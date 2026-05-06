@@ -11,3 +11,61 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id        Int       @id   @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+  orders    ServiceOrder[]
+}
+
+model Client {
+  id        Int       @id   @default(autoincrement())
+  name      String
+  email     String?
+  phone     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+  orders    ServiceOrder[]
+  
+}
+
+model Product {
+  id        Int       @id   @default(autoincrement())
+  name      String
+  price     Decimal   @db.Decimal(10, 2)
+  quantity  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+  orders    ServiceOrderItem[]
+}
+
+model ServiceOrder {
+  id        Int       @id   @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  client    Client    @relation(fields: [clientId], references: [id])
+  clientId  Int
+  status    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  deletedAt DateTime?
+  items     ServiceOrderItem[]
+}
+
+model ServiceOrderItem {
+  id              Int           @id   @default(autoincrement())
+  serviceOrder    ServiceOrder  @relation(fields: [serviceOrderId], references: [id])
+  serviceOrderId  Int
+  product         Product       @relation(fields: [productId], references: [id])
+  productId       Int
+  quantity        Int
+  soldPrice       Decimal       @db.Decimal(10, 2)
+  subtotal        Decimal       @db.Decimal(10, 2)
+}
