@@ -28,4 +28,10 @@ export class AuthController {
     async login(@Body() dto: LoginDto): Promise<any> {
         return this.authService.login(dto);
     }
+
+    @Post('refresh')
+    async refresh(@Body() body: any) {
+        const { refreshToken } = body;
+        return this.authService.refresh(refreshToken);
+    }
 }

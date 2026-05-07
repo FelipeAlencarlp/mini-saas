@@ -4,13 +4,16 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 
+interface MinhaObj { value: string };
+const refreshTokens: MinhaObj[] = [];
+
 @Injectable()
 export class AuthService {
     constructor(
         private readonly usersService: UsersService,
-        private jwt: JwtService
+        private readonly jwt: JwtService
     ) {}
-    async validateUser(user: LoginDto): Promise<any> {
+    private async validateUser(user: LoginDto) {
         const validUser = await this.usersService.findOneByEmail(user.email);
 
         if (!validUser) {
@@ -28,10 +31,52 @@ export class AuthService {
         return validUser;
     }
 
-    async login(userReq: any): Promise<{ access_token: string }> {
-        const user = await this.validateUser(userReq);
-        const payload = { sub: user.id, email: user.email };
+    private token(payload: any) {
+        const { exp, iat, nbf, ...cleanPayload } = payload;
 
-        return { access_token: await this.jwt.signAsync(payload) };
+        const accessToken = this.jwt.sign(
+            { ...cleanPayload, type: 'access' },
+            { expiresIn: '60s' }
+        );
+
+        const refreshToken = this.jwt.sign(
+            { ...cleanPayload, type: 'refresh' },
+            { expiresIn: '1h' }
+        );
+
+        refreshTokens.push({ value: refreshToken });
+
+        return { accessToken, refreshToken };
+    }
+
+    async login(userReq: any) {
+        const user = await this.validateUser(userReq);
+        const payload = { username: user.email, sub: user.id };
+
+        return this.token(payload);
+    }
+
+    async refresh(refreshToken: string) {
+        const storedToken = refreshTokens.find(
+            (token) => token.value === refreshToken,
+        );
+
+        if (!storedToken) {
+            throw new UnauthorizedException('Refresh token inválido.');
+        }
+
+        const payload = this.jwt.verify(refreshToken);
+
+        if (payload.type !== 'refresh') {
+            throw new UnauthorizedException('Tipo de token invalido.');
+        }
+
+        const user = this.usersService.findOneByEmail(payload.email);
+
+        if (!user) {
+            throw new UnauthorizedException('Refresh token inválido.');
+        }
+
+        return this.token(payload);
     }
 }
