@@ -42,7 +42,7 @@ export class AuthService {
 
         const accessToken = this.jwt.sign(
             { ...cleanPayload, type: 'access' },
-            { expiresIn: '60s' }
+            { expiresIn: '15m' }
         );
 
         const refreshToken = this.jwt.sign(

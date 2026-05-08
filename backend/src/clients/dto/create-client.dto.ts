@@ -6,6 +6,7 @@ import {
     IsOptional
 } from "class-validator";
 import { IsValidPhone } from "../decorators/IsValidPhone";
+import { Transform } from "class-transformer";
 
 export class CreateClientDto {
     @IsString()
@@ -19,6 +20,15 @@ export class CreateClientDto {
 
     @IsString()
     @IsOptional()
+    @Transform(({ value }) => {
+        if (value) {
+            const cleaned = value.replace(/\D/g, '');
+            if (cleaned.length === 11) {
+                return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+            }
+            return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 6)}-${cleaned.slice(6)}`;
+        }
+        })
     @IsValidPhone()
-    readonly phone?: string
+    readonly phone?: string;
 }
