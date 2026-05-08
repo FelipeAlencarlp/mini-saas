@@ -25,7 +25,7 @@ export class ClientsService {
 
     async findOne(id: number): Promise<ClientEntity> {
         const client = await this.prisma.client.findFirst({
-            where: { id },
+            where: { id, deletedAt: null },
             select: this.customerSelect
         });
 
