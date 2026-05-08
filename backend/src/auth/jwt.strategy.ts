@@ -18,6 +18,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             throw new UnauthorizedException('Tipo de token inválido.');
         }
 
-        return { userId: payload.sub, username: payload.username };
+        return { sub: payload.sub, username: payload.username };
     }
 }

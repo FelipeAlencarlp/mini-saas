@@ -1,7 +1,12 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import {
+    Injectable,
+    NotFoundException,
+    UnauthorizedException
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
+import { AuthEntity } from './entity/auth.entity';
 import * as bcrypt from 'bcrypt';
 
 interface MinhaObj { value: string };
@@ -13,11 +18,12 @@ export class AuthService {
         private readonly usersService: UsersService,
         private readonly jwt: JwtService
     ) {}
+
     private async validateUser(user: LoginDto) {
         const validUser = await this.usersService.findOneByEmail(user.email);
 
         if (!validUser) {
-            throw new UnauthorizedException('Usuário não encontrado');
+            throw new NotFoundException('Usuário não encontrado');
         }
 
         const isMatch = await bcrypt.compare(
@@ -49,14 +55,14 @@ export class AuthService {
         return { accessToken, refreshToken };
     }
 
-    async login(userReq: any) {
+    async login(userReq: any): Promise<AuthEntity> {
         const user = await this.validateUser(userReq);
         const payload = { username: user.email, sub: user.id };
 
         return this.token(payload);
     }
 
-    async refresh(refreshToken: string) {
+    async refresh(refreshToken: string): Promise<AuthEntity> {
         const storedToken = refreshTokens.find(
             (token) => token.value === refreshToken,
         );
@@ -65,18 +71,32 @@ export class AuthService {
             throw new UnauthorizedException('Refresh token inválido.');
         }
 
-        const payload = this.jwt.verify(refreshToken);
+        const payload = await this.jwt.verify(refreshToken);
 
         if (payload.type !== 'refresh') {
             throw new UnauthorizedException('Tipo de token invalido.');
         }
 
-        const user = this.usersService.findOneByEmail(payload.email);
+        const user = await this.usersService.findOneByEmail(payload.username);
 
         if (!user) {
             throw new UnauthorizedException('Refresh token inválido.');
         }
 
         return this.token(payload);
+    }
+
+    async logout(refreshToken: string): Promise<{ loggedOut: boolean }> {
+        const tokenIndex = refreshTokens.findIndex(
+            (token) => token.value === refreshToken
+        );
+
+        if (tokenIndex === -1) {
+            throw new UnauthorizedException('Refresh token inválido.');
+        }
+
+        refreshTokens.splice(tokenIndex, 1);
+
+        return { loggedOut: true };
     }
 }

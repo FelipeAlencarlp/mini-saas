@@ -2,7 +2,8 @@
 /backend/dist
 /backend/node_modules
 /backend/build
-/backend/generated/prisma
+/backend/src/generated/prisma
+/backend/prisma/migrations
 package-lock.json
 
 # Logs
