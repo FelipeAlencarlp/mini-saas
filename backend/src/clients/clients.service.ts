@@ -19,7 +19,8 @@ export class ClientsService {
     async findAll(): Promise<ClientEntity[]> {
         return await this.prisma.client.findMany({
             where: { deletedAt: null },
-            select: this.customerSelect
+            select: this.customerSelect,
+            orderBy: { id: 'asc' }
         });
     }
 
@@ -48,7 +49,10 @@ export class ClientsService {
 
         return await this.prisma.client.update({
             where: { id: client.id },
-            data: { ...dto }
+            data: { 
+                ...dto,
+                updatedAt: new Date()
+            }
         });
     }
 

@@ -1,4 +1,4 @@
 export class CurrentUserDto {
-    id!: string;
+    sub!: number;
     username!: string;
 }

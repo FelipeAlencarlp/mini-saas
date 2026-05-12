@@ -8,15 +8,18 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
     constructor(private readonly prisma: PrismaService) {}
 
+    private customerSelect = {
+        id: true,
+        name: true,
+        email: true,
+        orders: true
+    };
+
     async findAll(): Promise<UserEntity[]> {
         return await this.prisma.user.findMany({
             where: { deletedAt: null },
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                orders: true
-            }
+            select: this.customerSelect,
+            orderBy: { id: 'asc' }
         });
     }
 
@@ -24,6 +27,19 @@ export class UsersService {
         return await this.prisma.user.findFirst({
             where: { email, deletedAt: null }
         });
+    }
+
+    async findOne(id: number): Promise<UserEntity> {
+        const user = await this.prisma.user.findFirst({
+            where: { id, deletedAt: null },
+            select: this.customerSelect
+        });
+
+        if (!user) {
+            throw new NotFoundException('Usuário não encontrado.');
+        }
+
+        return user;
     }
 
     async create(dto: RegisterUserDto): Promise<UserEntity> {
