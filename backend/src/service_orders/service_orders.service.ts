@@ -2,10 +2,13 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { PrismaService } from '../prisma.service';
 import { ClientsService } from '../clients/clients.service';
 import { ProductsService } from '../products/products.service';
+import { ProductEntity } from '../products/entities/product.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ServiceOrderEntity } from './entity/service-order.entity';
 import { CurrentUserDto } from '../auth/dto/current-user.dto';
 import { Prisma } from '../generated/prisma/client';
+import { orderSelect } from './helpers/order.select';
+import { orderMapper } from './helpers/order.mapper';
 
 @Injectable()
 export class ServiceOrdersService {
@@ -15,47 +18,131 @@ export class ServiceOrdersService {
         private readonly productsService: ProductsService
     ) {}
 
-    private customerSelect = {
-        id: true,
-        userId: true,
-        clientId: true,
-        status: true,
-        items: true,
-        total: true
+    // helper
+    private async products(items: CreateOrderDto['items']) {
+        const products = await this.productsService.findProducts(
+            items.map(item => item.productId)
+        );
+
+        // mapa para facilitar busca
+        return new Map(
+            products.map(product => [product.id, product])
+        );
     }
 
-    private orderMapper(order: any): ServiceOrderEntity {
-        return {
-            ...order,
-            items: order.items.map(item => ({
-                ...item,
-                soldPrice: item.soldPrice.toNumber(),
-                subtotal: item.subtotal.toNumber()
-            })),
+    // calculate
+    private calculateTotal(
+        items: CreateOrderDto['items'],
+        products: Map<number, ProductEntity>
+    ): number {
+        let total = 0;
+
+        for (const item of items) {
+            const product = products.get(item.productId);
+
+            if (!product) {
+                throw new BadRequestException(
+                    `Produto ${item.productId} não encontrado.`
+                );
+            }
+
+            if (product.quantity < item.quantity) {
+                throw new BadRequestException(
+                    `Estoque insuficiente para ${product.name}`
+                );
+            }
+
+            total += Number(product.price) * item.quantity;
+        }
+
+        return total;
+    }
+
+    // database
+    private createOrder(
+        tx: Prisma.TransactionClient,
+        userId: number,
+        clientId: number,
+        total: number
+    ) {
+        return tx.serviceOrder.create({
+            data: {
+                userId,
+                clientId,
+                status: 'Iniciado',
+                total: new Prisma.Decimal(total)
+            }
+        });
+    }
+
+    private async createOrderItems(
+        tx: Prisma.TransactionClient,
+        orderId: number,
+        items: CreateOrderDto['items'],
+        products: Map<number, ProductEntity>
+    ) {
+        for (const item of items) {
+            const product = products.get(item.productId);
+
+            const subtotal = Number(product!.price) * item.quantity;
+
+            await tx.serviceOrderItem.create({
+                data: {
+                    serviceOrderId: orderId,
+                    productId: product!.id,
+                    quantity: item.quantity,
+                    soldPrice: product!.price,
+                    subtotal
+                }
+            });
         }
     }
 
+    private async updateProduct(
+        tx: Prisma.TransactionClient,
+        items: CreateOrderDto['items'],
+        products: Map<number, ProductEntity>
+    ) {
+        for (const item of items) {
+            const product = products.get(item.productId);
+
+            if(product!.quantity < item.quantity) {
+                throw new BadRequestException(
+                    `Produto com ID ${product!.id} com estoque insuficiente.`
+                );
+            }
+
+            await tx.product.update({
+                where: { id: product!.id },
+                data: {
+                    quantity: product!.quantity - item.quantity
+                }
+            });
+        }
+    }
+
+    // public methods
     async findAll(): Promise<ServiceOrderEntity[]> {
         const orders = await this.prisma.serviceOrder.findMany({
             where: { deletedAt: null },
-            select: this.customerSelect,
+            select: orderSelect,
             orderBy: { id: 'asc' }
         });
 
-        return orders.map(this.orderMapper);
+        return orders.map(orderMapper);
     }
 
     async findOne(id: number): Promise<ServiceOrderEntity> {
         const order = await this.prisma.serviceOrder.findUnique({
             where: { id, deletedAt: null },
-            select: this.customerSelect
+            select: orderSelect
         });
 
         if (!order) {
             throw new NotFoundException('Ordem não encontrada.');
         }
 
-        return this.orderMapper(order);
+        return orderMapper(order);
     }
 
     async create(
@@ -64,66 +151,30 @@ export class ServiceOrdersService {
     ): Promise<ServiceOrderEntity> {
         await this.clientsService.findOne(dto.clientId);
 
-        const productIds = dto.items.map(item => item.productId);
-        const products = await this.productsService.findProducts(productIds);
-
-        // mapa para facilitar busca
-        const productsMap = new Map(
-            products.map(product => [product.id, product])
-        );
+        const products = await this.products(dto.items);
+        const total = this.calculateTotal(dto.items, products);
         
         const order = await this.prisma.$transaction(async (tx) => {
-            let total = 0;
+            const createdOrder = await this.createOrder(
+                tx,
+                user.sub,
+                dto.clientId,
+                total
+            );
 
-            for (const item of dto.items) {
-                const product = productsMap.get(item.productId);
+            await this.createOrderItems(
+                tx,
+                createdOrder.id,
+                dto.items,
+                products
+            );
 
-                if (!product) {
-                    throw new BadRequestException(
-                        `Produto ${item.productId} não encontrado.`
-                    );
-                }
-
-                if (product.quantity < item.quantity) {
-                    throw new BadRequestException(
-                        `Estoque insuficiente para ${product.name}`
-                    );
-                }
-
-                const subtotal = Number(product.price) * item.quantity;
-                total += subtotal;
-            }
-
-            const createdOrder = await tx.serviceOrder.create({
-                data: {
-                    userId: user.sub,
-                    clientId: dto.clientId,
-                    status: 'Iniciado',
-                    total: new Prisma.Decimal(total)
-                }
-            });
-
-            for (const item of dto.items) {
-                const product = productsMap.get(item.productId);
-                const subtotal = Number(product!.price) * item.quantity;
-
-                await tx.serviceOrderItem.create({
-                    data: {
-                        serviceOrderId: createdOrder.id,
-                        productId: product!.id,
-                        quantity: item.quantity,
-                        soldPrice: product!.price,
-                        subtotal,
-                    }
-                });
-            }
-
-            const orderWithItens = await tx.serviceOrder.findUnique({
+            const orderWithItems = await tx.serviceOrder.findUnique({
                 where: { id: createdOrder.id },
-                select: this.customerSelect
+                select: orderSelect
             });
 
-            return this.orderMapper(orderWithItens);
+            return orderMapper(orderWithItems);
         });
 
         return order;
@@ -138,31 +189,14 @@ export class ServiceOrdersService {
             );
         }
 
-        const products = await this.productsService.findProducts(
-            order.items.map(item => item.productId)
-        );
-
-        const productsMap = new Map(
-            products.map(product => [product.id, product])
-        );
+        const products = await this.products(order.items);
 
         await this.prisma.$transaction(async (tx) => {
-            for (const item of order.items) {
-                const product = productsMap.get(item.productId);
-
-                if(product!.quantity < item.quantity) {
-                    throw new BadRequestException(
-                        `Produto com ID ${product!.id} com estoque insuficiente.`
-                    );
-                }
-
-                await tx.product.update({
-                    where: { id: product!.id },
-                    data: {
-                        quantity: product!.quantity - item.quantity
-                    }
-                });
-            }
+            await this.updateProduct(
+                tx,
+                order.items,
+                products
+            );
 
             await tx.serviceOrder.update({
                 where:  { id: order.id },
