@@ -8,7 +8,8 @@ import {
     Patch,
     Post,
     UseGuards,
-    UseInterceptors
+    UseInterceptors,
+    Query
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TransformInterceptor } from '../transform.interceptor';
@@ -17,6 +18,7 @@ import { ClientEntity } from './entity/client.entity';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { PaginatedResult } from '../common/types/paginated-result.type';
 
 @Controller('clients')
 @ApiTags('clients')
@@ -28,8 +30,11 @@ export class ClientsController {
 
     @Get()
     @ApiOkResponse({ type: ClientEntity, isArray: true })
-    async findAll(): Promise<ClientEntity[]> {
-        return this.clientsService.findAll();
+    async findAll(
+        @Query('page') page: string,
+        @Query('limit') limit: string
+    ): Promise<PaginatedResult<ClientEntity>> {
+        return this.clientsService.findAll(page, limit);
     }
 
     @Get(':id')

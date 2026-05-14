@@ -9,6 +9,7 @@ import {
   UseGuards,
   ParseIntPipe,
   UseInterceptors,
+  Query,
 } from '@nestjs/common';
 import { ServiceOrdersService } from './service_orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -18,6 +19,7 @@ import { TransformInterceptor } from '../transform.interceptor';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { CurrentUserDto } from '../auth/dto/current-user.dto';
+import { PaginatedResult } from '../common/types/paginated-result.type';
 
 @Controller('service-orders')
 @ApiTags('service-orders')
@@ -29,8 +31,11 @@ export class ServiceOrdersController {
 
   @Get()
   @ApiOkResponse({ type: ServiceOrderEntity, isArray: true })
-  async findAll(): Promise<ServiceOrderEntity[]> {
-    return this.serviceOrdersService.findAll();
+  async findAll(
+    @Query('page') page: string,
+    @Query('limit') limit: string
+  ): Promise<PaginatedResult<ServiceOrderEntity>> {
+    return this.serviceOrdersService.findAll(page, limit);
   }
 
   @Post()

@@ -9,6 +9,8 @@ import { CurrentUserDto } from '../auth/dto/current-user.dto';
 import { Prisma } from '../generated/prisma/client';
 import { orderSelect } from './helpers/order.select';
 import { orderMapper } from './helpers/order.mapper';
+import { PaginatedResult } from '../common/types/paginated-result.type';
+import { paginate } from '../common/paginate/paginate';
 
 @Injectable()
 export class ServiceOrdersService {
@@ -122,14 +124,29 @@ export class ServiceOrdersService {
     }
 
     // public methods
-    async findAll(): Promise<ServiceOrderEntity[]> {
+    async findAll(
+        page: string, limit: string
+    ): Promise<PaginatedResult<ServiceOrderEntity>> {
+        const pagination = await paginate<ServiceOrderEntity>(
+            this.prisma.serviceOrder,
+            { page, limit },
+            {
+                where: { deletedAt: null },
+                select: orderSelect,
+                orderBy: { id: 'asc' }
+            }
+        );
+
         const orders = await this.prisma.serviceOrder.findMany({
             where: { deletedAt: null },
             select: orderSelect,
             orderBy: { id: 'asc' }
         });
 
-        return orders.map(orderMapper);
+        return {
+            ...pagination,
+            data: pagination.data.map(orderMapper)
+        };
     }
 
     async findOne(id: number): Promise<ServiceOrderEntity> {

@@ -8,7 +8,8 @@ import {
   Delete,
   UseGuards,
   UseInterceptors,
-  ParseIntPipe
+  ParseIntPipe,
+  Query
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -22,19 +23,23 @@ import {
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ProductEntity } from './entities/product.entity';
 import { TransformInterceptor } from '../transform.interceptor';
+import { PaginatedResult } from '../common/types/paginated-result.type';
 
 @Controller('products')
 @ApiTags('products')
-// @ApiBearerAuth()
-// @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(TransformInterceptor)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
   @ApiOkResponse({ type: ProductEntity, isArray: true })
-  async findAll(): Promise<ProductEntity[]> {
-    return this.productsService.findAll();
+  async findAll(
+    @Query('page') page: string,
+    @Query('limit') limit: string
+  ): Promise<PaginatedResult<ProductEntity>> {
+    return this.productsService.findAll(page, limit);
   }
 
   @Get(':id')

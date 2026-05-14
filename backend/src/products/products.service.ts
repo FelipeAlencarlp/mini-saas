@@ -3,6 +3,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from '../prisma.service';
 import { ProductEntity } from './entities/product.entity';
+import { paginate } from '../common/paginate/paginate';
+import { PaginatedResult } from '../common/types/paginated-result.type';
 
 @Injectable()
 export class ProductsService {
@@ -22,17 +24,28 @@ export class ProductsService {
     };
   }
 
-  async findAll(): Promise<ProductEntity[]> {
-    const resultado = await this.prisma.product.findMany({
-      where: {
-        quantity: { gt: 0 },
-        deletedAt: null
-      },
-      select: this.customerSelect,
-      orderBy: { id: 'asc' }
-    });
+  async findAll(
+    page: string, limit: string
+  ): Promise<PaginatedResult<ProductEntity>> {
+    const pagination = await paginate<ProductEntity>(
+      this.prisma.product,
+      { page, limit },
+      {
+        where: { 
+          quantity: { gt: 0 },
+          deletedAt: null
+        },
+        select: this.customerSelect,
+        orderBy: { id: 'asc' }
+      }
+    );
 
-    return resultado.map(product => this.productMapper(product));
+    return {
+      ...pagination,
+      data: pagination.data.map(
+        product => this.productMapper(product)
+      )
+    };
   }
 
   async findOne(id: number): Promise<ProductEntity> {
