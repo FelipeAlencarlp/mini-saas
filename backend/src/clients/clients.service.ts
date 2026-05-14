@@ -5,18 +5,11 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { PaginatedResult } from '../common/types/paginated-result.type';
 import { paginate } from '../common/paginate/paginate';
+import { customerSelect } from './helpers/client.select';
 
 @Injectable()
 export class ClientsService {
     constructor(private readonly prisma: PrismaService) {}
-
-    private customerSelect = {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        orders: true
-    };
 
     async findAll(
         page: string, limit: string
@@ -25,7 +18,7 @@ export class ClientsService {
             this.prisma.client,
             { page, limit },
             {
-                select: this.customerSelect,
+                select: customerSelect,
                 orderBy: { id: 'asc' }
             }
         );
@@ -34,7 +27,7 @@ export class ClientsService {
     async findOne(id: number): Promise<ClientEntity> {
         const client = await this.prisma.client.findFirst({
             where: { id, deletedAt: null },
-            select: this.customerSelect
+            select: customerSelect
         });
 
         if (!client) {
@@ -47,7 +40,7 @@ export class ClientsService {
     async create(dto: CreateClientDto): Promise<ClientEntity> {
         return await this.prisma.client.create({
             data: { ...dto },
-            select: this.customerSelect
+            select: customerSelect
         });
     }
 

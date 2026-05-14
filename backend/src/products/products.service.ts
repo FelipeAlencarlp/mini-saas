@@ -5,24 +5,12 @@ import { PrismaService } from '../prisma.service';
 import { ProductEntity } from './entities/product.entity';
 import { paginate } from '../common/paginate/paginate';
 import { PaginatedResult } from '../common/types/paginated-result.type';
+import { customerSelect } from './helpers/product.select';
+import { productMapper } from './helpers/product.mapper';
 
 @Injectable()
 export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
-
-  private customerSelect = {
-    id: true,
-    name: true,
-    price: true,
-    quantity: true
-  }
-
-  private productMapper(product: any): ProductEntity {
-    return {
-      ...product,
-      price: product.price.toNumber()
-    };
-  }
 
   async findAll(
     page: string, limit: string
@@ -35,7 +23,7 @@ export class ProductsService {
           quantity: { gt: 0 },
           deletedAt: null
         },
-        select: this.customerSelect,
+        select: customerSelect,
         orderBy: { id: 'asc' }
       }
     );
@@ -43,7 +31,7 @@ export class ProductsService {
     return {
       ...pagination,
       data: pagination.data.map(
-        product => this.productMapper(product)
+        product => productMapper(product)
       )
     };
   }
@@ -55,14 +43,14 @@ export class ProductsService {
         quantity: { gt: 0 },
         deletedAt: null
       },
-      select: this.customerSelect
+      select: customerSelect
     });
 
     if (!product) {
       throw new NotFoundException('Produto não encontrado.');
     }
 
-    return this.productMapper(product);
+    return productMapper(product);
   }
 
   async findProducts(ids: number[]): Promise<ProductEntity[]> {
@@ -74,7 +62,7 @@ export class ProductsService {
         quantity: { gt: 0 }, // traz apenas maior que 0
         deletedAt: null
       },
-      select: this.customerSelect
+      select: customerSelect
     });
 
     const idsExist = new Set(products.map(p => p.id));
@@ -86,16 +74,16 @@ export class ProductsService {
       );
     }
 
-    return products.map(product => this.productMapper(product));
+    return products.map(product => productMapper(product));
   }
 
   async create(dto: CreateProductDto): Promise<ProductEntity> {
     const resultado = await this.prisma.product.create({
       data: { ...dto },
-      select: this.customerSelect
+      select: customerSelect
     });
 
-    return this.productMapper(resultado);
+    return productMapper(resultado);
   }
 
   async update(id: number, dto: UpdateProductDto): Promise<ProductEntity> {
@@ -107,10 +95,10 @@ export class ProductsService {
         ...dto,
         updatedAt: new Date()
       },
-      select: this.customerSelect
+      select: customerSelect
     });
 
-    return this.productMapper(resultado);
+    return productMapper(resultado);
   }
 
   async remove(id: number): Promise<{ productRemoved: boolean }> {
