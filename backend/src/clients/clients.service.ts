@@ -12,12 +12,21 @@ export class ClientsService {
     constructor(private readonly prisma: PrismaService) {}
 
     async findAll(
-        page: string, limit: string
+        page: string,
+        limit: string,
+        filter?: string
     ): Promise<PaginatedResult<ClientEntity>> {
+        const where = filter
+            ? {
+                name: { contains: filter, mode: 'insensitive' }
+              }
+            : {};
+
         return paginate(
             this.prisma.client,
             { page, limit },
             {
+                where,
                 select: customerSelect,
                 orderBy: { id: 'asc' }
             }

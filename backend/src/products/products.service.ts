@@ -13,16 +13,26 @@ export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(
-    page: string, limit: string
+    page: string,
+    limit: string,
+    filter?: string
   ): Promise<PaginatedResult<ProductEntity>> {
+    const where = {
+      quantity: { gt: 0 },
+      deletedAt: null,
+      ...( filter
+        ? {
+          name: { contains: filter, mode: 'insensitive' }
+        }
+        : {}
+      )
+    };
+
     const pagination = await paginate<ProductEntity>(
       this.prisma.product,
       { page, limit },
       {
-        where: { 
-          quantity: { gt: 0 },
-          deletedAt: null
-        },
+        where,
         select: customerSelect,
         orderBy: { id: 'asc' }
       }

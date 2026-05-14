@@ -32,9 +32,10 @@ export class ClientsController {
     @ApiOkResponse({ type: ClientEntity, isArray: true })
     async findAll(
         @Query('page') page: string,
-        @Query('limit') limit: string
+        @Query('limit') limit: string,
+        @Query('filter') filter?: string
     ): Promise<PaginatedResult<ClientEntity>> {
-        return this.clientsService.findAll(page, limit);
+        return this.clientsService.findAll(page, limit, filter);
     }
 
     @Get(':id')

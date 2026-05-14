@@ -37,9 +37,10 @@ export class ProductsController {
   @ApiOkResponse({ type: ProductEntity, isArray: true })
   async findAll(
     @Query('page') page: string,
-    @Query('limit') limit: string
+    @Query('limit') limit: string,
+    @Query('filter') filter?: string
   ): Promise<PaginatedResult<ProductEntity>> {
-    return this.productsService.findAll(page, limit);
+    return this.productsService.findAll(page, limit, filter);
   }
 
   @Get(':id')
