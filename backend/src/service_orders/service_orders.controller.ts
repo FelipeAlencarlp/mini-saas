@@ -1,4 +1,15 @@
-import { Controller, Post, Body, UseInterceptors, UseGuards, Patch, ParseIntPipe, Param, Get } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+  ParseIntPipe,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ServiceOrdersService } from './service_orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ServiceOrderEntity } from './entity/service-order.entity';
@@ -37,5 +48,13 @@ export class ServiceOrdersController {
     @Param('id', ParseIntPipe) id: number
   ): Promise<{ endedOrder: boolean }> {
     return this.serviceOrdersService.endOrder(id);
+  }
+
+  @Delete(':id')
+  @ApiOkResponse({ type: Boolean })
+  async remove(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<{ canceledOrder: boolean }> {
+    return this.serviceOrdersService.cancelOrder(id);
   }
 }

@@ -206,4 +206,21 @@ export class ServiceOrdersService {
 
         return { endedOrder: true }
     }
+
+    async cancelOrder(id: number): Promise<{ canceledOrder: boolean }> {
+        const order = await this.findOne(id);
+
+        if (order.status !== 'Iniciado') {
+            throw new BadRequestException(
+                'Só é permitido cancelar ordens com status Iniciado.'
+            );
+        }
+
+        await this.prisma.serviceOrder.update({
+            where: { id: order.id },
+            data: { status: 'Cancelado' }
+        });
+
+        return { canceledOrder: true }
+    }
 }
