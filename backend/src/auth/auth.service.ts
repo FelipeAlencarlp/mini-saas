@@ -23,7 +23,7 @@ export class AuthService {
         const validUser = await this.usersService.findOneByEmail(user.email);
 
         if (!validUser) {
-            throw new NotFoundException('Usuário não encontrado');
+            throw new UnauthorizedException('Credênciais inválidas');
         }
 
         const isMatch = await bcrypt.compare(
@@ -31,7 +31,7 @@ export class AuthService {
         );
 
         if (!isMatch) {
-            throw new UnauthorizedException('Senha incorreta.');
+            throw new UnauthorizedException('Credênciais inválidas');
         }
 
         return validUser;
