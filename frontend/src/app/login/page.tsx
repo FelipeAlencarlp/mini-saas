@@ -1,11 +1,12 @@
 "use client";
 
-import React, { use, useState } from "react";
-import { SignInResponse, signIn, useSession } from "next-auth/react";
+import { api } from "@/services/api";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Cookies from 'js-cookie';
 
-export default function Login(props: any) {
-    // Recupera os dados da sessão fornecido pelo Next-Auth
-    const { data: session } = useSession();
+export default function Login() {
+    const router = useRouter();
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -26,16 +27,29 @@ export default function Login(props: any) {
         return password.length >= 4;
     };
 
-    // Função responsável pela autenticação
-    const login = async (email: string, password: string) => {
-        // a função recebe como parametros o nome da autenticação "credentials"
-        const retorno: SignInResponse | undefined = await signIn('credentials', {
-            username: email,
-            password,
-            redirect: false,
-        });
+    const handleLogin = async () => {
+        try {
+            setLoginError('');
 
-        return retorno;
+            const response = await api.post('/auth/login', {
+                email,
+                password
+            });
+
+            const { accessToken } = response.data.data;
+
+            Cookies.set('auth', accessToken);
+
+            router.push('/admin/dashboard');
+        } catch (error: any) {
+            if (error.response?.status === 401) {
+                setLoginError('E-mail ou senha inválidos');
+                return;
+            }
+
+            setLoginError('Erro interno do servidor');
+            console.log(error);
+        }
     };
 
     const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -68,20 +82,7 @@ export default function Login(props: any) {
 
         if (newErrors.email || newErrors.password) return;
 
-        try {
-            const resp = await login(email, password);
-            
-            if (resp?.error) {
-                setLoginError('E-mail ou senha incorretos');
-                console.log('Credenciais inválidas.');
-                return;
-            }
-
-            setLoginError('');
-            console.log('Success');
-        } catch (error) {
-            console.log(error);
-        }
+        await handleLogin();
     };
 
     return (
@@ -93,7 +94,7 @@ export default function Login(props: any) {
         >
             <div
                 className="
-                    m-4 p-4 bg-white w-11/12 max-w-[700px]
+                    m-4 p-4 bg-white w-11/12 max-w-175
                     flex flex-col items-center justify-center rounded-2xl
                 "
             >
@@ -101,7 +102,7 @@ export default function Login(props: any) {
                     id="login-form"
                     onSubmit={(e) => onSubmit(e)}
                     className="
-                        w-11/12 max-w-[500px] flex-col
+                        w-11/12 max-w-125 flex-col
                         flex items-center justify-center
                     "
                 >
@@ -182,93 +183,3 @@ export default function Login(props: any) {
         </section>
     );
 }
-
-// export default function LoginPage() {
-//     const [email, setEmail] = useState('');
-//     const [erroEmail, setErroEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [erroPassword, setErroPassword] = useState('');
-
-//     function handleLogin() {
-//         let valid = true;
-
-//         if (!email.trim() && !password.trim()) {
-//             setErroEmail('E-mail é obrigatório');
-//             setErroPassword('A senha é obrigatória');
-//             valid = false;
-//         } else if (!email.includes('@')) {
-//             setErroEmail('E-mail invalido');
-//             valid = false;
-//         } else if (!password.trim()) {
-//             setErroPassword('A senha é obrigatória');
-//             valid = false;
-//         } else {
-//             setErroEmail('');
-//             setErroPassword('');
-//         }
-
-//         if (!valid) return;
-//     }
-
-//     return (
-//         <div className="flex h-screen items-center justify-center">
-//             <div className="bg-white p-6 rounded shadow w-80">
-//                 <h1
-//                     className="text-center text-xl mb-4 font-bold text-gray-800"
-//                 >
-//                     Login
-//                 </h1>
-
-//                 <input
-//                     type="email"
-//                     placeholder="Seu e-mail"
-//                     className="w-full border p-2 mb-3 rounded text-gray-600"
-//                     value={email}
-//                     onChange={(e) => {
-//                         setEmail(e.target.value);
-//                         setErroEmail('');
-//                     }}
-//                     onKeyDown={(e) => {
-//                         if (e.key === 'Enter') {
-//                             handleLogin;
-//                         }
-//                     }}
-//                 />
-
-//                 {erroEmail && 
-//                     <p className="text-red-400 text-xs mb-3">{erroEmail}</p>
-//                 }
-
-//                 <input
-//                     type="password"
-//                     placeholder="Sua senha"
-//                     className="w-full border p-2 mb-3 rounded text-gray-600"
-//                     value={password}
-//                     onChange={(e) => {
-//                         setPassword(e.target.value);
-//                         setErroPassword('');
-//                     }}
-//                     onKeyDown={(e) => {
-//                         if (e.key === 'Enter') {
-//                             handleLogin;
-//                         }
-//                     }}
-//                 />
-
-//                 {erroPassword &&
-//                     <p className="text-red-400 text-xs mb-3">{erroPassword}</p>
-//                 }
-
-//                 <button
-//                     onClick={handleLogin}
-//                     className="
-//                         w-full bg-blue-600 text-white p-2 rounded
-//                         cursor-pointer hover:bg-blue-700
-//                     "
-//                 >
-//                     Entrar
-//                 </button>
-//             </div>
-//         </div>
-//     );
-// }
