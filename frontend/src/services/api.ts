@@ -6,7 +6,6 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    console.log(config)
     const token = Cookies.get('auth');
 
     if (token) {
@@ -16,22 +15,56 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
+    if (
+        error.response?.status === 401 &&
+        !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
       
-//       // Tenta renovar o token usando o refresh token
-//       const newToken = await refreshToken(); 
-//       localStorage.setItem("token", newToken);
-      
-//       // Repete a requisição original com o novo token
-//       originalRequest.headers.Authorization = `Bearer ${newToken}`;
-//       return api(originalRequest);
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+      try {
+        // Tenta renovar o token usando o refresh token
+        const newToken = await refreshToken();
+
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+        return api(originalRequest);
+
+      } catch (refreshError) {
+        Cookies.remove('auth');
+        Cookies.remove('refresh');
+
+        window.location.href = '/login';
+
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export async function refreshToken() {
+    const refresh = Cookies.get('refresh');
+
+    if (!refresh) {
+        throw new Error('Refresh token não encontrado.');
+    }
+
+    const response = await axios.post(
+        'http://localhost:8000/auth/refresh',
+        {
+            refreshToken: refresh
+        }
+    );
+
+    const { accessToken } = response.data.data;
+
+    Cookies.set('auth', accessToken);
+
+    return accessToken;
+}

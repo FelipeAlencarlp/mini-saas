@@ -1,13 +1,15 @@
 "use client";
 
-import { api } from "@/services/api";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
+import { loginRequest } from "./helpers/loginRequest";
+import { useAuth } from "@/hooks/useAuth";
+import { validateLoginForm } from "./helpers/validateLoginForm";
 
 export default function Login() {
+    const { login } = useAuth();
     const router = useRouter();
-
+    
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loginError, setLoginError] = useState<string>('');
@@ -17,70 +19,32 @@ export default function Login() {
         password: ''
     });
 
-    // Validador de email
-    const validateEmail = (email: string) => {
-        return /\S+@\S+\.\S+/.test(email);
-    };
-
-    // Validador de senha
-    const validatePassword = (password: string) => {
-        return password.length >= 4;
-    };
-
     const handleLogin = async () => {
-        try {
-            setLoginError('');
+        setLoginError('');
 
-            const response = await api.post('/auth/login', {
-                email,
-                password
-            });
+        const result = await loginRequest({ email, password });
 
-            const { accessToken } = response.data.data;
-
-            Cookies.set('auth', accessToken);
-
-            router.push('/admin/dashboard');
-        } catch (error: any) {
-            if (error.response?.status === 401) {
-                setLoginError('E-mail ou senha inválidos');
-                return;
-            }
-
-            setLoginError('Erro interno do servidor');
-            console.log(error);
+        if (!result.success) {
+            setLoginError(result.message);
+            return;
         }
+        
+        login(result.data.accessToken, result.data.refreshToken);
+
+        router.push('/admin/dashboard');
     };
 
     const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const newErrors = {
-            email: '',
-            password: '',
-        };
+        const validationErrors = validateLoginForm({
+            email,
+            password
+        });
 
-        // Validação email
-        if (!email) {
-            newErrors.email = 'E-mail obrigatório';
-        } else if (!validateEmail(email)) {
-            newErrors.email = 'E-mail inválido';
-        } else {
-            newErrors.email = '';
-        }
+        setErrors(validationErrors);
 
-        // Validação senha
-        if (!password) {
-            newErrors.password = 'Senha obrigatória';
-        } else if (!validatePassword(password)) {
-            newErrors.password = 'Senha deve ter no mínimo 4 caracteres';
-        } else {
-            newErrors.password = '';
-        }
-
-        setErrors(newErrors);
-
-        if (newErrors.email || newErrors.password) return;
+        if (validationErrors.email || validationErrors.password) return;
 
         await handleLogin();
     };
