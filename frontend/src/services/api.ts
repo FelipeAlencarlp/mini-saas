@@ -1,10 +1,13 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
+const router = useRouter();
 
 export const api = axios.create({
     baseURL: 'http://localhost:8000'
 });
 
+// Token
 api.interceptors.request.use((config) => {
     const token = Cookies.get('auth');
 
@@ -15,14 +18,18 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+
+// Refresh Token
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const isLoginRoute = originalRequest.url !== '/login';
 
     if (
         error.response?.status === 401 &&
-        !originalRequest._retry
+        !originalRequest._retry &&
+        !isLoginRoute
     ) {
       originalRequest._retry = true;
       
@@ -38,7 +45,7 @@ api.interceptors.response.use(
         Cookies.remove('auth');
         Cookies.remove('refresh');
 
-        window.location.href = '/login';
+        router.push('/login');
 
         return Promise.reject(refreshError);
       }

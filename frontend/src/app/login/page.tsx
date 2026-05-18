@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { loginRequest } from "./helpers/loginRequest";
 import { useAuth } from "@/hooks/useAuth";
 import { validateLoginForm } from "./helpers/validateLoginForm";
+import { Form } from "@/components/form/Form";
+import { Input } from "@/components/form/Input";
+import { Button } from "@/components/form/Button";
 
 export default function Login() {
     const { login } = useAuth();
@@ -56,94 +59,50 @@ export default function Login() {
                 items-center h-screen
             "
         >
-            <div
-                className="
-                    m-4 p-4 bg-white w-11/12 max-w-175
-                    flex flex-col items-center justify-center rounded-2xl
-                "
+            <Form
+                id="login-form"
+                title="Login"
+                error={loginError}
+                onSubmit={onSubmit}
             >
-                <form
-                    id="login-form"
-                    onSubmit={(e) => onSubmit(e)}
-                    className="
-                        w-11/12 max-w-125 flex-col
-                        flex items-center justify-center
-                    "
-                >
-                    <h2
-                        className="
-                            inter-normal text-[28px]
-                            text-black font-black mb-4
-                        "
-                    >
-                        Login
-                    </h2>
+                <Input
+                    label="E-mail"
+                    id="email-login-input"
+                    name="email"
+                    type="email"
+                    value={email}
+                    placeholder="example@email.com"
+                    error={errors.email}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                        setErrors({
+                            email: '',
+                            password: errors.password
+                        });
+                    }}
+                />
 
-                    <div className="w-full flex flex-col gap-2">
-                        <label
-                            className="text-gray-800 text-xl"
-                            htmlFor="email-login-input"
-                        >
-                            E-mail
-                        </label>
-                        <input
-                            id="email-login-input"
-                            name="email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                                setErrors({email: '', password: errors.password});
-                            }}
-                            className="border p-2 rounded h-11 text-gray-600"
-                        />
+                <Input
+                    label="Senha"
+                    id="password-login-input"
+                    name="password"
+                    type="password"
+                    value={password}
+                    placeholder="Sua senha aqui"
+                    error={errors.password}
+                    onChange={(e) => {
+                        setPassword(e.target.value);
+                        setErrors({
+                            email: errors.email,
+                            password: ''
+                        });
+                    }}
+                />
 
-                        {errors.email && 
-                            <span className="text-red-400 text-xs mb-3">
-                                {errors.email}
-                            </span>
-                        }
-
-                        <label
-                            className="text-gray-800 text-xl"
-                            htmlFor="password-login-input"
-                        >
-                                Senha
-                        </label>
-                        <input
-                            id="password-login-input"
-                            name="password"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                                setErrors({email: errors.email, password: ''});
-                            }}
-                            type="password"
-                            className="border p-2 rounded h-11 text-gray-600"
-                        />
-
-                        {errors.password && 
-                            <span className="text-red-400 text-xs mb-3">
-                                {errors.password}
-                            </span>
-                        }
-                    </div>
-
-                    <button
-                        className="
-                            bg-black w-full m-3 text-white
-                            p-3 cursor-pointer hover:bg-gray-900
-                        "
-                    >
-                        Entrar
-                    </button>
-                    
-                    {loginError &&
-                        <span className="text-red-400 text-xl mb-3">
-                            {loginError}
-                        </span>
-                    }
-                </form>
-            </div>
+                <Button type="submit">
+                    Entrar
+                </Button>
+            </Form>
         </section>
     );
 }

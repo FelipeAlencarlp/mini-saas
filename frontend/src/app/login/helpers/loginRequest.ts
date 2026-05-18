@@ -34,6 +34,7 @@ export async function loginRequest(
             data: response.data.data
         };
     } catch (error: any) {
+        console.log(error)
         if (error.response?.status === 401) {
             return {
                 success: false,
