@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
-const router = useRouter();
 
 export const api = axios.create({
     baseURL: 'http://localhost:8000'
@@ -25,11 +24,13 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const isLoginRoute = originalRequest.url !== '/login';
+    const isRefreshRoute = originalRequest.url.includes('/auth/refresh');
 
     if (
         error.response?.status === 401 &&
         !originalRequest._retry &&
-        !isLoginRoute
+        !isLoginRoute &&
+        !isRefreshRoute
     ) {
       originalRequest._retry = true;
       
@@ -39,9 +40,11 @@ api.interceptors.response.use(
 
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
-        return api(originalRequest);
+        return api.request(originalRequest);
 
       } catch (refreshError) {
+        const router = useRouter();
+
         Cookies.remove('auth');
         Cookies.remove('refresh');
 
@@ -69,9 +72,10 @@ export async function refreshToken() {
         }
     );
 
-    const { accessToken } = response.data.data;
+    const { accessToken, refreshToken } = response.data.data;
 
     Cookies.set('auth', accessToken);
+    Cookies.set('refresh', refreshToken);
 
     return accessToken;
 }

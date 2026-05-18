@@ -13,10 +13,12 @@ export class DashboardService {
         private readonly clients: ClientsService
     ) {}
 
-    async total(): Promise<number> {
-        return await this.prisma.serviceOrder.count({
+    async total(): Promise<{ total: number}> {
+        const orders = await this.prisma.serviceOrder.count({
             where: { status: 'Iniciado' }
         });
+
+        return { total: orders };
     }
 
     async totalEndedOrders(): Promise<{ totalEnded: number }> {

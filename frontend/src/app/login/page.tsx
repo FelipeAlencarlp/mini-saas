@@ -8,6 +8,8 @@ import { validateLoginForm } from "./helpers/validateLoginForm";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/form/Button";
+import { HiOutlineArrowRightStartOnRectangle as loginIcon } from "react-icons/hi2";
+
 
 export default function Login() {
     const { login } = useAuth();
@@ -34,7 +36,7 @@ export default function Login() {
         
         login(result.data.accessToken, result.data.refreshToken);
 
-        router.push('/admin/dashboard');
+        router.push('/admin');
     };
 
     const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -99,7 +101,16 @@ export default function Login() {
                     }}
                 />
 
-                <Button type="submit">
+                <Button
+                    type="submit"
+                    Icon={loginIcon}
+                    className="
+                        bg-black w-full m-3 text-white
+                        p-3 cursor-pointer hover:bg-gray-900
+                        items-center justify-center flex gap-3
+                        rounded-md
+                    "
+                >
                     Entrar
                 </Button>
             </Form>

@@ -16,7 +16,7 @@ export class DashboardController {
 
   @Get('total-orders')
   @ApiOkResponse({ type: Number })
-  async total(): Promise<number> {
+  async total(): Promise<{ total: number}> {
     return this.dashboardService.total();
   }
 

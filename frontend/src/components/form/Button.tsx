@@ -1,24 +1,26 @@
 interface ButtonProps {
     children: React.ReactNode;
     type?: 'button' | 'submit' | 'reset';
+    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    className: string;
 }
 
 export function Button({
     children,
     type = 'button',
-    onClick
+    Icon,
+    onClick,
+    className
 }: ButtonProps) {
     return (
         <button
             type={type}
             onClick={onClick}
-            className="
-                bg-black w-full m-3 text-white
-                p-3 cursor-pointer hover:bg-gray-900
-            "
+            className={className}
         >
             {children}
+            <Icon className="w-5 h-5"/>
         </button>
     );
 }
