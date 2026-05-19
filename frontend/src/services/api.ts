@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useRouter } from "next/navigation";
 
 export const api = axios.create({
     baseURL: 'http://localhost:8000'
@@ -23,7 +22,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    const isLoginRoute = originalRequest.url !== '/login';
+    const isLoginRoute = originalRequest.url === '/login';
     const isRefreshRoute = originalRequest.url.includes('/auth/refresh');
 
     if (
@@ -43,12 +42,8 @@ api.interceptors.response.use(
         return api.request(originalRequest);
 
       } catch (refreshError) {
-        const router = useRouter();
-
         Cookies.remove('auth');
         Cookies.remove('refresh');
-
-        router.push('/login');
 
         return Promise.reject(refreshError);
       }

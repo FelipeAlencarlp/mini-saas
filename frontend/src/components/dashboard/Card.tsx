@@ -15,6 +15,7 @@ export default function Card({ title, span1, span2 }: CardProps) {
             <h1 className="
                 text-white bg-gray-600 w-full
                 h-full rounded-t-md text-center py-3
+                font-semibold
             ">
                 {title}
             </h1>

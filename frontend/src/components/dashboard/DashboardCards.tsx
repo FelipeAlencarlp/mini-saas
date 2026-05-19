@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
     getTotalOrders,
     getTotalEndedOrders,
@@ -8,17 +9,17 @@ import {
     getClientMostOrders,
 } from "@/services/dashboardService";
 import Card from "./Card";
-import { useEffect, useState } from "react";
-import { ProductMostSolded } from "@/types/ProductMostSolded.type";
+import { CardSkeleton } from "./CardSkeleton";
 
-export default function DashboardCards({ refetchRef }: any) {
+export default function DashboardCards() {
     const [totalOrders, setTotal] = useState<number>(0);
     const [totalEndedOrders, setTotalEndedOrders] = useState<number>(0);
     const [totalSoldOrders, setTotalSoldOrders] = useState<number>(0);
     const [productName, setProductName] = useState<string>('');
-    const [producQuantity, setProductQuantity] = useState<number>();
+    const [producQuantity, setProductQuantity] = useState<number>(0);
     const [clientName, setClientName] = useState<string>('');
-    const [clientQuantity, setClientQuantity] = useState<number>();
+    const [clientQuantity, setClientQuantity] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
 
     async function fatchDashboard() {
         const totalOrders = await getTotalOrders();
@@ -37,11 +38,18 @@ export default function DashboardCards({ refetchRef }: any) {
     }
 
     useEffect(() => {
-        fatchDashboard();
-
-        if (refetchRef) {
-            refetchRef.current = fatchDashboard;
+        async function loadData() {
+            try {
+                setLoading(true);
+                await fatchDashboard();
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
         }
+
+        loadData();
     }, []);
 
     const totalSoldTransformed = totalSoldOrders.toFixed(2).replace('.', ',');
@@ -56,16 +64,19 @@ export default function DashboardCards({ refetchRef }: any) {
 
     return (
         <div className="flex flex-auto flex-wrap">
-            {cards.map((item) => {
-                return (
+            {loading
+                ? Array.from({ length: 4}).map((_, index) => (
+                    <CardSkeleton key={index} />
+                  ))
+                : cards.map((item) => (
                     <Card
                         key={item.title}
                         title={item.title}
                         span1={item.result}
                         span2={item.span2}
                     />
-                );
-            })}
+                ))
+            }
         </div>
     );
 }

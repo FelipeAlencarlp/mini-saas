@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 import { loginRequest } from "./helpers/loginRequest";
 import { useAuth } from "@/hooks/useAuth";
 import { validateLoginForm } from "./helpers/validateLoginForm";
@@ -9,7 +10,6 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/form/Button";
 import { HiOutlineArrowRightStartOnRectangle as loginIcon } from "react-icons/hi2";
-
 
 export default function Login() {
     const { login } = useAuth();

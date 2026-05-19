@@ -50,6 +50,11 @@ export class AuthService {
             { expiresIn: '1h' }
         );
 
+        const index = refreshTokens.findIndex(
+            (token) => token.value === refreshToken
+        );
+
+        refreshTokens.splice(index, 1);
         refreshTokens.push({ value: refreshToken });
 
         return { accessToken, refreshToken };
