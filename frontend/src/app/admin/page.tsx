@@ -1,5 +1,5 @@
-import { TitlePage } from "@/components/admin/TitlePage";
-import DashboardCards from "@/components/dashboard/DashboardCards";
+import { TitlePage } from "@/components/dashboard/TitlePage";
+import DashboardCards from "@/components/dashboard/card/DashboardCards";
 
 export default function AdminPage() {
     return (

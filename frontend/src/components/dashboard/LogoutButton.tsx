@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "../form/Button";
 import { HiOutlineArrowLeftStartOnRectangle as logoutIcon } from "react-icons/hi2";
 
-export default function LogoutButton() {
+export function LogoutButton() {
     const router = useRouter();
     const { logout } = useAuth();
 

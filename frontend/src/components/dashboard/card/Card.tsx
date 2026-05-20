@@ -4,11 +4,11 @@ interface CardProps {
     span2?: number;
 }
 
-export default function Card({ title, span1, span2 }: CardProps) {
+export function Card({ title, span1, span2 }: CardProps) {
     return (
         <div className="
             flex flex-col box-border shadow-md
-            items-center justify-center mt-10 mx-5
+            items-center justify-center mt-4 md:mt-10 mx-5
             rounded-xl border-2 h-auto
             w-full max-w-60 border-gray-600
         ">

@@ -1,6 +1,6 @@
 "use client";
 
-import { TitlePage } from "@/components/admin/TitlePage";
+import { TitlePage } from "@/components/dashboard/TitlePage";
 
 export default function UsersPage() {
     return (

@@ -2,7 +2,7 @@ export function CardSkeleton() {
     return (
         <div className="
             flex flex-col box-border shadow-md
-            items-center justify-center mt-10 mx-5
+            items-center justify-center mt-4 mx-5
             rounded-xl border-2 h-auto
             w-full max-w-60 border-gray-300
             animate-pulse

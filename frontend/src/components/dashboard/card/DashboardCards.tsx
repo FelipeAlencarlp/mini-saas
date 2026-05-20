@@ -8,7 +8,7 @@ import {
     getProductMostSolded,
     getClientMostOrders,
 } from "@/services/dashboardService";
-import Card from "./Card";
+import { Card } from "./Card";
 import { CardSkeleton } from "./CardSkeleton";
 
 export default function DashboardCards() {
@@ -63,7 +63,10 @@ export default function DashboardCards() {
     ];
 
     return (
-        <div className="flex flex-auto flex-wrap">
+        <div className="
+            flex flex-col items-center gap-4 mb-4 md:mb-0
+            md:flex-row md:flex-wrap md:items-start
+        ">
             {loading
                 ? Array.from({ length: 4}).map((_, index) => (
                     <CardSkeleton key={index} />
