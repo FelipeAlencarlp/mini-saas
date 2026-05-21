@@ -62,7 +62,11 @@ export class AuthService {
 
     async login(userReq: any): Promise<AuthEntity> {
         const user = await this.validateUser(userReq);
-        const payload = { username: user.email, sub: user.id };
+        const payload = {
+            sub: user.id,
+            username: user.name,
+            useremail: user.email
+        };
 
         return this.token(payload);
     }
@@ -82,7 +86,7 @@ export class AuthService {
             throw new UnauthorizedException('Tipo de token invalido.');
         }
 
-        const user = await this.usersService.findOneByEmail(payload.username);
+        const user = await this.usersService.findOneByEmail(payload.useremail);
 
         if (!user) {
             throw new UnauthorizedException('Refresh token inválido.');

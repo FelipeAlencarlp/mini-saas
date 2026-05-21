@@ -8,9 +8,9 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TransformInterceptor } from '../transform.interceptor';
 import { UsersService } from './users.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { CurrentUserDto } from '../auth/dto/current-user.dto';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from '../auth/entity/user.entity';
+import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -19,13 +19,17 @@ import { UserEntity } from '../auth/entity/user.entity';
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
+    @Get('user')
+    @ApiOkResponse()
+    async user(@CurrentUser() user: UserDto): Promise<UserEntity> {
+        return user;
+    }
+
     @Get()
     @ApiBearerAuth()
     @ApiOkResponse({ type: UserEntity, isArray: true })
-    async findAll(
-        @CurrentUser() user: CurrentUserDto
-    ): Promise<UserEntity[]> {
-        console.log(user);
+    async findAll(): Promise<UserEntity[]> {
+        
         return this.usersService.findAll();
     }
 }
