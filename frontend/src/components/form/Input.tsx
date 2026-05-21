@@ -1,3 +1,5 @@
+import { forwardRef } from "react";
+
 interface InputProps {
     label: string;
     id: string;
@@ -9,7 +11,8 @@ interface InputProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export function Input({
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+    ({
     label,
     id,
     name,
@@ -18,7 +21,7 @@ export function Input({
     placeholder,
     error,
     onChange
-}: InputProps) {
+}, ref) => {
     return (
         <div className="w-full flex flex-col gap-2 my-3">
             <label
@@ -29,13 +32,20 @@ export function Input({
             </label>
 
             <input
+                ref={ref}
                 id={id}
                 name={name}
                 value={value}
                 type={type}
                 placeholder={placeholder}
                 onChange={onChange}
-                className="border p-2 rounded h-11 text-gray-600"
+                className={`
+                    border p-2 rounded h-11 text-gray-600
+                    ${error
+                        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
+                        : 'border-gray-300 focus:border-blue-500'
+                    }
+                `}
             />
 
             {error && (
@@ -45,4 +55,4 @@ export function Input({
             )}
         </div>
     );
-}
+});

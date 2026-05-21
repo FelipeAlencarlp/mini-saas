@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
     getTotalOrders,
     getTotalEndedOrders,
@@ -12,54 +12,58 @@ import { Card } from "./Card";
 import { CardSkeleton } from "./CardSkeleton";
 
 export default function DashboardCards() {
-    const [totalOrders, setTotal] = useState<number>(0);
-    const [totalEndedOrders, setTotalEndedOrders] = useState<number>(0);
-    const [totalSoldOrders, setTotalSoldOrders] = useState<number>(0);
-    const [productName, setProductName] = useState<string>('');
-    const [producQuantity, setProductQuantity] = useState<number>(0);
-    const [clientName, setClientName] = useState<string>('');
-    const [clientQuantity, setClientQuantity] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(true);
+    async function getDashboardData() {
+        const [
+            totalOrders,
+            totalEndedOrders,
+            totalSoldOrders,
+            productData,
+            clientData,
+        ] = await Promise.all([
+            getTotalOrders(),
+            getTotalEndedOrders(),
+            getTotalSoldOrders(),
+            getProductMostSolded(),
+            getClientMostOrders(),
+        ]);
 
-    async function fatchDashboard() {
-        const totalOrders = await getTotalOrders();
-        const totalEndedOrders = await getTotalEndedOrders();
-        const totalSoldOrders = await getTotalSoldOrders();
-        const { productName, quantitySold } = await getProductMostSolded();
-        const { clientName, quantityOrders } = await getClientMostOrders();
+        return {
+            totalOrders,
+            totalEndedOrders,
+            totalSoldOrders,
 
-        setTotal(totalOrders);
-        setTotalEndedOrders(totalEndedOrders);
-        setTotalSoldOrders(totalSoldOrders);
-        setProductName(productName);
-        setProductQuantity(quantitySold);
-        setClientName(clientName);
-        setClientQuantity(quantityOrders);
+            productName: productData.productName,
+            quantitySold: productData.quantitySold,
+
+            clientName: clientData.clientName,
+            quantityOrders: clientData.quantityOrders
+        };
     }
 
-    useEffect(() => {
-        async function loadData() {
-            try {
-                setLoading(true);
-                await fatchDashboard();
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        }
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['dashboard'],
+        queryFn: getDashboardData
+    });
 
-        loadData();
-    }, []);
+    if (error) console.log(error);
 
-    const totalSoldTransformed = totalSoldOrders.toFixed(2).replace('.', ',');
+    const totalSoldTransformed =
+        data?.totalSoldOrders.toFixed(2).replace('.', ',');
 
     const cards = [
-        { title: 'TOTAL ORDENS', result: totalOrders.toString() },
-        { title: 'TOTAL FINALIZADAS', result: totalEndedOrders.toString() },
-        { title: 'VALOR VENDIDO R$', result: totalSoldTransformed },
-        { title: 'PRODUTO MAIS VENDIDO', result: productName, span2: producQuantity },
-        { title: 'CLIENTE COM MAIS ORDENS', result: clientName, span2: clientQuantity },
+        { title: 'TOTAL ORDENS', span1: data?.totalOrders.toString() },
+        { title: 'TOTAL FINALIZADAS', span1: data?.totalEndedOrders.toString() },
+        { title: 'VALOR VENDIDO R$', span1: totalSoldTransformed },
+        {
+            title: 'PRODUTO MAIS VENDIDO',
+            span1: data?.productName,
+            span2: data?.quantitySold
+        },
+        {
+            title: 'CLIENTE COM MAIS ORDENS',
+            span1: data?.clientName,
+            span2: data?.quantityOrders
+        },
     ];
 
     return (
@@ -67,7 +71,7 @@ export default function DashboardCards() {
             flex flex-col items-center gap-4 mb-4 md:mb-0
             md:flex-row md:flex-wrap md:items-start
         ">
-            {loading
+            {isLoading
                 ? Array.from({ length: 4}).map((_, index) => (
                     <CardSkeleton key={index} />
                   ))
@@ -75,7 +79,7 @@ export default function DashboardCards() {
                     <Card
                         key={item.title}
                         title={item.title}
-                        span1={item.result}
+                        span1={item.span1 ?? ''}
                         span2={item.span2}
                     />
                 ))

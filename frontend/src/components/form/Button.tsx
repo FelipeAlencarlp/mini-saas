@@ -1,7 +1,7 @@
 interface ButtonProps {
     children: React.ReactNode;
     type?: 'button' | 'submit' | 'reset';
-    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className: string;
 }
@@ -20,7 +20,7 @@ export function Button({
             className={className}
         >
             {children}
-            <Icon className="w-5 h-5"/>
+            {Icon && <Icon className="w-5 h-5"/>}
         </button>
     );
 }

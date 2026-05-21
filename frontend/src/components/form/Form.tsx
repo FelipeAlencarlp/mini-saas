@@ -31,19 +31,19 @@ export function Form({
                 <h2
                     className="
                         inter-normal text-[28px]
-                        text-black font-black mb-4
+                        text-gray-800 font-black mb-4
                     "
                 >
                     {title}
                 </h2>
-
-                {children}
-
+                
                 {error && (
                     <span className="text-red-400 text-xl mb-3">
                         {error}
                     </span>
                 )}
+                
+                {children}
             </form>
         </div>
     );

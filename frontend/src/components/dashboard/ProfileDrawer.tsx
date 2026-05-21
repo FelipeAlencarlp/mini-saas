@@ -1,4 +1,8 @@
+"use client";
+
+import { useQuery } from '@tanstack/react-query';
 import { HiXMark, HiUserCircle } from 'react-icons/hi2';
+import { getUser } from "@/services/userService";
 import { LogoutButton } from './LogoutButton';
 
 interface ProfileDrawerProps {
@@ -10,6 +14,13 @@ export function ProfileDrawer({
     open,
     onClose
 }: ProfileDrawerProps) {
+    const { data: user, isLoading, error } = useQuery({
+        queryKey: ['user'],
+        queryFn: getUser
+    });
+
+    if (error) console.log(error);
+
     return (
         <div
             className={`
@@ -39,13 +50,25 @@ export function ProfileDrawer({
                     <HiUserCircle size={50} />
 
                     <div>
-                        <p className="font-semibold">
-                            Nome Usuário
-                        </p>
+                        {isLoading
+                            ? (
+                                <div className="animate-pulse">
+                                    <p className="font-semibold"/>
+                                    <p className="text-sm text-gray-500"/>
+                                </div>
+                              )
+                            : (
+                                <>
+                                    <p className="font-semibold">
+                                        {user?.username}
+                                    </p>
 
-                        <p className="text-sm text-gray-500">
-                            administrador
-                        </p>
+                                    <p className="text-sm text-gray-500">
+                                        {user?.useremail}
+                                    </p>
+                                </>
+                            )
+                        }
                     </div>
                 </div>
             </div>

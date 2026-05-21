@@ -22,14 +22,16 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    const isLoginRoute = originalRequest.url === '/login';
-    const isRefreshRoute = originalRequest.url.includes('/auth/refresh');
+    const url = originalRequest?.url || '';
+
+    const isAuthRoute =
+        url.includes('/auth/login') ||
+        url.includes('/auth/refresh');
 
     if (
         error.response?.status === 401 &&
         !originalRequest._retry &&
-        !isLoginRoute &&
-        !isRefreshRoute
+        !isAuthRoute
     ) {
       originalRequest._retry = true;
       
