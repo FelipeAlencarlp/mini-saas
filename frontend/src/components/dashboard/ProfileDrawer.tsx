@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { HiXMark, HiUserCircle } from 'react-icons/hi2';
-import { getUser } from "@/services/userService";
+import { getUser } from "@/services/usersService";
 import { LogoutButton } from './LogoutButton';
 
 interface ProfileDrawerProps {
