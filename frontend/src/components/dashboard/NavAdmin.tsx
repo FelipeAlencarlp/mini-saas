@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
     HiOutlinePresentationChartBar as dashboardIcon,
-    HiOutlineUsers as usersIcon
+    HiOutlineUsers as usersIcon,
+    HiOutlineIdentification as clientsIcon
 } from "react-icons/hi2";
 
 export default function NavAdmin() {
@@ -13,6 +14,7 @@ export default function NavAdmin() {
     const menu = [
         { icon: dashboardIcon, name: 'Dashboard', href: '/admin' },
         { icon: usersIcon, name: 'Usuários', href: '/admin/users' },
+        { icon: clientsIcon, name: 'Clientes', href: '/admin/clients' },
     ];
 
     return (
