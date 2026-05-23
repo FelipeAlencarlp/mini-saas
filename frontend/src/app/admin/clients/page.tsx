@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getClients } from "@/services/clientsService";
-import { useToast } from "@/hooks/useToast";
 import { TitlePage } from "@/components/dashboard/TitlePage";
 import { Table } from "@/components/table/Table";
 import { TableDeleteButton } from "@/components/table/TableDeteleButton";
@@ -75,11 +74,14 @@ export default function ClientsPage() {
 
     return (
         <>
-            <TitlePage>Clientes</TitlePage>
+            <TitlePage isLoading={isLoading}>
+                Clientes
+            </TitlePage>
 
             <Table
                 columns={columns}
                 data={clients ?? []}
+                isLoading={isLoading}
             />
 
             <EditClientModal

@@ -1,15 +1,17 @@
 import { HiXMark } from 'react-icons/hi2';
 import NavAdmin from './NavAdmin';
-
-interface SidebarProps {
-    open: boolean;
-    onClose: () => void;
-}
+import { SidebarSkeleton } from './SidebarSkeleton';
+import { SidebarProps } from '@/types/dashboard/SidebarProps.type';
 
 export function Sidebar({
     open,
+    isLoading,
     onClose
 }: SidebarProps) {
+    if (isLoading) {
+        return <SidebarSkeleton/>
+    }
+
     return (
         <aside
             className={`

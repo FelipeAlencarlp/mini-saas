@@ -5,15 +5,13 @@ import { Button } from "../form/Button";
 import { Form } from "../form/Form";
 import { Input } from "../form/Input";
 import { useRef, useState } from "react";
-import { useToast } from "@/hooks/useToast";
-import { registerRequest } from "@/app/register/helpers/registerRequest";
 import { validateRegisterForm } from "@/app/register/helpers/validateRegisterForm";
 import { Section } from "../form/Section";
 import { FooterForm } from "./FooterForm";
+import { useRegisterUser } from "@/hooks/useRegisterUser";
 
 export function FormRegister() {
     const router = useRouter();
-    const { showToast } = useToast();
 
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
@@ -30,22 +28,7 @@ export function FormRegister() {
 
     const nameInputRef = useRef<HTMLInputElement>(null);
 
-    const handleRegister = async () => {
-        setRegisterError('');
-
-        const result = await registerRequest({
-            name,
-            email,
-            password
-        });
-
-        if (!result.success) {
-            showToast(result.message, 'error');
-            return;
-        }
-
-        router.push('/login?success=registered');
-    };
+    const registerUserMutation = useRegisterUser();
 
     const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -70,7 +53,11 @@ export function FormRegister() {
             return;
         }
 
-        await handleRegister();
+        registerUserMutation.mutate({
+            name,
+            email,
+            password
+        });
     }
 
     return (

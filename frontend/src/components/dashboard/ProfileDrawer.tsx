@@ -4,23 +4,21 @@ import { useQuery } from '@tanstack/react-query';
 import { HiXMark, HiUserCircle } from 'react-icons/hi2';
 import { getUser } from "@/services/usersService";
 import { LogoutButton } from './LogoutButton';
+import { UserType } from '@/types/User.type';
 
 interface ProfileDrawerProps {
     open: boolean;
+    user?: UserType;
+    isLoading: boolean;
     onClose: () => void;
 }
 
 export function ProfileDrawer({
     open,
+    user,
+    isLoading,
     onClose
 }: ProfileDrawerProps) {
-    const { data: user, isLoading, error } = useQuery({
-        queryKey: ['user'],
-        queryFn: getUser
-    });
-
-    if (error) console.log(error);
-
     return (
         <div
             className={`

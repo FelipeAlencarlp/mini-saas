@@ -5,20 +5,20 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
     HiOutlineArrowRightStartOnRectangle as loginIcon
 } from "react-icons/hi2";
-import { loginRequest } from "@/app/login/helpers/loginRequest";
 import { validateLoginForm } from "@/app/login/helpers/validateLoginForm";
-import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/useToast";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/form/Button";
 import { FooterForm } from "./FooterForm";
 import { Section } from "../form/Section";
+import { useLogin } from "@/hooks/useLogin";
 
 export function FormLogin() {
-    const { login } = useAuth();
-    const { showToast } = useToast();
     const router = useRouter();
+    const { showToast } = useToast();
+    const loginMutation = useLogin();
+    const searchParams = useSearchParams();
     
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -28,28 +28,15 @@ export function FormLogin() {
         password: ''
     });
 
-    const searchParams = useSearchParams();
-    
     useEffect(() => {
         const success = searchParams.get('success');
 
-        if (success === 'registered') {
-            showToast('Cadastro realizado com sucesso', 'success');
-        }
-    }, []);
+        if (success !== 'registered') return;
 
-    const handleLogin = async () => {
-        const result = await loginRequest({ email, password });
+        showToast('Cadastro realizado com sucesso. Faça login', 'success');
 
-        if (!result.success) {
-            showToast(result.message, 'error');
-            return;
-        }
-        
-        login(result.data.accessToken, result.data.refreshToken);
-
-        router.push('/admin');
-    };
+        router.replace('/login');
+    }, [searchParams]);
 
     const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -63,7 +50,10 @@ export function FormLogin() {
 
         if (validationErrors.email || validationErrors.password) return;
 
-        await handleLogin();
+        loginMutation.mutate({
+            email,
+            password
+        });
     };
 
     return (
@@ -110,6 +100,7 @@ export function FormLogin() {
                 <Button
                     type="submit"
                     Icon={loginIcon}
+                    disabled={loginMutation.isPending}
                     className="
                         bg-gray-800 w-full m-3 text-white
                         p-3 cursor-pointer hover:bg-gray-700
@@ -117,7 +108,10 @@ export function FormLogin() {
                         rounded-md
                     "
                 >
-                    Entrar
+                    {loginMutation.isPending
+                        ? "Entrando..."
+                        : "Entrar"
+                    }
                 </Button>
 
                 <FooterForm

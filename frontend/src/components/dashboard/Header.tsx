@@ -21,10 +21,18 @@ export function Header({
             {/* Menu */}
             <button
                 onClick={onOpenMenu}
-                className="text-white"
+                className="text-white md:hidden"
             >
                 <HiBars3 size={28} />
             </button>
+
+            <p className="
+                bg-linear-to-r from-gray-400 to-blue-600
+                bg-clip-text text-transparent
+                font-semibold text-2xl md:pl-12
+            ">
+                Mini SaaS
+            </p>
 
             {/* Perfil */}
             <button

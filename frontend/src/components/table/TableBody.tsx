@@ -1,7 +1,7 @@
 import { TableBodyProps } from "@/types/table/TableBodyProps.type";
 import { TableRow } from "./TableRow";
 
-export function TableBody({ data, columns }: TableBodyProps) {
+export function TableBody<T>({ data, columns }: TableBodyProps<T>) {
     return (
         <tbody className="
             text-gray-800 divide-y divide-gray-200

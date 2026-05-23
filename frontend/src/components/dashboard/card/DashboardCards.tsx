@@ -1,52 +1,11 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
-import {
-    getTotalOrders,
-    getTotalEndedOrders,
-    getTotalSoldOrders,
-    getProductMostSolded,
-    getClientMostOrders,
-} from "@/services/dashboardService";
+import { DashboardCardsProps } from "@/types/dashboard/DashboardCardsProps.type";
 import { Card } from "./Card";
 import { CardSkeleton } from "./CardSkeleton";
 
-export default function DashboardCards() {
-    async function getDashboardData() {
-        const [
-            totalOrders,
-            totalEndedOrders,
-            totalSoldOrders,
-            productData,
-            clientData,
-        ] = await Promise.all([
-            getTotalOrders(),
-            getTotalEndedOrders(),
-            getTotalSoldOrders(),
-            getProductMostSolded(),
-            getClientMostOrders(),
-        ]);
-
-        return {
-            totalOrders,
-            totalEndedOrders,
-            totalSoldOrders,
-
-            productName: productData.productName,
-            quantitySold: productData.quantitySold,
-
-            clientName: clientData.clientName,
-            quantityOrders: clientData.quantityOrders
-        };
-    }
-
-    const { data, isLoading, error } = useQuery({
-        queryKey: ['dashboard'],
-        queryFn: getDashboardData
-    });
-
-    if (error) console.log(error);
-
+export default function DashboardCards({
+    data,
+    isLoading
+}: DashboardCardsProps) {
     const totalSoldTransformed =
         data?.totalSoldOrders.toFixed(2).replace('.', ',');
 
