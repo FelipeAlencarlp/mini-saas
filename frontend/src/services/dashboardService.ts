@@ -1,6 +1,6 @@
 import { api } from "@/services/api";
-import { clientMostOrders } from "@/types/ClientMostOrders.type";
-import { ProductMostSolded } from "@/types/ProductMostSolded.type";
+import { clientMostOrders } from "@/types/dashboard/ClientMostOrders.type";
+import { ProductMostSolded } from "@/types/dashboard/ProductMostSolded.type";
 
 export async function getTotalOrders(): Promise<number> {
     const response = await api.get('/dashboard/total-orders');

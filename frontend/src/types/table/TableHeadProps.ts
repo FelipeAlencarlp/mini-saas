@@ -1,5 +1,5 @@
 import { Column } from "./Column.type";
 
-export type TableHeadProps = {
-    columns: Column[];
+export type TableHeadProps<T> = {
+    columns: Column<T>[];
 };

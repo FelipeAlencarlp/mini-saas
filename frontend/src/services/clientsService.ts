@@ -1,4 +1,4 @@
-import { ClientType } from "@/types/Client.type";
+import { ClientType } from "@/types/dashboard/Client.type";
 import { api } from "./api";
 
 export async function getClients(): Promise<ClientType[]> {

@@ -4,6 +4,7 @@ interface ButtonProps {
     Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className: string;
+    disabled?: boolean;
 }
 
 export function Button({
@@ -11,11 +12,13 @@ export function Button({
     type = 'button',
     Icon,
     onClick,
-    className
+    className,
+    disabled
 }: ButtonProps) {
     return (
         <button
             type={type}
+            disabled={disabled}
             onClick={onClick}
             className={className}
         >

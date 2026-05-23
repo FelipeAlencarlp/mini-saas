@@ -39,19 +39,11 @@ export async function registerRequest({
             data: response.data.data
         };
     } catch (error: any) {
-        if (
-            error.response?.status === 400 ||
-            error.response?.status === 409
-        ) {
-            return {
-                success: false,
-                message: 'Esse e-mail já está sendo utilizado.'
-            };
-        }
+        const message = error.response?.data?.message;
 
         return {
             success: false,
-            message: 'Erro interno do servidor'
+            message: message || 'Erro interno do servidor'
         };
     }
 }

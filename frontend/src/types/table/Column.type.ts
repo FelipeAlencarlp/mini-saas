@@ -1,5 +1,5 @@
-export type Column = {
+export type Column<T> = {
     header: string;
-    accessor: string;
-    render?: (row: Record<string, any>) => React.ReactNode;
+    accessor: keyof T | string;
+    render?: (row: T) => React.ReactNode;
 };

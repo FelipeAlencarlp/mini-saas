@@ -59,10 +59,13 @@ export function FormRegister() {
 
         setErrors(validationErrors);
 
-        if (
-            validationErrors.name || validationErrors.email ||
-            validationErrors.password || validationErrors.confirmPassword
-        ) {
+        const hasErrors =
+            validationErrors.name ||
+            validationErrors.email ||
+            validationErrors.password ||
+            validationErrors.confirmPassword;
+
+        if (hasErrors) {
             nameInputRef.current?.focus();
             return;
         }

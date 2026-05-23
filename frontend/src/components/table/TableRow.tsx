@@ -1,6 +1,9 @@
 import { TableRowProps } from "@/types/table/TableRowProps.type";
 
-export function TableRow({ row, columns }: TableRowProps) {
+export function TableRow<T>({
+    row,
+    columns
+}: TableRowProps<T>) {
     return (
         <tr
             className="
@@ -12,20 +15,24 @@ export function TableRow({ row, columns }: TableRowProps) {
             "
         >
             {columns.map((column, index) => {
-                console.log(column)
-                const value = row[column.accessor];
+                const value = row[column.accessor as keyof T];
 
                 const hasContent =
                     value !== undefined &&
                     value !== null &&
                     value !== "";
 
-                if (!hasContent && !column.render) return null;
-
                 return (
                     <td
-                        key={column.accessor}
-                        className="p-3 max-md:block max-md:p-0"
+                        key={String(column.accessor)}
+                        className={`
+                            p-3 max-md:block max-md:p-0
+                            ${
+                                !hasContent && !column.render
+                                ? "max-md:hidden"
+                                : ""
+                            }
+                        `}
                     >
                         <span className={`
                             hidden max-md:block text-md uppercase py-1
@@ -38,7 +45,7 @@ export function TableRow({ row, columns }: TableRowProps) {
                         <div className="py-3 text-base md:py-0">
                             {column.render
                                 ? column.render(row)
-                                : value
+                                : String(value ?? '')
                             }
                         </div>
                     </td>

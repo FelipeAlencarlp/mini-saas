@@ -1,6 +1,6 @@
 import { Column } from "./Column.type";
 
-export type TableRowProps = {
-    row: Record<string, any>;
-    columns: Column[];
+export type TableRowProps<T> = {
+    row: T;
+    columns: Column<T>[];
 };
