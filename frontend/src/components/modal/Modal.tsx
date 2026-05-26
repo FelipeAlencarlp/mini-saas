@@ -1,10 +1,15 @@
+import { HiXMark } from 'react-icons/hi2';
 import { ModalProps } from "@/types/modal/ModalProps.type";
+import { Button } from '../form/Button';
 
 export function Modal({
+    children,
     isOpen,
-    onClose,
     title,
-    children
+    onClose,
+    onClick,
+    isPending,
+    optionTitle
 }: ModalProps) {
     return (
         <div
@@ -12,8 +17,7 @@ export function Modal({
             className={`
                 fixed inset-0 z-50
                 flex items-center justify-center
-                bg-black/50
-                transition-all duration-300
+                bg-black/50 transition-all duration-300
 
                 ${
                     isOpen
@@ -22,30 +26,60 @@ export function Modal({
                 }
             `}
         >
-        <div
-            onClick={(e) => e.stopPropagation()}
-            className={`
-                bg-gray-200 p-4 rounded border-3 w-90
-                transform transition-all duration-300
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className={`
+                    w-120 max-w-175 flex flex-col 
+                    rounded-2xl bg-gray-200 p-8
+                    transform transition-all duration-300
 
-                ${
-                    isOpen
-                        ? "translate-y-0 scale-100"
-                        : "-translate-y-10 scale-95"
-                }
-            `}
-        >
-        <h3
-            className="
-                text-gray-600 text-2xl text-center
-                font-bold mb-5 pb-4 border-b
-            "
-        >
-            {title}
-        </h3>
+                    ${
+                        isOpen
+                            ? "translate-y-0 scale-100"
+                            : "-translate-y-10 scale-95"
+                    }
+                `}
+            >
+                <div className="flex justify-end">
+                    <button
+                        className="text-gray-600 cursor-pointer"
+                        onClick={onClose}
+                    >
+                        <HiXMark size={24} />
+                    </button>
+                </div>
 
-        {children}
+                <h3
+                    className={`
+                        text-gray-600 text-2xl text-center
+                        font-bold
+                        ${title
+                            ? "border-b mb-5 pb-4"
+                            : "border-b-0 mb-0 pb-0"
+                        }
+                    `}
+                >
+                    {title}
+                </h3>
+
+                {children}
+
+                <Button
+                    type="submit"
+                    onClick={onClick}
+                    disabled={isPending}
+                    className="
+                        w-full bg-blue-500 text-white p-2
+                        mt-6 rounded hover:bg-blue-600
+                        font-semibold
+                    "
+                >
+                    {isPending
+                        ? `${optionTitle?.[0] ?? ""}`
+                        : `${optionTitle?.[1] ?? ""}`
+                    }
+                </Button>
+            </div>
         </div>
-    </div>
     );
 }

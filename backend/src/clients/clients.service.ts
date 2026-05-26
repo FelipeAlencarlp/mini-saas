@@ -18,9 +18,10 @@ export class ClientsService {
     ): Promise<PaginatedResult<ClientEntity>> {
         const where = filter
             ? {
-                name: { contains: filter, mode: 'insensitive' }
+                name: { contains: filter, mode: 'insensitive' },
+                deletedAt: null
               }
-            : {};
+            : { deletedAt: null };
 
         return paginate(
             this.prisma.client,

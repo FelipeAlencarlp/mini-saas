@@ -9,13 +9,16 @@ export function Table<T>({
     isLoading
 }: TableProps<T>) {
     return (
-        <div className="overflow-x-auto shadow-md sm:rounded-lg mt-10 ">
+        <div className="
+            overflow-x-auto shadow-md mt-5
+            sm:rounded-lg
+        ">
             {isLoading ? 
                 (
                     <TableSkeleton
-                    columns={columns.length}
-                    rows={6}
-                />
+                        columns={columns.length}
+                        rows={6}
+                    />
                 )
             :
                 (

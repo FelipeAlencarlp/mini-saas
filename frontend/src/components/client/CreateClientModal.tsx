@@ -2,20 +2,18 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Modal } from "../modal/Modal";
-import { EditModalProps } from "@/types/modal/client/EditClientModalProps";
+import { CreateModalProps } from "@/types/modal/client/CreateClientModalProps";
 import { Input } from "../form/Input";
 import {
     validateClientModal
 } from "@/app/admin/clients/helpers/validateClientModal";
 
-export function EditClientModal({
-    client,
+export function CreateClientModal({
     isOpen,
     onClose,
     onConfirm,
     isPending
-}: EditModalProps) {
-    const [id, setId] = useState<number>(0);
+}: CreateModalProps) {
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
@@ -55,28 +53,30 @@ export function EditClientModal({
         }
 
         onConfirm(
-            id,
             name,
             email,
             phone
         );
     }
 
+    useEffect(() => {
+        if (isOpen) {
+            setName('');
+            setEmail('');
+            setPhone('');
+        }
+    }, [isOpen]);
+
     function handleClose() {
         resetForm();
         onClose();
     }
 
-    useEffect(() => {
-        if (isOpen && client) {
-            setId(client.id);
-            setName(client.name);
-            setEmail(client?.email || '');
-            setPhone(client?.phone || '');
-        }
-    }, [isOpen, client]);
-
     function resetForm() {
+        setName('');
+        setEmail('');
+        setPhone('');
+
         setErrors({
             name: '',
             email: '',
@@ -86,18 +86,18 @@ export function EditClientModal({
 
     return (
         <Modal
-            title="Editar Cliente"
+            title="Criar Cliente"
             isOpen={isOpen}
             onClose={handleClose}
             onClick={handleSubmit}
             isPending={isPending}
-            optionTitle={['Salvando...', 'Salvar']}
+            optionTitle={['Criando...', 'Criar']}
         >
             <Input
                 label="Nome"
                 bgLabel="bg-gray-200"
                 ref={nameInputRef}
-                id="name-edit-client-modal"
+                id="name-create-client-modal"
                 name="name"
                 type="text"
                 value={name}
@@ -116,7 +116,7 @@ export function EditClientModal({
                 label="E-mail"
                 bgLabel="bg-gray-200"
                 ref={emailInputRef}
-                id="email-edit-client-modal"
+                id="email-create-client-modal"
                 name="email"
                 type="email"
                 value={email}
@@ -135,7 +135,7 @@ export function EditClientModal({
                 label="Telefone"
                 bgLabel="bg-gray-200"
                 ref={phoneInputRef}
-                id="phone-edit-client-modal"
+                id="phone-create-client-modal"
                 name="phone"
                 type="tel"
                 value={phone}

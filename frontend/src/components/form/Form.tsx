@@ -1,49 +1,89 @@
+import Link from "next/link";
+import { FooterForm } from "../user/FooterForm";
+import { Button } from "./Button";
+
 interface FormProps {
     children: React.ReactNode;
     id: string;
     title: string;
-    error?: string;
+    isPending: boolean;
+    titlesButton: string[] | '';
+    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
+
+    childrenP: React.ReactNode;
+    href: string;
+    titleLink: string;
+    childrenLink: React.ReactNode;
 }
 
 export function Form({
     children,
     id,
     title,
-    error,
+    isPending,
+    titlesButton,
+    Icon,
+    childrenP,
+    href,
+    titleLink,
+    childrenLink,
     onSubmit
 }: FormProps) {
     return (
         <div
             className="
-                m-4 p-4 bg-white w-11/12 max-w-175
-                flex flex-col items-center justify-center rounded-2xl
+                flex flex-col items-center justify-center
+                m-4 p-4 bg-white w-11/12 max-w-175 rounded-2xl
             "
         >
             <form
                 id={id}
                 onSubmit={onSubmit}
                 className="
-                    w-11/12 max-w-125 flex-col
-                    flex items-center justify-center
+                    flex flex-col w-11/12 max-w-125
                 "
             >
                 <h2
                     className="
-                        inter-normal text-[28px]
-                        text-gray-800 font-black mb-4
+                        text-3xl text-gray-800 text-center
+                        font-black my-2
                     "
                 >
                     {title}
                 </h2>
                 
-                {error && (
-                    <span className="text-red-400 text-xl mb-3">
-                        {error}
-                    </span>
-                )}
-                
                 {children}
+
+                <Button
+                    type="submit"
+                    Icon={Icon}
+                    disabled={isPending}
+                    className="
+                        bg-gray-800 w-full my-6 text-white
+                        p-3 hover:bg-gray-700 rounded-md
+                        items-center justify-center flex gap-3
+                    "
+                >
+                    {isPending
+                        ? `${titlesButton?.[0] ?? ""}`
+                        : `${titlesButton?.[1] ?? ""}`
+                    }
+                </Button>
+
+                <p className="text-gray-800 text-center">
+                    {childrenP}
+                    <Link
+                        href={href}
+                        className="
+                            pl-1 font-bold cursor pointer
+                            hover:underline
+                        "
+                        title={titleLink}
+                    >
+                        {childrenLink}
+                    </Link>
+                </p>
             </form>
         </div>
     );

@@ -5,6 +5,7 @@ interface ButtonProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     className: string;
     disabled?: boolean;
+    title?: string;
 }
 
 export function Button({
@@ -13,14 +14,19 @@ export function Button({
     Icon,
     onClick,
     className,
-    disabled
+    disabled,
+    title
 }: ButtonProps) {
     return (
         <button
             type={type}
+            title={title}
             disabled={disabled}
             onClick={onClick}
-            className={className}
+            className={`
+                ${className} cursor-pointer transition
+                duration-300 ease-in-out hover:scale-105
+            `}
         >
             {children}
             {Icon && <Icon className="w-5 h-5"/>}

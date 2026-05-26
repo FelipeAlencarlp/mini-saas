@@ -1,4 +1,4 @@
-import { ClientType } from "../dashboard/Client.type";
+import { ClientType } from "../../dashboard/Client.type";
 
 export type EditModalProps = {
     client: ClientType | null;

@@ -1,8 +1,6 @@
 "use client";
 
-import { useQuery } from '@tanstack/react-query';
 import { HiXMark, HiUserCircle } from 'react-icons/hi2';
-import { getUser } from "@/services/usersService";
 import { LogoutButton } from './LogoutButton';
 import { UserType } from '@/types/User.type';
 
@@ -36,7 +34,7 @@ export function ProfileDrawer({
                 </h2>
 
                 <button
-                    className="text-gray-200"
+                    className="text-gray-200 cursor-pointer"
                     onClick={onClose}
                 >
                     <HiXMark size={24} />

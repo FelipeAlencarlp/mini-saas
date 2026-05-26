@@ -1,4 +1,4 @@
-interface UpdateClientModalProps {
+interface ClientModalProps {
     name: string;
     email?: string;
     phone?: string;
@@ -10,11 +10,11 @@ interface ValidationErrors {
     phone: string;
 }
 
-export function validateUpdateClientModal({
+export function validateClientModal({
     name,
     email,
     phone
-}: UpdateClientModalProps): ValidationErrors {
+}: ClientModalProps): ValidationErrors {
     const errors: ValidationErrors = {
         name: '',
         email: '',

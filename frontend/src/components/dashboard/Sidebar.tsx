@@ -33,8 +33,8 @@ export function Sidebar({
 
                 {/* Botão fechar mobile */}
                 <button
+                    className="md:hidden text-gray-200 cursor-pointer"
                     onClick={onClose}
-                    className="md:hidden text-gray-200"
                 >
                     <HiXMark size={24} />
                 </button>

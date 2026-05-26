@@ -22,6 +22,15 @@ export function useLogin() {
         },
 
         onError: (error: any) => {
+            if (error.response?.status === 401) {
+                showToast(
+                    'E-mail ou senha incorretos. Tente novamente.',
+                    'error'
+                );
+
+                return;
+            }
+
             showToast(
                 error.response?.data?.message ||
                 'Erro interno do servidor',

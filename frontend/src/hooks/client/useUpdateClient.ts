@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useToast } from "./useToast";
+import { useToast } from "../useToast";
 import {
     updateClientRequest
 } from "@/app/admin/clients/helpers/updateClientRequest";

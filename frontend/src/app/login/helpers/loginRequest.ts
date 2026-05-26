@@ -5,9 +5,9 @@ interface LoginRequest {
     password: string;
 }
 
-export async function loginRequest(
-    { email, password }: LoginRequest
-) {
+export async function loginRequest({
+    email, password
+}: LoginRequest) {
     const response = await api.post('/auth/login', {
         email,
         password

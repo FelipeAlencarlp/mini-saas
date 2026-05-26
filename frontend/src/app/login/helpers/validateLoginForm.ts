@@ -9,7 +9,8 @@ interface ValidationErrors {
 }
 
 export function validateLoginForm({
-    email, password
+    email,
+    password
 }: ValidateLoginFormProps): ValidationErrors {
     const errors: ValidationErrors = {
         email: '',

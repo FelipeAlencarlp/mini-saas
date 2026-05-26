@@ -10,8 +10,12 @@ export function TableRow<T>({
                 md:border-b md:border-gray-500 transition-colors
                 duration-200 hover:bg-gray-100
                 odd:bg-gray-200 even:bg-gray-300
-                max-md:block max-md:rounded-lg max-md:border
+
+                max-md:block
+                max-md:rounded-lg
+                max-md:border
                 max-md:border-gray-500
+                max-md:overflow-hidden
             "
         >
             {columns.map((column, index) => {
@@ -27,6 +31,7 @@ export function TableRow<T>({
                         key={String(column.accessor)}
                         className={`
                             p-3 max-md:block max-md:p-0
+                            max-md:w-full
                             ${
                                 !hasContent && !column.render
                                 ? "max-md:hidden"
@@ -42,7 +47,9 @@ export function TableRow<T>({
                             {column.header}
                         </span>
 
-                        <div className="py-3 text-base md:py-0">
+                        <div className="
+                            py-3 text-base md:py-0 break-words
+                        ">
                             {column.render
                                 ? column.render(row)
                                 : String(value ?? '')

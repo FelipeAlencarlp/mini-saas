@@ -11,11 +11,11 @@ export async function registerRequest({
     email,
     password
 }: RegisterRequest) {
-        const response = await api.post('/auth/register', {
-            name,
-            email,
-            password
-        });
+    const response = await api.post('/auth/register', {
+        name,
+        email,
+        password
+    });
 
-        return response.data.data;
+    return response.data.data;
 }

@@ -1,23 +1,19 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Button } from "../form/Button";
 import { Form } from "../form/Form";
 import { Input } from "../form/Input";
 import { useRef, useState } from "react";
 import { validateRegisterForm } from "@/app/register/helpers/validateRegisterForm";
 import { Section } from "../form/Section";
-import { FooterForm } from "./FooterForm";
 import { useRegisterUser } from "@/hooks/useRegisterUser";
 
 export function FormRegister() {
-    const router = useRouter();
+    const registerUserMutation = useRegisterUser();
 
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [registerError, setRegisterError] = useState<string>('');
 
     const [errors, setErrors] = useState({
         name: '',
@@ -27,8 +23,9 @@ export function FormRegister() {
     });
 
     const nameInputRef = useRef<HTMLInputElement>(null);
-
-    const registerUserMutation = useRegisterUser();
+    const emailInputRef = useRef<HTMLInputElement>(null);
+    const passwordInputRef = useRef<HTMLInputElement>(null);
+    const confirmPasswordInputRef = useRef<HTMLInputElement>(null);
 
     const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,14 +39,23 @@ export function FormRegister() {
 
         setErrors(validationErrors);
 
-        const hasErrors =
-            validationErrors.name ||
-            validationErrors.email ||
-            validationErrors.password ||
-            validationErrors.confirmPassword;
-
-        if (hasErrors) {
+        if (validationErrors.name) {
             nameInputRef.current?.focus();
+            return;
+        }
+
+        if (validationErrors.email) {
+            emailInputRef.current?.focus();
+            return;
+        }
+
+        if (validationErrors.password) {
+            passwordInputRef.current?.focus();
+            return;
+        }
+
+        if (validationErrors.confirmPassword) {
+            confirmPasswordInputRef.current?.focus();
             return;
         }
 
@@ -65,17 +71,22 @@ export function FormRegister() {
             <Form
                 id="login-form"
                 title="Cadastre-se"
-                error={registerError}
+                titlesButton={["Cadastrando...","Cadastrar"]}
+                isPending={registerUserMutation.isPending}
+                childrenP="Já tem uma conta?"
+                href="/login"
+                titleLink="Clique para ir ao login"
+                childrenLink="Entrar"
                 onSubmit={onSubmit}
             >
                 <Input
                     label="Nome"
+                    bgLabel="bg-white"
                     ref={nameInputRef}
                     id="name-register-input"
                     name="name"
-                    type="string"
+                    type="text"
                     value={name}
-                    placeholder="Digite seu nome"
                     error={errors.name}
                     onChange={(e) => {
                         setName(e.target.value);
@@ -90,12 +101,12 @@ export function FormRegister() {
 
                 <Input
                     label="E-mail"
-                    ref={nameInputRef}
+                    bgLabel="bg-white"
+                    ref={emailInputRef}
                     id="email-register-input"
                     name="email"
                     type="email"
                     value={email}
-                    placeholder="example@email.com"
                     error={errors.email}
                     onChange={(e) => {
                         setEmail(e.target.value);
@@ -110,12 +121,12 @@ export function FormRegister() {
 
                 <Input
                     label="Senha"
-                    ref={nameInputRef}
+                    bgLabel="bg-white"
+                    ref={passwordInputRef}
                     id="password-register-input"
                     name="password"
                     type="password"
                     value={password}
-                    placeholder="example@email.com"
                     error={errors.password}
                     onChange={(e) => {
                         setPassword(e.target.value);
@@ -130,12 +141,12 @@ export function FormRegister() {
 
                 <Input
                     label="Confirmar Senha"
-                    ref={nameInputRef}
+                    bgLabel="bg-white"
+                    ref={confirmPasswordInputRef}
                     id="confirmPassword-register-input"
                     name="confirmPassword"
                     type="password"
                     value={confirmPassword}
-                    placeholder="Digite a mesma senha"
                     error={errors.confirmPassword}
                     onChange={(e) => {
                         setConfirmPassword(e.target.value);
@@ -146,25 +157,6 @@ export function FormRegister() {
                             confirmPassword: '',
                         });
                     }}
-                />
-
-                <Button
-                    type="submit"
-                    className="
-                        bg-gray-800 w-full m-3 text-white
-                        p-3 cursor-pointer hover:bg-gray-700
-                        items-center justify-center flex gap-3
-                        rounded-md
-                    "
-                >
-                    Cadastrar
-                </Button>
-
-                <FooterForm
-                    childrenP="Já tem uma conta?"
-                    href="/login"
-                    titleLink="Clique para ir ao login"
-                    childrenLink="Entrar"
                 />
             </Form>
         </Section>

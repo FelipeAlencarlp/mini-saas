@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
     HiOutlineArrowRightStartOnRectangle as loginIcon
@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/useToast";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { Button } from "@/components/form/Button";
-import { FooterForm } from "./FooterForm";
+import { FooterForm } from "../user/FooterForm";
 import { Section } from "../form/Section";
 import { useLogin } from "@/hooks/useLogin";
 
@@ -38,6 +38,9 @@ export function FormLogin() {
         router.replace('/login');
     }, [searchParams]);
 
+    const emailInputRef = useRef<HTMLInputElement>(null);
+    const passwordInputRef = useRef<HTMLInputElement>(null);
+
     const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -48,7 +51,15 @@ export function FormLogin() {
 
         setErrors(validationErrors);
 
-        if (validationErrors.email || validationErrors.password) return;
+        if (validationErrors.email) {
+            emailInputRef.current?.focus();
+            return;
+        }
+
+        if (validationErrors.password) {
+            passwordInputRef.current?.focus();
+            return;
+        }
 
         loginMutation.mutate({
             email,
@@ -61,15 +72,23 @@ export function FormLogin() {
             <Form
                 id="login-form"
                 title="Login"
+                titlesButton={["Entrando...","Entrar"]}
+                isPending={loginMutation.isPending}
+                Icon={loginIcon}
+                childrenP="Não tem uma conta?"
+                href="/register"
+                titleLink="Clique para se cadastrar"
+                childrenLink="Cadastre-se"
                 onSubmit={onSubmit}
             >
                 <Input
                     label="E-mail"
+                    bgLabel="bg-white"
+                    ref={emailInputRef}
                     id="email-login-input"
                     name="email"
                     type="email"
                     value={email}
-                    placeholder="example@email.com"
                     error={errors.email}
                     onChange={(e) => {
                         setEmail(e.target.value);
@@ -82,11 +101,12 @@ export function FormLogin() {
 
                 <Input
                     label="Senha"
+                    bgLabel="bg-white"
+                    ref={passwordInputRef}
                     id="password-login-input"
                     name="password"
                     type="password"
                     value={password}
-                    placeholder="Sua senha aqui"
                     error={errors.password}
                     onChange={(e) => {
                         setPassword(e.target.value);
@@ -95,30 +115,6 @@ export function FormLogin() {
                             password: ''
                         });
                     }}
-                />
-
-                <Button
-                    type="submit"
-                    Icon={loginIcon}
-                    disabled={loginMutation.isPending}
-                    className="
-                        bg-gray-800 w-full m-3 text-white
-                        p-3 cursor-pointer hover:bg-gray-700
-                        items-center justify-center flex gap-3
-                        rounded-md
-                    "
-                >
-                    {loginMutation.isPending
-                        ? "Entrando..."
-                        : "Entrar"
-                    }
-                </Button>
-
-                <FooterForm
-                    childrenP="Não tem uma conta?"
-                    href="/register"
-                    titleLink="Clique para se cadastrar"
-                    childrenLink="Cadastre-se"
                 />
             </Form>
         </Section>
