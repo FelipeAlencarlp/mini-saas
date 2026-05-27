@@ -20,7 +20,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     name,
     type = 'text',
     value,
-    placeholder,
     error,
     onChange
 }, ref) => {

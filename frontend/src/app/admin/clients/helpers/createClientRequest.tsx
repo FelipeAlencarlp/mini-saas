@@ -1,4 +1,5 @@
 import { api } from "@/services/api";
+import { ClientType } from "@/types/dashboard/Client.type";
 
 interface CreateRequest {
     name: string;
@@ -10,7 +11,7 @@ export async function createClientRequest({
     name,
     email,
     phone
-}: CreateRequest) {
+}: CreateRequest): Promise<ClientType> {
     const payload = {
         name,
         ...(email && { email }),

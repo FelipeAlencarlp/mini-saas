@@ -1,51 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { HiOutlinePlus } from "react-icons/hi2";
-import { getClients } from "@/services/clientsService";
+import { getClientsRequest } from "./helpers/getClientsRequest";
 import { TitlePage } from "@/components/dashboard/TitlePage";
 import { Table } from "@/components/table/Table";
 import { EditClientModal } from "@/components/client/EditClientModal";
 import { CreateClientModal } from "@/components/client/CreateClientModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
-import { Button } from "@/components/form/Button";
-import { ClientType } from "@/types/dashboard/Client.type";
+import {
+    SearchAndButtonHeaderPage
+} from "@/components/SearchAndButtonHeaderPage";
 import { useUpdateClient } from "@/hooks/client/useUpdateClient";
 import { useCreateClient } from "@/hooks/client/useCreateClient";
 import { useDeleteClient } from "@/hooks/client/useDeleteClient";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useToast } from "@/hooks/useToast";
 import { getClientTableColumns } from "@/utils/clientTableColumns";
+import { ModalType } from "@/types/modal/Modal.type";
 
 export default function ClientsPage() {
-    const [selectedClient, setSelectedClient] =
-        useState<ClientType | null>(null);
+    const { showToast } = useToast();
 
-    const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
-    const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
-    const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
+    const [modal, setModal] = useState<ModalType>(null);
+    const [search, setSearch] = useState<string>('');
+    const debouncedSearch = useDebounce(search, 500);
 
     const {
         data: clients,
         isLoading,
         error
     } = useQuery({
-        queryKey: ['clients'],
-        queryFn: getClients
+        queryKey: ['clients', debouncedSearch],
+        queryFn: () => getClientsRequest(debouncedSearch)
     });
 
-    if (error) console.log(error);
+    if (error) {
+        showToast('Erro ao carregar clientes', 'error');
+    }
 
-    const columns = getClientTableColumns({
-        onEdit: (client) => {
-            setSelectedClient(client);
-            setIsEditOpen(true);
-        },
+    const columns = useMemo(
+        () => getClientTableColumns({
+            onEdit: (client) => {
+                setModal({ type: 'edit', client });
+            },
 
-        onDelete: (client) => {
-            setSelectedClient(client);
-            setIsDeleteOpen(true);
-        }
-    });
+            onDelete: (client) => {
+                setModal({ type: 'delete', client });
+            }
+        }), []
+    );
 
     const createClientMutation = useCreateClient();
     const updateClientMutation = useUpdateClient();
@@ -62,7 +66,7 @@ export default function ClientsPage() {
             phone
         });
 
-        setIsCreateOpen(false);
+        setModal(null);
     }
 
     function handleUpdate(
@@ -78,13 +82,13 @@ export default function ClientsPage() {
             phone
         });
 
-        setIsEditOpen(false);
+        setModal(null);
     }
 
     function handleDelete(id: number) {
         deleteClientMutation.mutate({ id });
 
-        setIsDeleteOpen(false);
+        setModal(null);
     }
 
     return (
@@ -95,22 +99,14 @@ export default function ClientsPage() {
             </TitlePage>
 
             {/* Button and Search */}
-            {!isLoading &&
-                <div className="flex justify-end">
-                    <Button
-                        Icon={HiOutlinePlus}
-                        title="Cadastrar novo cliente"
-                        onClick={() => setIsCreateOpen(true)}
-                        className="
-                            bg-green-500 text-white px-3
-                            py-1 rounded hover:bg-green-600
-                            mt-5 flex gap-2 items-center
-                        "
-                    >
-                        Novo Cliente
-                    </Button>
-                </div>
-            }
+            <SearchAndButtonHeaderPage
+                label="Busque pelo nome"
+                title="Cadastrar Novo Cliente"
+                descriptionButton="Adicionar"
+                search={search}
+                onSearch={(e) => setSearch(e.target.value)}
+                onClick={() => setModal({ type: 'create' })}
+            />
 
             {/* Table */}
             <Table
@@ -121,24 +117,24 @@ export default function ClientsPage() {
 
             {/* Modals */}
             <CreateClientModal
-                isOpen={isCreateOpen}
-                onClose={() => setIsCreateOpen(false)}
+                isOpen={modal?.type === 'create'}
+                onClose={() => setModal(null)}
                 onConfirm={handleCreate}
-                isPending={updateClientMutation.isPending}
+                isPending={createClientMutation.isPending}
             />
 
             <EditClientModal
-                client={selectedClient}
-                isOpen={isEditOpen}
-                onClose={() => setIsEditOpen(false)}
+                client={modal?.type === 'edit' ? modal.client : null}
+                isOpen={modal?.type === 'edit'}
+                onClose={() => setModal(null)}
                 onConfirm={handleUpdate}
                 isPending={updateClientMutation.isPending}
             />
 
             <DeleteModal
-                client={selectedClient}
-                isOpen={isDeleteOpen}
-                onClose={() => setIsDeleteOpen(false)}
+                client={modal?.type === 'delete' ? modal.client : null}
+                isOpen={modal?.type === 'delete'}
+                onClose={() => setModal(null)}
                 onConfirm={handleDelete}
                 isPending={deleteClientMutation.isPending}
             />
