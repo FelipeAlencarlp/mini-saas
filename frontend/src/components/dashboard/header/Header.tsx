@@ -42,7 +42,8 @@ export function Header({
             {/* Perfil */}
             <button
                 onClick={onOpenProfile}
-                className="text-white"
+                title="Perfil"
+                className="text-white cursor-pointer"
             >
                 <HiUserCircle size={32} />
             </button>

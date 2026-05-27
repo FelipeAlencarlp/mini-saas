@@ -1,7 +1,7 @@
 "use client";
 
 import { TitlePage } from "@/components/dashboard/titlePage/TitlePage";
-import DashboardCards from "@/components/dashboard/card/DashboardCards";
+import { DashboardCards } from "@/components/dashboard/card/DashboardCards";
 import { useQuery } from "@tanstack/react-query";
 import { getDashboardData } from "./helpers/dashboardData";
 import { useToast } from "@/hooks/useToast";

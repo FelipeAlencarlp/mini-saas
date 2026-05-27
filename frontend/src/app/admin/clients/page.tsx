@@ -1,20 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { TitlePage } from "@/components/dashboard/titlePage/TitlePage";
-import { Table } from "@/components/table/Table";
 import { EditClientModal } from "@/components/client/EditClientModal";
 import { CreateClientModal } from "@/components/client/CreateClientModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
-import {
-    SearchAndButtonHeaderPage
-} from "@/components/searchAndButton/SearchAndButtonHeaderPage";
-import { TableSkeleton } from "@/components/table/TableSkeleton";
+import { PageTable } from "@/components/PageTable";
 import { useToast } from "@/hooks/useToast";
 import { useClientsActions } from "@/hooks/client/useClientsActions";
+import { useClientsQuery } from "@/hooks/client/useClientsQuery";
 import { getClientTableColumns } from "@/utils/clientTableColumns";
 import { ModalType } from "@/types/modal/Modal.type";
-import { useClientsQuery } from "@/hooks/client/useClientsQuery";
 
 export default function ClientsPage() {
     const { showToast } = useToast();
@@ -62,39 +57,22 @@ export default function ClientsPage() {
 
     return (
         <>
-            {/* Header */}
-            <TitlePage isLoading={isLoading}>
-                Clientes
-            </TitlePage>
-
-            {/* Button and Search */}
-            <SearchAndButtonHeaderPage
+            <PageTable
+                titlePage="Clientes"
+                isLoading={isLoading}
+                isFetching={isFetching}
+                search={search}
+                columns={columns}
+                data={clients?.data ?? []}
+                page={page}
+                pageCount={clients?.meta.lastPage ?? 0}
                 label="Busque pelo nome"
                 title="Cadastrar Novo Cliente"
                 descriptionButton="Adicionar"
-                search={search}
-                isLoading={isLoading}
                 onSearch={(e) => setSearch(e.target.value)}
                 onClick={() => setModal({ type: 'create' })}
+                handlePageClick={handlePageClick}
             />
-
-            {/* Table */}
-            {isLoading
-                ?
-                    <TableSkeleton
-                        columns={columns.length}
-                        rows={6}
-                    />
-                :
-                    <Table
-                        columns={columns}
-                        data={clients?.data ?? []}
-                        isLoading={isFetching}
-                        handlePageClick={handlePageClick}
-                        pageCount={clients?.meta.lastPage ?? 0}
-                        page={page}
-                    />
-            }
 
             {/* Modals */}
             <CreateClientModal

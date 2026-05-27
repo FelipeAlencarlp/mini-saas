@@ -20,12 +20,18 @@ export function ProfileDrawer({
     return (
         <div
             className={`
-                fixed top-0 right-0 z-50
-                w-64 h-screen bg-gray-800
-                shadow-lg
-                transform transition-transform duration-300
+                absolute top-10 right-8.5 z-50
+                w-64
+                rounded-xl
+                bg-gray-800
+                shadow-2xl
+                border border-gray-700
+                transition-all duration-200
 
-                ${open ? 'translate-x-0' : 'translate-x-full'}
+                ${open
+                    ? 'opacity-100 scale-100'
+                    : 'opacity-0 scale-95 pointer-events-none'
+                }
             `}
         >
             <div className="flex items-center justify-between p-5 border-b">

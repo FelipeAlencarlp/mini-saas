@@ -35,10 +35,6 @@ export function DashboardLayout() {
             {openMenu && (
                 <Overlay onClose={() => setOpenMenu(false)}/>
             )}
-
-            {openProfile && (
-                <Overlay onClose={() => setOpenProfile(false)}/>
-            )}
             
             <Sidebar
                 open={openMenu}

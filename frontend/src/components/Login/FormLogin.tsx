@@ -9,8 +9,6 @@ import { validateLoginForm } from "@/app/login/helpers/validateLoginForm";
 import { useToast } from "@/hooks/useToast";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import { Button } from "@/components/form/Button";
-import { FooterForm } from "../user/FooterForm";
 import { Section } from "../form/Section";
 import { useLogin } from "@/hooks/useLogin";
 
@@ -33,7 +31,10 @@ export function FormLogin() {
 
         if (success !== 'registered') return;
 
-        showToast('Cadastro realizado com sucesso. Faça login', 'success');
+        showToast(
+            'Cadastro realizado com sucesso. Faça login',
+            'success'
+        );
 
         router.replace('/login');
     }, [searchParams]);

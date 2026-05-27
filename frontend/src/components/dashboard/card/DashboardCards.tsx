@@ -2,7 +2,7 @@ import { DashboardCardsProps } from "@/types/dashboard/DashboardCardsProps.type"
 import { Card } from "./Card";
 import { CardSkeleton } from "./CardSkeleton";
 
-export default function DashboardCards({
+export function DashboardCards({
     data,
     isLoading
 }: DashboardCardsProps) {

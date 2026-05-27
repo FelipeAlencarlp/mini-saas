@@ -33,9 +33,6 @@ export function useClientsActions({ closeModal }: UseClientsActionsProps) {
         });
 
         closeModal();
-
-        // opcional: reset de página
-        // setPage(1);
     }
 
     function handleUpdate(

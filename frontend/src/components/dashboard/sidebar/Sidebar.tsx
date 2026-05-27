@@ -15,13 +15,16 @@ export function Sidebar({
     return (
         <aside
             className={`
-                fixed left-0 z-50
-                w-64 h-screen bg-gray-800
+                fixed left-0 top-17 z-50
+                w-64
+                h-[calc(100vh-68px)]
+                bg-gray-800
+
                 transform transition-transform duration-300
 
                 ${open ? 'translate-x-0' : '-translate-x-full'}
 
-                md:translate-x-0 md:sticky md:top-17 md:flex
+                md:translate-x-0
                 flex flex-col
             `}
         >
