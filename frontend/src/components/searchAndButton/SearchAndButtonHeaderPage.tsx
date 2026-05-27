@@ -1,16 +1,22 @@
 import { HiOutlinePlus } from "react-icons/hi2";
-import { Input } from "./form/Input";
-import { Button } from "./form/Button";
+import { Input } from "../form/Input";
+import { Button } from "../form/Button";
 import { SearchAndButton } from "@/types/SearchAndButton.type";
+import {
+    SearchAndButtonHeaderPageSkeleton
+} from "./SearchAndButtonHeaderPageSkeleton";
 
 export function SearchAndButtonHeaderPage({
     label,
     title,
     descriptionButton,
     search,
+    isLoading = false,
     onSearch,
     onClick
 }: SearchAndButton) {
+    if (isLoading) return <SearchAndButtonHeaderPageSkeleton />;
+    
     return (
         <div className="
             flex flex-col gap-4

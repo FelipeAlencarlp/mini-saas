@@ -9,9 +9,7 @@ export function TitlePage({
     children,
     isLoading = false
 }: TitlePageProps) {
-    if (isLoading) {
-        return <TitlePageSkeleton/>;
-    }
+    if (isLoading) return <TitlePageSkeleton/>;
 
     return (
         <>

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../useToast";
 import {
     updateClientRequest
-} from "@/app/admin/clients/helpers/updateClientRequest";
+} from "@/services/clients/updateClientRequest";
 
 export function useUpdateClient() {
     const queryClient = useQueryClient();

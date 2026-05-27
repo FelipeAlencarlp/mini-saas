@@ -1,36 +1,52 @@
 import { TableBody } from "./TableBody";
 import { TableHead } from "./TableHead";
+import { Spinner } from "../Spinner";
 import { TableProps } from "@/types/table/TableProps.type";
-import { TableSkeleton } from "./TableSkeleton";
+import { Pagination } from "../pagination";
 
 export function Table<T>({
     columns,
     data,
-    isLoading
+    isLoading = false,
+    page,
+    pageCount,
+    handlePageClick,
 }: TableProps<T>) {
     return (
-        <div className="
-            overflow-x-auto shadow-md mt-5
-            sm:rounded-lg
-        ">
-            {isLoading ? 
-                (
-                    <TableSkeleton
-                        columns={columns.length}
-                        rows={6}
-                    />
-                )
-            :
-                (
-                    <table className="
-                        table-fixed w-full
-                        border-collapse text-center
+        <>
+            <div className="
+                relative overflow-x-auto
+                shadow-md mt-5 sm:rounded-lg
+            ">
+                {isLoading && (
+                    <div className="
+                        absolute inset-0 z-10
+                        flex items-center justify-center
+                        bg-white/60
                     ">
-                        <TableHead columns={columns}/>
-                        <TableBody data={data} columns={columns}/>
-                    </table>
-                )
-            }
-        </div>
+                        <Spinner size={32} />
+                    </div>
+                )}
+                
+                <table className="
+                    table-fixed w-full
+                    border-collapse text-center
+                ">
+                    <TableHead columns={columns}/>
+                    <TableBody
+                        data={data}
+                        columns={columns}
+                    />
+                </table>
+            </div>
+            
+            {pageCount > 1 && (
+                <Pagination
+                    page={page}
+                    pageCount={pageCount}
+                    onPageChange={handlePageClick}
+                />
+            )}
+        </>
     );
 }

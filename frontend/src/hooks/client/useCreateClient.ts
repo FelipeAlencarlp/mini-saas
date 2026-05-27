@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../useToast";
 import {
     createClientRequest
-} from "@/app/admin/clients/helpers/createClientRequest";
+} from "@/services/clients/createClientRequest";
 
 export function useCreateClient() {
     const queryClient = useQueryClient();

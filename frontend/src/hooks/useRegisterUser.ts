@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "./useToast";
-import { registerRequest } from "@/app/register/helpers/registerRequest";
+import { registerRequest } from "@/services/users/registerRequest";
 import { useRouter } from "next/navigation";
 
 export function useRegisterUser() {

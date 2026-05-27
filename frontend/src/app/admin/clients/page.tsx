@@ -1,39 +1,48 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getClientsRequest } from "./helpers/getClientsRequest";
-import { TitlePage } from "@/components/dashboard/TitlePage";
+import { TitlePage } from "@/components/dashboard/titlePage/TitlePage";
 import { Table } from "@/components/table/Table";
 import { EditClientModal } from "@/components/client/EditClientModal";
 import { CreateClientModal } from "@/components/client/CreateClientModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
 import {
     SearchAndButtonHeaderPage
-} from "@/components/SearchAndButtonHeaderPage";
-import { useUpdateClient } from "@/hooks/client/useUpdateClient";
-import { useCreateClient } from "@/hooks/client/useCreateClient";
-import { useDeleteClient } from "@/hooks/client/useDeleteClient";
-import { useDebounce } from "@/hooks/useDebounce";
+} from "@/components/searchAndButton/SearchAndButtonHeaderPage";
+import { TableSkeleton } from "@/components/table/TableSkeleton";
 import { useToast } from "@/hooks/useToast";
+import { useClientsActions } from "@/hooks/client/useClientsActions";
 import { getClientTableColumns } from "@/utils/clientTableColumns";
 import { ModalType } from "@/types/modal/Modal.type";
+import { useClientsQuery } from "@/hooks/client/useClientsQuery";
 
 export default function ClientsPage() {
     const { showToast } = useToast();
 
     const [modal, setModal] = useState<ModalType>(null);
-    const [search, setSearch] = useState<string>('');
-    const debouncedSearch = useDebounce(search, 500);
+
+    const {
+        page,
+        search,
+        debouncedSearch,
+        setSearch,
+        handleCreate,
+        handleUpdate,
+        handleDelete,
+        handlePageClick,
+        createClientMutation,
+        updateClientMutation,
+        deleteClientMutation,
+    } = useClientsActions({
+        closeModal: () => setModal(null)
+    });
 
     const {
         data: clients,
         isLoading,
+        isFetching,
         error
-    } = useQuery({
-        queryKey: ['clients', debouncedSearch],
-        queryFn: () => getClientsRequest(debouncedSearch)
-    });
+    } = useClientsQuery(debouncedSearch, page);
 
     if (error) {
         showToast('Erro ao carregar clientes', 'error');
@@ -51,46 +60,6 @@ export default function ClientsPage() {
         }), []
     );
 
-    const createClientMutation = useCreateClient();
-    const updateClientMutation = useUpdateClient();
-    const deleteClientMutation = useDeleteClient();
-
-    function handleCreate(
-        name: string,
-        email: string,
-        phone: string
-    ) {
-        createClientMutation.mutate({
-            name,
-            email,
-            phone
-        });
-
-        setModal(null);
-    }
-
-    function handleUpdate(
-        id: number,
-        name: string,
-        email: string,
-        phone: string
-    ) {
-        updateClientMutation.mutate({
-            id,
-            name,
-            email,
-            phone
-        });
-
-        setModal(null);
-    }
-
-    function handleDelete(id: number) {
-        deleteClientMutation.mutate({ id });
-
-        setModal(null);
-    }
-
     return (
         <>
             {/* Header */}
@@ -104,16 +73,28 @@ export default function ClientsPage() {
                 title="Cadastrar Novo Cliente"
                 descriptionButton="Adicionar"
                 search={search}
+                isLoading={isLoading}
                 onSearch={(e) => setSearch(e.target.value)}
                 onClick={() => setModal({ type: 'create' })}
             />
 
             {/* Table */}
-            <Table
-                columns={columns}
-                data={clients ?? []}
-                isLoading={isLoading}
-            />
+            {isLoading
+                ?
+                    <TableSkeleton
+                        columns={columns.length}
+                        rows={6}
+                    />
+                :
+                    <Table
+                        columns={columns}
+                        data={clients?.data ?? []}
+                        isLoading={isFetching}
+                        handlePageClick={handlePageClick}
+                        pageCount={clients?.meta.lastPage ?? 0}
+                        page={page}
+                    />
+            }
 
             {/* Modals */}
             <CreateClientModal

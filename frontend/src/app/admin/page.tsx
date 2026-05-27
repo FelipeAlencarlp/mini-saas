@@ -1,28 +1,33 @@
 "use client";
 
-import { TitlePage } from "@/components/dashboard/TitlePage";
+import { TitlePage } from "@/components/dashboard/titlePage/TitlePage";
 import DashboardCards from "@/components/dashboard/card/DashboardCards";
 import { useQuery } from "@tanstack/react-query";
 import { getDashboardData } from "./helpers/dashboardData";
+import { useToast } from "@/hooks/useToast";
 
 export default function AdminPage() {
+    const { showToast } = useToast();
+
     const { data, isLoading, error } = useQuery({
         queryKey: ['dashboard'],
         queryFn: getDashboardData
     });
 
-    if (error) console.log(error);
+    if (error) {
+        showToast('Erro ao carregar dados', 'error');
+    }
 
     return (
-        <div>
+        <>
             <TitlePage isLoading={isLoading}>
                 Dashboard
             </TitlePage>
-            
+
             <DashboardCards
                 data={data}
                 isLoading={isLoading}
             />
-        </div>
+        </>
     );
 }

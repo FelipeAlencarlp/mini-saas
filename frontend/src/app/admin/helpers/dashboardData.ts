@@ -4,7 +4,7 @@ import {
     getTotalSoldOrders,
     getProductMostSolded,
     getClientMostOrders,
-} from "@/services/dashboardService";
+} from "@/services/dashboard/dashboardService";
 
 export async function getDashboardData() {
     const [

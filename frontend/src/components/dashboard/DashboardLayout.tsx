@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Sidebar } from "./Sidebar";
+import { Sidebar } from "./sidebar/Sidebar";
 import { Overlay } from "./Overlay";
-import { Header } from "./Header";
+import { Header } from "./header/Header";
 import { ProfileDrawer } from "./ProfileDrawer";
 import { useQuery } from "@tanstack/react-query";
-import { getUser } from "@/services/usersService";
+import { getUser } from "@/services/users/usersService";
+import { useToast } from "@/hooks/useToast";
 
 export function DashboardLayout() {
+    const { showToast } = useToast();
+
     const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [openProfile, setOpenProfile] = useState<boolean>(false);
 
@@ -17,11 +20,14 @@ export function DashboardLayout() {
         queryFn: getUser
     });
 
-    if (error) console.log(error);
+    if (error) {
+        showToast('Erro ao exibir usuário', 'error');
+    }
 
     return (
         <div>
             <Header
+                isLoading={isLoading}
                 onOpenMenu={() => setOpenMenu(true)}
                 onOpenProfile={() => setOpenProfile(true)}
             />

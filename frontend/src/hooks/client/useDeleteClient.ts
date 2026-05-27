@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "../useToast";
 import {
     deleteClientRequest
-} from "@/app/admin/clients/helpers/deleteClientRequest";
+} from "@/services/clients/deleteClientRequest";
 
 export function useDeleteClient() {
     const queryClient = useQueryClient();

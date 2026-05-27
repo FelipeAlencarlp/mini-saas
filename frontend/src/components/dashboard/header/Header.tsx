@@ -1,21 +1,26 @@
 import { HiBars3, HiUserCircle } from 'react-icons/hi2';
+import { HeaderSkeleton } from './HeaderSkeleton';
 
 interface HeaderProps {
+    isLoading?: boolean;
     onOpenMenu: () => void;
     onOpenProfile: () => void;
 }
 
 export function Header({
+    isLoading,
     onOpenMenu,
     onOpenProfile
 }: HeaderProps) {
+    if (isLoading) return <HeaderSkeleton/>;
+
     return (
         <header
             className="
                 fixed top-0 left-0 w-full
                 bg-gray-800 h-17 z-40
                 flex items-center justify-between
-                px-4
+                px-4 md:border-b
             "
         >
             {/* Menu */}
