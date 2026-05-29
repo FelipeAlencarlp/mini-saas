@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useCreateClient } from "./useCreateClient";
-import { useUpdateClient } from "./useUpdateClient";
-import { useDeleteClient } from "./useDeleteClient";
-import { useDebounce } from "../useDebounce";
+import { useCreateClient } from "../useCreateClient";
+import { useUpdateClient } from "../useUpdateClient";
+import { useDeleteClient } from "../useDeleteClient";
+import { useDebounce } from "../../useDebounce";
 
 type UseClientsActionsProps = {
     closeModal: () => void;

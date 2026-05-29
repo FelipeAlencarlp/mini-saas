@@ -6,7 +6,6 @@ export function HeaderSkeleton() {
                 bg-gray-800 h-17 z-40
                 flex items-center justify-between
                 px-4
-                animate-pulse
             "
         >
             {/* Menu */}
@@ -24,6 +23,7 @@ export function HeaderSkeleton() {
                     h-7 w-40
                     rounded bg-gray-600
                     md:ml-12
+                    animate-pulse
                 "
             />
 
@@ -32,6 +32,7 @@ export function HeaderSkeleton() {
                 className="
                     h-8 w-8
                     rounded-full bg-gray-600
+                    animate-pulse
                 "
             />
         </header>

@@ -6,7 +6,7 @@ import { CreateClientModal } from "@/components/client/CreateClientModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
 import { PageTable } from "@/components/PageTable";
 import { useToast } from "@/hooks/useToast";
-import { useClientsActions } from "@/hooks/client/useClientsActions";
+import { useClientsActions } from "@/hooks/client/actions/useClientsActions";
 import { useClientsQuery } from "@/hooks/client/useClientsQuery";
 import { getClientTableColumns } from "@/utils/clientTableColumns";
 import { ModalType } from "@/types/modal/Modal.type";

@@ -1,12 +1,9 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
 import { Modal } from "../modal/Modal";
-import { EditModalProps } from "@/types/modal/client/EditClientModalProps";
 import { Input } from "../form/Input";
+import { EditModalProps } from "@/types/modal/client/EditClientModalProps";
 import {
-    validateClientModal
-} from "@/app/admin/clients/helpers/validateClientModal";
+    useEditClientModalActions
+} from "@/hooks/client/actions/useEditClientModalActions";
 
 export function EditClientModal({
     client,
@@ -15,74 +12,26 @@ export function EditClientModal({
     onConfirm,
     isPending
 }: EditModalProps) {
-    const [id, setId] = useState<number>(0);
-    const [name, setName] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [phone, setPhone] = useState<string>('');
-
-    const [errors, setErrors] = useState({
-        name: '',
-        email: '',
-        phone: ''
+    const {
+        name,
+        email,
+        phone,
+        errors,
+        nameInputRef,
+        emailInputRef,
+        phoneInputRef,
+        setName,
+        setEmail,
+        setErrors,
+        handleSubmit,
+        handlePhone,
+        handleClose
+    } = useEditClientModalActions({
+        client,
+        isOpen,
+        onClose,
+        onConfirm
     });
-
-    const nameInputRef = useRef<HTMLInputElement>(null);
-    const emailInputRef = useRef<HTMLInputElement>(null);
-    const phoneInputRef = useRef<HTMLInputElement>(null);
-
-    function handleSubmit() {
-        const validationErrors = validateClientModal({
-            name,
-            email,
-            phone
-        });
-
-        setErrors(validationErrors);
-
-        if (validationErrors.name) {
-            nameInputRef.current?.focus();
-            return;
-        }
-
-        if (validationErrors.email) {
-            emailInputRef.current?.focus();
-            return;
-        }
-
-        if (validationErrors.phone) {
-            phoneInputRef.current?.focus();
-            return;
-        }
-
-        onConfirm(
-            id,
-            name,
-            email,
-            phone
-        );
-    }
-
-    function handleClose() {
-        resetForm();
-        onClose();
-    }
-
-    useEffect(() => {
-        if (isOpen && client) {
-            setId(client.id);
-            setName(client.name);
-            setEmail(client?.email || '');
-            setPhone(client?.phone || '');
-        }
-    }, [isOpen, client]);
-
-    function resetForm() {
-        setErrors({
-            name: '',
-            email: '',
-            phone: ''
-        });
-    }
 
     return (
         <Modal
@@ -139,9 +88,10 @@ export function EditClientModal({
                 name="phone"
                 type="tel"
                 value={phone}
+                maxlength={15}
                 error={errors.phone}
                 onChange={(e) => {
-                    setPhone(e.target.value);
+                    handlePhone(e);
                     setErrors({
                         name: errors.name,
                         email: errors.email,

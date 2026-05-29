@@ -34,7 +34,7 @@ export function validateClientModal({
     }
 
     // Phone
-    if (phone && phone.length !== 11) {
+    if (phone && phone.length !== 15) {
         errors.phone = 'Telefone inválido';
     }
 

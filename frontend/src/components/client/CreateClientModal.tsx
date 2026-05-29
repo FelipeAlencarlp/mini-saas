@@ -1,12 +1,9 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
 import { Modal } from "../modal/Modal";
-import { CreateModalProps } from "@/types/modal/client/CreateClientModalProps";
 import { Input } from "../form/Input";
+import { CreateModalProps } from "@/types/modal/client/CreateClientModalProps";
 import {
-    validateClientModal
-} from "@/app/admin/clients/helpers/validateClientModal";
+    useCreateClientModalActions
+} from "@/hooks/client/actions/useCreateClientModalActions";
 
 export function CreateClientModal({
     isOpen,
@@ -14,75 +11,25 @@ export function CreateClientModal({
     onConfirm,
     isPending
 }: CreateModalProps) {
-    const [name, setName] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [phone, setPhone] = useState<string>('');
-
-    const [errors, setErrors] = useState({
-        name: '',
-        email: '',
-        phone: ''
+    const {
+        name,
+        email,
+        phone,
+        errors,
+        nameInputRef,
+        emailInputRef,
+        phoneInputRef,
+        setName,
+        setEmail,
+        setErrors,
+        handleSubmit,
+        handlePhone,
+        handleClose
+    } = useCreateClientModalActions({
+        isOpen,
+        onClose,
+        onConfirm
     });
-
-    const nameInputRef = useRef<HTMLInputElement>(null);
-    const emailInputRef = useRef<HTMLInputElement>(null);
-    const phoneInputRef = useRef<HTMLInputElement>(null);
-
-    function handleSubmit() {
-        const validationErrors = validateClientModal({
-            name,
-            email,
-            phone
-        });
-
-        setErrors(validationErrors);
-
-        if (validationErrors.name) {
-            nameInputRef.current?.focus();
-            return;
-        }
-
-        if (validationErrors.email) {
-            emailInputRef.current?.focus();
-            return;
-        }
-
-        if (validationErrors.phone) {
-            phoneInputRef.current?.focus();
-            return;
-        }
-
-        onConfirm(
-            name,
-            email,
-            phone
-        );
-    }
-
-    useEffect(() => {
-        if (isOpen) {
-            setName('');
-            setEmail('');
-            setPhone('');
-        }
-    }, [isOpen]);
-
-    function handleClose() {
-        resetForm();
-        onClose();
-    }
-
-    function resetForm() {
-        setName('');
-        setEmail('');
-        setPhone('');
-
-        setErrors({
-            name: '',
-            email: '',
-            phone: ''
-        });
-    }
 
     return (
         <Modal
@@ -139,9 +86,10 @@ export function CreateClientModal({
                 name="phone"
                 type="tel"
                 value={phone}
+                maxlength={15}
                 error={errors.phone}
                 onChange={(e) => {
-                    setPhone(e.target.value);
+                    handlePhone(e);
                     setErrors({
                         name: errors.name,
                         email: errors.email,

@@ -8,6 +8,7 @@ interface InputProps {
     type?: string;
     value: string;
     placeholder?: string;
+    maxlength?: number;
     error?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -19,6 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     name,
     type = 'text',
     value,
+    maxlength,
     error,
     onChange
 }, ref) => {
@@ -31,6 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
                 value={value}
                 type={type}
                 placeholder=" "
+                maxLength={maxlength}
                 onChange={onChange}
                 className={`
                     peer block w-full rounded-md border
