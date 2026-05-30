@@ -5,7 +5,8 @@ import { usePathname } from 'next/navigation';
 import {
     HiOutlinePresentationChartBar as dashboardIcon,
     HiOutlineUsers as usersIcon,
-    HiOutlineIdentification as clientsIcon
+    HiOutlineIdentification as clientsIcon,
+    HiOutlineInboxStack as productsIcon
 } from "react-icons/hi2";
 
 export default function NavAdmin() {
@@ -15,6 +16,7 @@ export default function NavAdmin() {
         { icon: dashboardIcon, name: 'Dashboard', href: '/admin' },
         { icon: usersIcon, name: 'Usuários', href: '/admin/users' },
         { icon: clientsIcon, name: 'Clientes', href: '/admin/clients' },
+        { icon: productsIcon, name: 'Produtos', href: '/admin/products' },
     ];
 
     return (
@@ -28,16 +30,48 @@ export default function NavAdmin() {
                         href={item.href}
                         title={item.name}
                         className={`
-                            flex gap-2 px-3 py-1 mx-5
+                            group flex gap-2 px-3 py-1 mx-5
                             items-center rounded transition
                             ${isActive
-                                ? "bg-gray-600 font-semibold"
-                                : "hover:bg-gray-500"
+                                ? "bg-gray-700 font-semibold"
+                                : "hover:bg-gray-600"
                             }
                         `}
                     >
-                        {<item.icon size={20}/>}
-                        {item.name}
+                        <item.icon
+                            size={20}
+                            className={`
+                                transition-colors
+                                ${isActive
+                                    ? "text-gray-300"
+                                    : "group-hover:text-gray-300"
+                                }
+                            `}
+                        />
+
+                        <span
+                            className={`
+                                transition-colors
+                                ${isActive
+                                    ? "text-gray-300"
+                                    : "group-hover:text-gray-300"
+                                }
+                            `}
+                        >
+                            |
+                        </span>
+
+                        <span
+                            className={`
+                                transition-all
+                                ${isActive
+                                    ? "bg-linear-to-r from-gray-300 to-blue-600 bg-clip-text text-transparent"
+                                    : "group-hover:bg-linear-to-r group-hover:from-gray-300 group-hover:to-blue-600 group-hover:bg-clip-text group-hover:text-transparent"
+                                }
+                            `}
+                        >
+                            {item.name}
+                        </span>
                     </Link>
                 );
             })}

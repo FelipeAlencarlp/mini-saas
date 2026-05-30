@@ -4,6 +4,29 @@ export function TableRow<T>({
     row,
     columns
 }: TableRowProps<T>) {
+    const formatValue = (
+        value: unknown,
+        format?: string
+    ) => {
+        if (value == null) return "";
+
+        switch (format) {
+            case "currency":
+                return new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                }).format(Number(value));
+
+            case "number":
+                return new Intl.NumberFormat("pt-BR").format(
+                    Number(value)
+                );
+
+            default:
+                return String(value);
+        }
+    };
+
     return (
         <tr
             className="
@@ -52,7 +75,7 @@ export function TableRow<T>({
                         ">
                             {column.render
                                 ? column.render(row)
-                                : String(value ?? '')
+                                : formatValue(value, column.format)
                             }
                         </div>
                     </td>

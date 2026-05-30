@@ -1,5 +1,5 @@
 import { api } from "@/services/api";
-import { ClientType } from "@/types/dashboard/Client.type";
+import { ClientType } from "@/types/dashboard/clients/Client.type";
 
 interface CreateRequest {
     name: string;

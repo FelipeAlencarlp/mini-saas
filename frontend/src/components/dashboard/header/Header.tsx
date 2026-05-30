@@ -32,7 +32,7 @@ export function Header({
             </button>
 
             <p className="
-                bg-linear-to-r from-gray-400 to-blue-600
+                bg-linear-to-r from-gray-300 to-blue-600
                 bg-clip-text text-transparent
                 font-semibold text-2xl md:pl-12
             ">

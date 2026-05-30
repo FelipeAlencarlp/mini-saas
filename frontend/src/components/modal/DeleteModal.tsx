@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { DeleteModalProps } from "@/types/modal/client/DeleteModalProps.type";
+import { DeleteModalProps } from "@/types/modal/DeleteModalProps.type";
 import { Modal } from "./Modal";
 
 export function DeleteModal({
-    client,
+    item,
     isOpen,
     isPending,
     onClose,
@@ -16,10 +16,10 @@ export function DeleteModal({
     }
 
     useEffect(() => {
-        if(isOpen && client) {
-            setId(client.id);
+        if(isOpen && item) {
+            setId(item.id);
         }
-    }, [isOpen, client])
+    }, [isOpen, item])
 
     return (
         <Modal
@@ -35,7 +35,7 @@ export function DeleteModal({
                 text-center text-xl pb-2
             ">
                 Deseja realmente excluir:
-                <b>{client?.name}?</b>
+                <b>{item?.name}?</b>
             </p>
 
             <p className="

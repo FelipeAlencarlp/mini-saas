@@ -1,6 +1,6 @@
-import { ClientType } from "../dashboard/Client.type";
+import { ClientType } from "@/types/dashboard/clients/Client.type";
 
-export type ModalType =
+export type ModalClientType =
     | { type: 'create' }
     | { type: 'edit'; client: ClientType }
     | { type: 'delete'; client: ClientType }

@@ -1,7 +1,10 @@
-import { ClientType } from "@/types/dashboard/Client.type";
+type DeletableItem = {
+    id: number;
+    name: string;
+};
 
 export type DeleteModalProps = {
-    client: ClientType | null;
+    item: DeletableItem | null;
     isOpen: boolean;
     isPending: boolean;
     onClose: () => void;

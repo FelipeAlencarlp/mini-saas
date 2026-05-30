@@ -1,6 +1,7 @@
 import { TableDeleteButton } from "@/components/table/TableDeteleButton";
 import { TableEditButton } from "@/components/table/TableEditButton";
-import { ClientType } from "@/types/dashboard/Client.type";
+import { ClientType } from "@/types/dashboard/clients/Client.type";
+import { Column } from "@/types/table/Column.type";
 
 interface ClientTableColumnsProps {
     onEdit: (client: ClientType) => void;
@@ -10,7 +11,7 @@ interface ClientTableColumnsProps {
 export function getClientTableColumns({
     onEdit,
     onDelete
-}: ClientTableColumnsProps) {
+}: ClientTableColumnsProps): Column<ClientType>[] {
     return [
         { header: '#', accessor: 'id' },
         { header: 'NOME', accessor: 'name' },
@@ -31,5 +32,5 @@ export function getClientTableColumns({
                 </div>
             ),
         },
-    ];
+    ] satisfies Column<ClientType>[]; // não muda o tipo real do array para string
 }

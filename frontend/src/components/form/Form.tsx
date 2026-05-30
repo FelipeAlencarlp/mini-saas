@@ -34,7 +34,7 @@ export function Form({
         <div
             className="
                 flex flex-col items-center justify-center
-                m-4 p-4 bg-white w-11/12 max-w-175 rounded-2xl
+                py-6 bg-white w-11/12 max-w-175 rounded-2xl
             "
         >
             <form

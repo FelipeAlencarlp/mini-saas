@@ -1,20 +1,20 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { EditClientModal } from "@/components/client/EditClientModal";
-import { CreateClientModal } from "@/components/client/CreateClientModal";
+import { CreateProductModal } from "@/components/products/CreateProductModal";
+import { EditProductModal } from "@/components/products/EditProductModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
 import { PageTable } from "@/components/PageTable";
 import { useToast } from "@/hooks/useToast";
-import { useClientsActions } from "@/hooks/client/actions/useClientsActions";
-import { useClientsQuery } from "@/hooks/client/useClientsQuery";
-import { getClientTableColumns } from "@/utils/clientTableColumns";
-import { ModalClientType } from "@/types/modal/client/ModalClient.type";
+import { useProductsActions } from "@/hooks/products/actions/useProductsActions";
+import { useProductsQuery } from "@/hooks/products/useProductsQuery";
+import { getProductsTableColumns } from "@/utils/productsTableColumns";
+import { ModalProductsType } from "@/types/modal/products/ModalProducts.type";
 
-export default function ClientsPage() {
+export default function ProductsPage() {
     const { showToast } = useToast();
 
-    const [modal, setModal] = useState<ModalClientType>(null);
+    const [modal, setModal] = useState<ModalProductsType>(null);
 
     const {
         page,
@@ -25,32 +25,32 @@ export default function ClientsPage() {
         handleUpdate,
         handleDelete,
         handlePageClick,
-        createClientMutation,
-        updateClientMutation,
-        deleteClientMutation,
-    } = useClientsActions({
+        createProductMutation,
+        updateProductMutation,
+        deleteProductMutation,
+    } = useProductsActions({
         closeModal: () => setModal(null)
     });
 
     const {
-        data: clients,
+        data: products,
         isLoading,
         isFetching,
         error
-    } = useClientsQuery(debouncedSearch, page);
+    } = useProductsQuery(debouncedSearch, page);
 
     if (error) {
-        showToast('Erro ao carregar clientes', 'error');
+        showToast('Erro ao carregar produtos', 'error');
     }
 
     const columns = useMemo(
-        () => getClientTableColumns({
-            onEdit: (client) => {
-                setModal({ type: 'edit', client });
+        () => getProductsTableColumns({
+            onEdit: (product) => {
+                setModal({ type: 'edit', product });
             },
 
-            onDelete: (client) => {
-                setModal({ type: 'delete', client });
+            onDelete: (product) => {
+                setModal({ type: 'delete', product });
             }
         }), []
     );
@@ -58,16 +58,16 @@ export default function ClientsPage() {
     return (
         <>
             <PageTable
-                titlePage="Clientes"
+                titlePage="Produtos"
                 isLoading={isLoading}
                 isFetching={isFetching}
                 search={search}
                 columns={columns}
-                data={clients?.data ?? []}
+                data={products?.data ?? []}
                 page={page}
-                pageCount={clients?.meta.lastPage ?? 0}
+                pageCount={products?.meta.lastPage ?? 0}
                 label="Busque pelo nome"
-                title="Cadastrar Novo Cliente"
+                title="Cadastrar Novo Produto"
                 descriptionButton="Adicionar"
                 onSearch={(e) => setSearch(e.target.value)}
                 onClick={() => setModal({ type: 'create' })}
@@ -75,27 +75,27 @@ export default function ClientsPage() {
             />
 
             {/* Modals */}
-            <CreateClientModal
+            <CreateProductModal
                 isOpen={modal?.type === 'create'}
                 onClose={() => setModal(null)}
                 onConfirm={handleCreate}
-                isPending={createClientMutation.isPending}
+                isPending={createProductMutation.isPending}
             />
 
-            <EditClientModal
-                client={modal?.type === 'edit' ? modal.client : null}
+            <EditProductModal
+                product={modal?.type === 'edit' ? modal.product : null}
                 isOpen={modal?.type === 'edit'}
                 onClose={() => setModal(null)}
                 onConfirm={handleUpdate}
-                isPending={updateClientMutation.isPending}
+                isPending={updateProductMutation.isPending}
             />
 
             <DeleteModal
-                item={modal?.type === 'delete' ? modal.client : null}
+                item={modal?.type === 'delete' ? modal.product : null}
                 isOpen={modal?.type === 'delete'}
                 onClose={() => setModal(null)}
                 onConfirm={handleDelete}
-                isPending={deleteClientMutation.isPending}
+                isPending={deleteProductMutation.isPending}
             />
         </>
     );

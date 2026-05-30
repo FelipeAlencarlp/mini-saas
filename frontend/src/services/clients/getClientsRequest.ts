@@ -1,5 +1,7 @@
 import { api } from "@/services/api";
-import { ClientsResponse } from "@/types/dashboard/ClientsResponse.type";
+import {
+    ClientsResponse
+} from "@/types/dashboard/clients/ClientsResponse.type";
 
 export async function getClientsRequest(
     search: string,
