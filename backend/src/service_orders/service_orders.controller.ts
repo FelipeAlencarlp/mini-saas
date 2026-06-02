@@ -33,9 +33,10 @@ export class ServiceOrdersController {
   @ApiOkResponse({ type: ServiceOrderEntity, isArray: true })
   async findAll(
     @Query('page') page: string,
-    @Query('limit') limit: string
+    @Query('limit') limit: string,
+    @Query('filter') filter?: string
   ): Promise<PaginatedResult<ServiceOrderEntity>> {
-    return this.serviceOrdersService.findAll(page, limit);
+    return this.serviceOrdersService.findAll(page, limit, filter);
   }
 
   @Post()
@@ -47,7 +48,7 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.create(user, dto);
   }
 
-  @Patch(':id')
+  @Patch('end-order/:id')
   @ApiOkResponse({ type: Boolean })
   async endOrder(
     @Param('id', ParseIntPipe) id: number
@@ -55,11 +56,19 @@ export class ServiceOrdersController {
     return this.serviceOrdersService.endOrder(id);
   }
 
+  @Patch('cancel-order/:id')
+  @ApiOkResponse({ type: Boolean })
+  async cancelOrder(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<{ canceledOrder: boolean }> {
+    return this.serviceOrdersService.cancelOrder(id);
+  }
+
   @Delete(':id')
   @ApiOkResponse({ type: Boolean })
   async remove(
     @Param('id', ParseIntPipe) id: number
-  ): Promise<{ canceledOrder: boolean }> {
-    return this.serviceOrdersService.cancelOrder(id);
+  ): Promise<{ serviceOrderRemoved: boolean }> {
+    return this.serviceOrdersService.remove(id);
   }
 }

@@ -29,6 +29,7 @@ export function SearchAndButtonHeaderPage({
                     id="search-client-input"
                     name="search"
                     type="search"
+                    autoComplete="off"
                     value={search}
                     onChange={onSearch}
                 />

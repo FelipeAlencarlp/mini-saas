@@ -1,10 +1,10 @@
 type DeletableItem = {
     id: number;
-    name: string;
+    name?: string;
 };
 
 export type DeleteModalProps = {
-    item: DeletableItem | null;
+    item?: DeletableItem | null;
     isOpen: boolean;
     isPending: boolean;
     onClose: () => void;

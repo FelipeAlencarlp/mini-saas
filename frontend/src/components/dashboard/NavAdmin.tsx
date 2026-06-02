@@ -1,12 +1,11 @@
-"use client";
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
     HiOutlinePresentationChartBar as dashboardIcon,
     HiOutlineUsers as usersIcon,
     HiOutlineIdentification as clientsIcon,
-    HiOutlineInboxStack as productsIcon
+    HiOutlineInboxStack as productsIcon,
+    HiOutlineChartBar as osIcon
 } from "react-icons/hi2";
 
 export default function NavAdmin() {
@@ -17,16 +16,17 @@ export default function NavAdmin() {
         { icon: usersIcon, name: 'Usuários', href: '/admin/users' },
         { icon: clientsIcon, name: 'Clientes', href: '/admin/clients' },
         { icon: productsIcon, name: 'Produtos', href: '/admin/products' },
+        { icon: osIcon, name: 'Ordens de Serviço', href: '/admin/service_orders' },
     ];
 
     return (
         <nav className="flex flex-col gap-3">
-            {menu.map((item) => {
+            {menu.map((item, index) => {
                 const isActive = pathname === item.href;
 
                 return (
                     <Link
-                        key={item.href}
+                        key={index}
                         href={item.href}
                         title={item.name}
                         className={`

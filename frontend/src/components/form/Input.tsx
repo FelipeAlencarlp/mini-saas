@@ -22,6 +22,7 @@ interface InputProps {
     min?: number;
     prefix?: string;
     inputMode?: InputMode;
+    autoComplete?: string;
     error?: string;
     className?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -39,6 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
     prefix,
     inputMode,
     error,
+    autoComplete,
     className,
     onChange
 }, ref) => {
@@ -64,6 +66,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
                     maxLength={maxlength}
                     min={min}
                     inputMode={inputMode}
+                    autoComplete={autoComplete}
                     onChange={onChange}
                     className={`
                         peer block w-full rounded-md border

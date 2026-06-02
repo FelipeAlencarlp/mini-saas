@@ -1,5 +1,3 @@
-"use client";
-
 import { HiXMark, HiUserCircle } from 'react-icons/hi2';
 import { LogoutButton } from './LogoutButton';
 import { UserType } from '@/types/User.type';

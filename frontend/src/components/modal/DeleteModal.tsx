@@ -35,7 +35,7 @@ export function DeleteModal({
                 text-center text-xl pb-2
             ">
                 Deseja realmente excluir:
-                <b>{item?.name}?</b>
+                <b>{item?.name ?? "Essa ordem"}?</b>
             </p>
 
             <p className="

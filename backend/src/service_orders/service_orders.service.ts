@@ -125,23 +125,51 @@ export class ServiceOrdersService {
 
     // public methods
     async findAll(
-        page: string, limit: string
+        page: string,
+        limit: string,
+        filter?: string
     ): Promise<PaginatedResult<ServiceOrderEntity>> {
+        const where = {
+            deletedAt: null,
+            ...(filter && {
+                client: {
+                    name: {
+                        contains: filter,
+                        mode: 'insensitive'
+                    }
+                }
+            })
+        };
+
+        const select = {
+            id: true,
+            status: true,
+            total: true,
+            user: {
+                select: {
+                    id: true,
+                    name: true,
+                }
+            },
+            client: {
+                select: {
+                    id: true,
+                    name: true,
+                }
+            },
+            items: true,
+            createdAt: true,
+        }
+
         const pagination = await paginate<ServiceOrderEntity>(
             this.prisma.serviceOrder,
             { page, limit },
             {
-                where: { deletedAt: null },
-                select: orderSelect,
-                orderBy: { id: 'asc' }
+                where,
+                select,
+                orderBy: { createdAt: 'desc' }
             }
         );
-
-        const orders = await this.prisma.serviceOrder.findMany({
-            where: { deletedAt: null },
-            select: orderSelect,
-            orderBy: { id: 'asc' }
-        });
 
         return {
             ...pagination,
@@ -239,5 +267,16 @@ export class ServiceOrdersService {
         });
 
         return { canceledOrder: true }
+    }
+
+    async remove(id: number): Promise<{ serviceOrderRemoved: boolean }> {
+        const order = await this.findOne(id);
+
+        await this.prisma.serviceOrder.update({
+            where: { id: order.id },
+            data: { deletedAt: new Date() }
+        });
+
+        return { serviceOrderRemoved: true };
     }
 }
