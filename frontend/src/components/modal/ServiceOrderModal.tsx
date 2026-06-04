@@ -12,7 +12,6 @@ export function ServiceOrderModal({
 }: ModalProps) {
     return (
         <div
-            onClick={onClose}
             className={`
                 fixed inset-0 z-50
                 bg-black/50
@@ -40,26 +39,19 @@ export function ServiceOrderModal({
                 `}
             >
                 <div className="
-                    flex justify-end
-                    p-6
+                    flex justify-end p-3
                     border-b border-gray-300
                 ">
                     <button
-                        className="
-                            text-gray-600
-                            cursor-pointer
-                        "
+                        className="text-gray-600 cursor-pointer"
+                        title="Fechar"
                         onClick={onClose}
                     >
                         <HiXMark size={24} />
                     </button>
                 </div>
 
-                <div className="
-                    flex-1
-                    overflow-auto
-                    p-6
-                ">
+                <div className="flex-1 overflow-auto px-6">
                     {children}
                 </div>
 

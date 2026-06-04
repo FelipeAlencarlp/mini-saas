@@ -1,27 +1,11 @@
+import { forwardRef } from "react";
 import { Input } from "./Input";
+import { SearchInputProps } from "@/types/form/SearchInput.type";
 
-type SearchResult = {
-    id: number;
-    name: string;
-};
-
-type SearchInputProps = {
-    label: string;
-    value: string;
-    results: SearchResult[];
-    error?: string;
-    isOpen?: boolean;
-
-    onChange: (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => void;
-
-    onSelect: (
-        item: SearchResult
-    ) => void;
-};
-
-export function SearchInput({
+export const SearchInput = forwardRef<
+    HTMLInputElement,
+    SearchInputProps
+>(({
     label,
     value,
     results,
@@ -29,10 +13,11 @@ export function SearchInput({
     isOpen,
     onChange,
     onSelect
-}: SearchInputProps) {
+}, ref) => {
     return (
         <div className="relative">
             <Input
+                ref={ref}
                 label={label}
                 bgLabel="bg-gray-200"
                 id="search"
@@ -65,6 +50,7 @@ export function SearchInput({
                             className="
                                 w-full px-3 py-2
                                 text-left text-gray-700
+                                border border-gray-200
                                 hover:bg-gray-200
                                 transition-colors
                             "
@@ -76,4 +62,4 @@ export function SearchInput({
             )}
         </div>
     );
-}
+});

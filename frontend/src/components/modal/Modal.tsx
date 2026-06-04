@@ -30,7 +30,7 @@ export function Modal({
                 onClick={(e) => e.stopPropagation()}
                 className={`
                     w-120 max-w-175 flex flex-col 
-                    rounded-2xl bg-gray-200 p-8
+                    rounded-2xl bg-gray-200 p-6
                     transform transition-all duration-300
 
                     ${
@@ -54,15 +54,17 @@ export function Modal({
                         text-gray-600 text-2xl text-center
                         font-bold
                         ${title
-                            ? "border-b mb-5 pb-4"
-                            : "border-b-0 mb-0 pb-0"
+                            ? "border-b pb-4"
+                            : "border-b-0 pb-0"
                         }
                     `}
                 >
                     {title}
                 </h3>
-
-                {children}
+                
+                <div>
+                    {children}
+                </div>
 
                 <Button
                     type="submit"
