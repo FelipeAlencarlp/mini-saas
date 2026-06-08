@@ -1,6 +1,10 @@
-export function ProductsServiceOrder({
-    children
-}: { children: React.ReactNode }) {
+import { BaseCardProps } from "@/types/dashboard/service_orders/BaseCardProps.typs";
+
+export function BaseCardServiceOrder({
+    children,
+    titleP,
+    className
+}: BaseCardProps) {
     return (
         <>
             <p
@@ -11,20 +15,21 @@ export function ProductsServiceOrder({
                     text-gray-700 font-semibold
                 "
             >
-                PRODUTOS
+                {titleP}
             </p>
 
             <div
-                className="
+                className={`
                     w-full bg-gray-300
                     shadow-lg p-4 md:p-6
                     rounded-b-lg
                     md:rounded-lg
                     md:rounded-tl-none
                     flex flex-col
+                    ${className ?? ""}
                     gap-3 md:gap-5
                     ss-start md:ss-center
-                "
+                `}
             >
                 { children }
             </div>

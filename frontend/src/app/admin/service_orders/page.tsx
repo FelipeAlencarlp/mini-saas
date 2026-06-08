@@ -47,7 +47,7 @@ export default function ServiceOrdersPage() {
     } = useServiceOrdersQuery(debouncedSearch, page);
 
     if (error) {
-        showToast('Erro ao carregar produtos', 'error');
+        showToast('Erro ao carregar ordens de serviço', 'error');
     }
 
     const columns = useMemo(

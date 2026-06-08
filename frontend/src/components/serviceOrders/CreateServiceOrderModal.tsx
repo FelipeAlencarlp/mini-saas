@@ -1,3 +1,9 @@
+import { ServiceOrderClientData } from "./ServiceOrderClientData";
+import { BaseCardServiceOrder } from "./BaseCardServiceOrder";
+import { SelectProductServiceOrder } from "./SelectProductServiceOrder";
+import { ProductsListServiceOrder } from "./ProductsListServiceOrder";
+import { TotalsServiceOrder } from "./TotalsServiceOrder";
+import { Modal } from "../modal/Modal";
 import { ServiceOrderModal } from "../modal/ServiceOrderModal";
 import { SearchInput } from "../form/SearchInput";
 import {
@@ -6,11 +12,6 @@ import {
 import {
     useCreateServiceOrderModalActions
 } from "@/hooks/service_orders/actions/useCreateServiceOrderModalActions";
-import { Modal } from "../modal/Modal";
-import { ServiceOrderClientData } from "./ServiceOrderClientData";
-import { ProductsServiceOrder } from "./ProductsServiceOrder";
-import { SelectProductServiceOrder } from "./SelectProductServiceOrder";
-import { ProductsListServiceOrder } from "./ProductsListServiceOrder";
 
 export function CreateServiceOrderModal({
     isOpen,
@@ -19,33 +20,36 @@ export function CreateServiceOrderModal({
     isPending
 }: CreateServiceOrderModalProps) {
     const {
-        clients,
-        products,
-        productId,
+        step,
         items,
         client,
         search,
-        isOpenSearch,
-        clientError,
-        productIdError,
         errors,
+        clients,
+        products,
+        subtotal,
+        productId,
+        clientError,
+        isOpenSearch,
+        productIdError,
         clientInputRef,
+        quantityProduct,
         productIdInputRef,
-        step,
+        setItems,
         setErrors,
+        setClient,
+        setSearch,
+        setProductId,
         setClientError,
         setProductIdError,
-        setSearch,
-        setClient,
-        setProductId,
-        setItems,
-        setIsOpenSearch,
-        handleAdvance,
-        handleAddProduct,
-        handleChangeQuantity,
-        handleSubmit,
-        handleCloseClient,
         handleClose,
+        handleSubmit,
+        handleAdvance,
+        setIsOpenSearch,
+        handleAddProduct,
+        handleCloseClient,
+        handleChangeQuantity,
+        handleRemoveProductList,
     } = useCreateServiceOrderModalActions({
         isOpen,
         onClose,
@@ -89,13 +93,15 @@ export function CreateServiceOrderModal({
                 onClose={handleClose}
                 onClick={handleSubmit}
                 isPending={isPending}
-                optionTitle={['Criando...', 'Criar']}
+                items={items}
+                optionTitle={['Salvando...', 'Salvar']}
+                optionTitle2={['Criando...', 'Criar']}
             >
                 {/* Client Data */}
                 <ServiceOrderClientData client={client}/>
 
                 {/* Products */}
-                <ProductsServiceOrder>
+                <BaseCardServiceOrder titleP="PRODUTOS">
                     {/* Select Product */}
                     <SelectProductServiceOrder
                         value={productId}
@@ -113,8 +119,16 @@ export function CreateServiceOrderModal({
                     <ProductsListServiceOrder
                         items={items}
                         handleChangeQuantity={handleChangeQuantity}
+                        handleRemoveProductList={handleRemoveProductList}
                     />
-                </ProductsServiceOrder>
+                </BaseCardServiceOrder>
+
+                {/* Totals */}
+                <TotalsServiceOrder
+                    items={items}
+                    subtotal={subtotal}
+                    quantityProduct={quantityProduct}
+                />
             </ServiceOrderModal>
         </>
     );

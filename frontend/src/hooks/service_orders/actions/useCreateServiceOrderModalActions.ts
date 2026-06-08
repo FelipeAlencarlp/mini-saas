@@ -24,11 +24,14 @@ export function useCreateServiceOrderModalActions({
     const [search, setSearch] = useState<string>('');
     const [isOpenSearch, setIsOpenSearch] = useState<boolean>(false);
 
+    const [step, setStep] = useState<'client' | 'serviceOrder'>('client');
+
     const [client, setClient] = useState<ClientType | null>(null);
     const [productId, setProductId] = useState<string>('');
     const [items, setItems] = useState<Item[]>([]);
 
-    const [step, setStep] = useState<'client' | 'serviceOrder'>('client');
+    const [subtotal, setSubtotal] = useState<number>(0);
+    const [quantityProduct, setQuantityProduct] = useState<number>(0);
 
     const [clientError, setClientError] = useState({ client: '' });
     const [productIdError, setProductIdError] = useState({ productId: '' });
@@ -57,6 +60,12 @@ export function useCreateServiceOrderModalActions({
             setStep('client');
         }
     }, [isOpen]);
+
+    useEffect(() => {
+        if (items.length > 0) {
+            handleTotals();
+        }
+    }, [items]);
 
     function handleAdvance() {
         const validationClientError = validateClientSelectedModal({
@@ -116,6 +125,8 @@ export function useCreateServiceOrderModalActions({
                 }
             ];
         });
+
+        setProductId('');
     }
 
     function handleChangeQuantity(
@@ -134,6 +145,31 @@ export function useCreateServiceOrderModalActions({
                     : item
             )
         );
+    }
+
+    function handleRemoveProductList(
+        productId: number
+    ) {
+        setItems(prev =>
+            prev.filter(item =>
+                item.product.id !== productId
+            )
+        );
+    }
+
+    function handleTotals() {
+        const totals = items.reduce((acc, item) => {
+            acc.totalQuantity += item.quantity;
+            acc.totalPrice += item.price * item.quantity;
+            return acc;
+        }, {totalQuantity: 0, totalPrice: 0});
+
+        setSubtotal(totals.totalPrice);
+        setQuantityProduct(totals.totalQuantity);
+    }
+
+    function handleSave() {
+
     }
 
     function handleSubmit() {
@@ -187,34 +223,37 @@ export function useCreateServiceOrderModalActions({
     }
 
     return {
-        clients,
-        products,
-        productId,
+        step,
+        items,
         search,
         client,
-        items,
         errors,
+        clients,
+        products,
+        subtotal,
+        productId,
         clientError,
-        productIdError,
         isOpenSearch,
+        productIdError,
         clientInputRef,
+        quantityProduct,
         productIdInputRef,
-        step,
 
-        setErrors,
-        setClientError,
-        setProductIdError,
+        setItems,
         setSearch,
         setClient,
+        setErrors,
         setProductId,
-        setItems,
+        setClientError,
         setIsOpenSearch,
+        setProductIdError,
 
+        handleClose,
+        handleSubmit,
         handleAdvance,
         handleAddProduct,
-        handleChangeQuantity,
-        handleSubmit,
         handleCloseClient,
-        handleClose
+        handleChangeQuantity,
+        handleRemoveProductList,
     };
 }

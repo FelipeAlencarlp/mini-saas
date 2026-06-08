@@ -8,7 +8,9 @@ export function ServiceOrderModal({
     onClose,
     onClick,
     isPending,
-    optionTitle
+    optionTitle,
+    optionTitle2,
+    items = []
 }: ModalProps) {
     return (
         <div
@@ -51,35 +53,59 @@ export function ServiceOrderModal({
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-auto px-6">
+                <div className="flex-1 overflow-auto px-6 pb-6">
                     {children}
                 </div>
 
-                <div className="
-                    p-6 flex
-                    justify-center
-                    border-t border-gray-300
-                ">
-                    <Button
-                        type="submit"
-                        onClick={onClick}
-                        disabled={isPending}
-                        className="
-                            w-64
-                            bg-blue-500
-                            text-white
-                            p-2
-                            rounded
-                            hover:bg-blue-600
-                            font-semibold
-                        "
-                    >
-                        {isPending
-                            ? `${optionTitle?.[0] ?? ""}`
-                            : `${optionTitle?.[1] ?? ""}`
-                        }
-                    </Button>
-                </div>
+                {items?.length > 0 && (
+                    <div className="
+                        p-6 flex
+                        flex-col
+                        gap-2
+                        md:flex-row
+                        md:justify-center
+                        border-t border-gray-300
+                    ">
+                        <Button
+                            type="submit"
+                            onClick={onClick}
+                            disabled={isPending}
+                            className="
+                                w-64
+                                bg-blue-500
+                                text-white
+                                p-2
+                                rounded
+                                hover:bg-blue-600
+                                font-semibold
+                            "
+                        >
+                            {isPending
+                                ? `${optionTitle?.[0] ?? ""}`
+                                : `${optionTitle?.[1] ?? ""}`
+                            }
+                        </Button>
+                        
+                        <Button
+                            type="submit"
+                            disabled={isPending}
+                            className="
+                                w-64
+                                bg-green-500
+                                text-white
+                                p-2
+                                rounded
+                                hover:bg-green-600
+                                font-semibold
+                            "
+                        >
+                            {isPending
+                                ? `${optionTitle2?.[0] ?? ""}`
+                                : `${optionTitle2?.[1] ?? ""}`
+                            }
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     );

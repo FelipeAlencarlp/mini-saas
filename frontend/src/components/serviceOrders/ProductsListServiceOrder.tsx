@@ -2,15 +2,14 @@ import { Item } from "@/types/dashboard/service_orders/Item.type";
 import { Button } from "../form/Button";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { Input } from "../form/Input";
-
-type ProductsListProps = {
-    items: Item[];
-    handleChangeQuantity: (id: number, value: string) => void;
-};
+import {
+    ProductsListProps
+} from "@/types/dashboard/service_orders/ProductsListProps.type";
 
 export function ProductsListServiceOrder({
     items,
-    handleChangeQuantity
+    handleChangeQuantity,
+    handleRemoveProductList
 }: ProductsListProps) {
     return (
         <>
@@ -41,6 +40,10 @@ export function ProductsListServiceOrder({
                             "
                         >
                             <Button
+                                onClick={() =>
+                                    handleRemoveProductList(item.product.id)
+                                }
+                                title="Remover produto"
                                 className="
                                     absolute mb-3
                                     top-3 right-3
@@ -51,6 +54,7 @@ export function ProductsListServiceOrder({
                             >
                                 <HiOutlineTrash size={18} />
                             </Button>
+
                             <div
                                 className="
                                     flex flex-col
