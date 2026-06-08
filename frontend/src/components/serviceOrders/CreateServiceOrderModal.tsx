@@ -24,7 +24,6 @@ export function CreateServiceOrderModal({
         items,
         client,
         search,
-        errors,
         clients,
         products,
         subtotal,
@@ -35,8 +34,6 @@ export function CreateServiceOrderModal({
         clientInputRef,
         quantityProduct,
         productIdInputRef,
-        setItems,
-        setErrors,
         setClient,
         setSearch,
         setProductId,
@@ -94,8 +91,7 @@ export function CreateServiceOrderModal({
                 onClick={handleSubmit}
                 isPending={isPending}
                 items={items}
-                optionTitle={['Salvando...', 'Salvar']}
-                optionTitle2={['Criando...', 'Criar']}
+                optionTitle={['Criando...', 'Criar']}
             >
                 {/* Client Data */}
                 <ServiceOrderClientData client={client}/>

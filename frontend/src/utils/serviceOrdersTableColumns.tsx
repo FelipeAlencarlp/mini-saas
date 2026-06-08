@@ -29,7 +29,7 @@ export function getServiceOrdersTableColumns({
         {
             header: 'STATUS',
             accessor: 'status',
-            render: (serviceOrder: ServiceOrdersType) => (
+            render: (serviceOrder) => (
                 <div className="w-full text-white text-xs">
                     {serviceOrder.status === 'Iniciado'
                         ? (
@@ -60,7 +60,7 @@ export function getServiceOrdersTableColumns({
         {
             header: 'AÇÕES',
             accessor: 'actions',
-            render: (serviceOrder: ServiceOrdersType) => (
+            render: (serviceOrder) => (
                 <div className="flex justify-center gap-2">
                     {serviceOrder.status !== 'Finalizado' && (
                         <TableEditButton

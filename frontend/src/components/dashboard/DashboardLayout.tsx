@@ -5,8 +5,7 @@ import { Sidebar } from "./sidebar/Sidebar";
 import { Overlay } from "./Overlay";
 import { Header } from "./header/Header";
 import { ProfileDrawer } from "./ProfileDrawer";
-import { useQuery } from "@tanstack/react-query";
-import { getUser } from "@/services/users/usersService";
+import { useUserQuery } from "@/hooks/users/useUserQuery";
 import { useToast } from "@/hooks/useToast";
 
 export function DashboardLayout() {
@@ -15,10 +14,7 @@ export function DashboardLayout() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
     const [openProfile, setOpenProfile] = useState<boolean>(false);
 
-    const { data: user, isLoading, error } = useQuery({
-        queryKey: ['user'],
-        queryFn: getUser
-    });
+    const { data: user, isLoading, error } = useUserQuery();
 
     if (error) {
         showToast('Erro ao exibir usuário', 'error');

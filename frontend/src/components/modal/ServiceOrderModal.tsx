@@ -9,7 +9,6 @@ export function ServiceOrderModal({
     onClick,
     isPending,
     optionTitle,
-    optionTitle2,
     items = []
 }: ModalProps) {
     return (
@@ -60,34 +59,12 @@ export function ServiceOrderModal({
                 {items?.length > 0 && (
                     <div className="
                         p-6 flex
-                        flex-col
-                        gap-2
-                        md:flex-row
-                        md:justify-center
+                        justify-center
                         border-t border-gray-300
                     ">
                         <Button
                             type="submit"
                             onClick={onClick}
-                            disabled={isPending}
-                            className="
-                                w-64
-                                bg-blue-500
-                                text-white
-                                p-2
-                                rounded
-                                hover:bg-blue-600
-                                font-semibold
-                            "
-                        >
-                            {isPending
-                                ? `${optionTitle?.[0] ?? ""}`
-                                : `${optionTitle?.[1] ?? ""}`
-                            }
-                        </Button>
-                        
-                        <Button
-                            type="submit"
                             disabled={isPending}
                             className="
                                 w-64
@@ -100,8 +77,8 @@ export function ServiceOrderModal({
                             "
                         >
                             {isPending
-                                ? `${optionTitle2?.[0] ?? ""}`
-                                : `${optionTitle2?.[1] ?? ""}`
+                                ? `${optionTitle?.[0] ?? ""}`
+                                : `${optionTitle?.[1] ?? ""}`
                             }
                         </Button>
                     </div>

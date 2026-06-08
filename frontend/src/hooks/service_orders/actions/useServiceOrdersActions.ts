@@ -24,12 +24,10 @@ export function useServiceOrdersActions({
     const deleteOrderServiceMutation = useDeleteServiceOrder();
 
     function handleCreate(
-        userId: number,
         clientId: number,
-        items: number[]
+        items: { productId: number, quantity: number }[]
     ) {
         createServiceOrderMutation.mutate({
-            userId,
             clientId,
             items
         });

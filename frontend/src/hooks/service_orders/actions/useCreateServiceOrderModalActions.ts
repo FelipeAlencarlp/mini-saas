@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import {
-    validateServiceOrderModal
-} from "@/app/admin/service_orders/helpers/validateServiceOrderModal";
-import {
     validateClientSelectedModal
 } from "@/app/admin/service_orders/helpers/validateClientSelectedModal";
 import {
@@ -35,10 +32,6 @@ export function useCreateServiceOrderModalActions({
 
     const [clientError, setClientError] = useState({ client: '' });
     const [productIdError, setProductIdError] = useState({ productId: '' });
-    const [errors, setErrors] = useState({
-        client: '',
-        items: ''
-    });
 
     const { data: clients } = useClientsQuery(
         search,
@@ -168,27 +161,16 @@ export function useCreateServiceOrderModalActions({
         setQuantityProduct(totals.totalQuantity);
     }
 
-    function handleSave() {
-
-    }
-
     function handleSubmit() {
-        // const validationErrors = validateServiceOrderModal({
-        //     client,
-        //     items
-        // });
+        if (!client) return;
 
-        // setErrors(validationErrors);
-
-        // if (validationErrors.items) {
-        //     itemsInputRef.current?.focus();
-        //     return;
-        // }
-
-        // onConfirm(
-        //     client,
-        //      items
-        // );
+        onConfirm(
+            client.id,
+            items.map(item => ({
+                productId: item.product.id,
+                quantity: item.quantity,
+            }))
+        );
     }
 
     function handleCloseClient() {
@@ -215,11 +197,6 @@ export function useCreateServiceOrderModalActions({
         setClient(null);
         setStep('client');
         setItems([]);
-
-        setErrors({
-            client: '',
-            items: ''
-        });
     }
 
     return {
@@ -227,7 +204,6 @@ export function useCreateServiceOrderModalActions({
         items,
         search,
         client,
-        errors,
         clients,
         products,
         subtotal,
@@ -239,10 +215,8 @@ export function useCreateServiceOrderModalActions({
         quantityProduct,
         productIdInputRef,
 
-        setItems,
         setSearch,
         setClient,
-        setErrors,
         setProductId,
         setClientError,
         setIsOpenSearch,

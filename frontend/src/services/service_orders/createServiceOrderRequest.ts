@@ -4,18 +4,15 @@ import {
 } from "@/types/dashboard/service_orders/ServiceOrders.type";
 
 interface CreateRequest {
-    userId: number;
     clientId: number;
-    items: number[];
+    items: { productId: number, quantity: number }[];
 }
 
 export async function createServiceOrderRequest({
-    userId,
     clientId,
     items
 }: CreateRequest): Promise<ServiceOrdersType> {
     const response = await api.post('/service-orders', {
-        userId,
         clientId,
         items
     });
