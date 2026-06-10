@@ -31,10 +31,12 @@ export function getProductsTableColumns({
             render: (product: ProductType) => (
                 <div className="flex justify-center gap-2">
                     <TableEditButton
+                        title="Editar Produto"
                         onClick={() => onEdit(product)}
                     />
 
                     <TableDeleteButton
+                        title="Deletar Produto"
                         onClick={() => onDelete(product)}
                     />
                 </div>

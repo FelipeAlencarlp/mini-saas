@@ -10,11 +10,10 @@ export type ServiceOrdersType = {
         id: number;
         name: string;
     };
-    items: [
-        {
-            productId: number;
-            quantity: number;
-        }
-    ]
+    items: {
+        productId: number;
+        quantity: number;
+    }[];
     createdAt: string;
+    updatedAt: string;
 };

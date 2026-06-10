@@ -1,4 +1,3 @@
-import { Item } from "@/types/dashboard/service_orders/Item.type";
 import { Button } from "../form/Button";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { Input } from "../form/Input";

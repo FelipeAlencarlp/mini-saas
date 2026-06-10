@@ -23,10 +23,12 @@ export function getClientTableColumns({
             render: (client: ClientType) => (
                 <div className="flex justify-center gap-2">
                     <TableEditButton
+                        title="Editar Cliente"
                         onClick={() => onEdit(client)}
                     />
 
                     <TableDeleteButton
+                        title="Deletar Cliente"
                         onClick={() => onDelete(client)}
                     />
                 </div>

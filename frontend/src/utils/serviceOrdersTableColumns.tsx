@@ -47,15 +47,30 @@ export function getServiceOrdersTableColumns({
             ),
         },
         {
-            header: 'TOTAL',
+            header: 'TOTAL ITEMS',
+            accessor: 'totalProducts',
+            render: (serviceOrder) =>
+                serviceOrder.items.reduce(
+                    (total, item) => total + item.quantity,
+                    0
+                )
+        },
+        {
+            header: 'VALOR TOTAL',
             accessor: 'total',
             format: "currency"
         },
         {
-            header: 'DATA/HORA',
+            header: 'CRIADO EM',
             accessor: 'createdAt',
             render: (serviceOrder) =>
                 new Date(serviceOrder.createdAt).toLocaleString("pt-BR")
+        },
+        {
+            header: 'ATUALIZADO EM',
+            accessor: 'updatedAt',
+            render: (serviceOrder) =>
+                new Date(serviceOrder.updatedAt).toLocaleString("pt-BR")
         },
         {
             header: 'AÇÕES',
@@ -64,11 +79,13 @@ export function getServiceOrdersTableColumns({
                 <div className="flex justify-center gap-2">
                     {serviceOrder.status !== 'Finalizado' && (
                         <TableEditButton
+                            title="Editar Ordem"
                             onClick={() => onEdit(serviceOrder)}
                         />
                     )}
 
                     <TableDeleteButton
+                        title="Deletar Ordem"
                         onClick={() => onDelete(serviceOrder)}
                     />
                 </div>

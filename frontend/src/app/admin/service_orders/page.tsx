@@ -17,6 +17,7 @@ import {
     ModalServiceOrdersType
 } from "@/types/modal/service_orders/ModalServiceOrders.type";
 import { getServiceOrdersTableColumns } from "@/utils/serviceOrdersTableColumns";
+import { EditServiceOrderModal } from "@/components/serviceOrders/EditServiceOrderModal";
 
 export default function ServiceOrdersPage() {
     const { showToast } = useToast();
@@ -29,12 +30,12 @@ export default function ServiceOrdersPage() {
         debouncedSearch,
         setSearch,
         handleCreate,
-        // handleUpdate,
+        handleUpdate,
         handleDelete,
         handlePageClick,
         createServiceOrderMutation,
-        // updateProductMutation,
-        deleteOrderServiceMutation,
+        updateServiceOrderMutation,
+        deleteServiceOrderMutation,
     } = useServiceOrdersActions({
         closeModal: () => setModal(null)
     });
@@ -89,12 +90,20 @@ export default function ServiceOrdersPage() {
                 isPending={createServiceOrderMutation.isPending}
             />
 
+            <EditServiceOrderModal
+                serviceOrder={modal?.type === 'edit' ? modal.serviceOrder : null}
+                isOpen={modal?.type === 'edit'}
+                onClose={() => setModal(null)}
+                onConfirm={handleUpdate}
+                isPending={updateServiceOrderMutation.isPending}
+            />
+
             <DeleteModal
                 item={modal?.type === 'delete' ? modal.serviceOrder : null}
                 isOpen={modal?.type === 'delete'}
                 onClose={() => setModal(null)}
                 onConfirm={handleDelete}
-                isPending={deleteOrderServiceMutation.isPending}
+                isPending={deleteServiceOrderMutation.isPending}
             />
         </>
     );

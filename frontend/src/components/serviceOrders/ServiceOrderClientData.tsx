@@ -27,7 +27,7 @@ export function ServiceOrderClientData({
                         ">
                             TELEFONE:{' '}
                             <span className="font-normal text-gray-500">
-                                {client.phone}
+                                {client?.phone}
                             </span>
                         </p>
                     </>
@@ -40,7 +40,7 @@ export function ServiceOrderClientData({
                         <p className="text-gray-400 font-semibold break-all">
                             E-MAIL:{' '}
                             <span className="font-normal text-gray-500">
-                                {client.email}
+                                {client?.email}
                             </span>
                         </p>
                     </>

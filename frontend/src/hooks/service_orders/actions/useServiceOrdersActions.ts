@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCreateServiceOrder } from "../useCreateServiceOrder";
-// import { useUpdateProduct } from "../useUpdateProduct";
+import { useUpdateServiceOrder } from "../useUpdateServiceOrder";
 import { useDeleteServiceOrder } from "../useDeleteServiceOrder";
 import { useDebounce } from "../../useDebounce";
 
@@ -20,12 +20,15 @@ export function useServiceOrdersActions({
     }, [debouncedSearch]);
 
     const createServiceOrderMutation = useCreateServiceOrder();
-    // const updateProductMutation = useUpdateProduct();
-    const deleteOrderServiceMutation = useDeleteServiceOrder();
+    const updateServiceOrderMutation = useUpdateServiceOrder();
+    const deleteServiceOrderMutation = useDeleteServiceOrder();
 
     function handleCreate(
         clientId: number,
-        items: { productId: number, quantity: number }[]
+        items: {
+            productId: number,
+            quantity: number
+        }[]
     ) {
         createServiceOrderMutation.mutate({
             clientId,
@@ -35,24 +38,23 @@ export function useServiceOrdersActions({
         closeModal();
     }
 
-    // function handleUpdate(
-    //     id: number,
-    //     name: string,
-    //     price: number,
-    //     quantity: number
-    // ) {
-    //     updateProductMutation.mutate({
-    //         id,
-    //         name,
-    //         price,
-    //         quantity
-    //     });
+    function handleUpdate(
+        id: number,
+        items: {
+            productId: number,
+            quantity: number
+        }[]
+    ) {
+        updateServiceOrderMutation.mutate({
+            id,
+            items
+        });
 
-    //     closeModal();
-    // }
+        closeModal();
+    }
 
     function handleDelete(id: number) {
-        deleteOrderServiceMutation.mutate({ id });
+        deleteServiceOrderMutation.mutate({ id });
 
         closeModal();
     }
@@ -70,12 +72,12 @@ export function useServiceOrdersActions({
         setPage,
 
         handleCreate,
-        // handleUpdate,
+        handleUpdate,
         handleDelete,
         handlePageClick,
 
         createServiceOrderMutation,
-        // updateProductMutation,
-        deleteOrderServiceMutation,
+        updateServiceOrderMutation,
+        deleteServiceOrderMutation,
     };
 }
