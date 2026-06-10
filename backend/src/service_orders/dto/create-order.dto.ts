@@ -4,8 +4,10 @@ import {
     IsArray,
     IsNotEmpty,
     IsNumber,
-    IsPositive
+    IsPositive,
+    ValidateNested
 } from "class-validator";
+import { Type } from 'class-transformer';
 import { CreateOrderItemDto } from "./create-order-item.dto";
 
 export class CreateOrderDto {
@@ -17,5 +19,7 @@ export class CreateOrderDto {
     @IsArray({ message: 'Precisa ser passado um Array.' })
     @ArrayNotEmpty({ message: 'O Array não pode ser vazio.' })
     @ArrayMinSize(1, { message: 'Um produto é obrigatório.' })
-    readonly items!: CreateOrderItemDto[]; 
+    @ValidateNested({ each: true })
+    @Type(() => CreateOrderItemDto)
+    readonly items!: CreateOrderItemDto[];
 }

@@ -11,10 +11,16 @@ import {
   UseInterceptors,
   Query,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags
+} from '@nestjs/swagger';
 import { ServiceOrdersService } from './service_orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { UpdateOrderDto } from './dto/update-order.dto';
 import { ServiceOrderEntity } from './entity/service-order.entity';
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TransformInterceptor } from '../transform.interceptor';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
@@ -46,6 +52,15 @@ export class ServiceOrdersController {
     @Body() dto: CreateOrderDto
   ): Promise<ServiceOrderEntity> {
     return this.serviceOrdersService.create(user, dto);
+  }
+
+  @Patch('edit-order/:id')
+  @ApiOkResponse({ type: ServiceOrderEntity })
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateOrderDto
+  ): Promise<ServiceOrderEntity> {
+    return this.serviceOrdersService.update(id, dto);
   }
 
   @Patch('end-order/:id')
