@@ -1,16 +1,19 @@
 import { TableDeleteButton } from "@/components/table/TableDeteleButton";
 import { TableEditButton } from "@/components/table/TableEditButton";
+import { TableViewButton } from "@/components/table/TableViewButton";
 import {
     ServiceOrdersType
 } from "@/types/dashboard/service_orders/ServiceOrders.type";
 import { Column } from "@/types/table/Column.type";
 
 interface ServiceOrdersTableColumnsProps {
+    onView: (serviceOrder: ServiceOrdersType) => void;
     onEdit: (serviceOrder: ServiceOrdersType) => void;
     onDelete: (serviceOrder: ServiceOrdersType) => void;
 }
 
 export function getServiceOrdersTableColumns({
+    onView,
     onEdit,
     onDelete
 }: ServiceOrdersTableColumnsProps): Column<ServiceOrdersType>[] {
@@ -79,6 +82,13 @@ export function getServiceOrdersTableColumns({
             accessor: 'actions',
             render: (serviceOrder) => (
                 <div className="flex justify-center gap-2">
+                    {serviceOrder.status !== 'Cancelado' && (
+                        <TableViewButton
+                            title="Visualizar Ordem"
+                            onClick={() => onView(serviceOrder)}
+                        />
+                    )}
+
                     {serviceOrder.status === 'Iniciado' && (
                         <TableEditButton
                             title="Editar Ordem"

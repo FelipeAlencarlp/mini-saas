@@ -6,23 +6,27 @@ export function DashboardCards({
     data,
     isLoading
 }: DashboardCardsProps) {
-    
-    // TODO: Ajustar totais de ordens (ver no sistema)
-
     const totalSoldTransformed =
-        data?.totalSoldOrders.toFixed(2).replace('.', ',');
+        data?.totalSoldOrders
+            .toLocaleString(
+                'pt-BR',
+                {
+                    style: 'currency',
+                    currency: 'BRL',
+                }
+            );
 
     const cards = [
         { title: 'TOTAL ORDENS', span1: data?.totalOrders.toString() },
         { title: 'TOTAL FINALIZADAS', span1: data?.totalEndedOrders.toString() },
-        { title: 'VALOR VENDIDO R$', span1: totalSoldTransformed },
+        { title: 'VALOR VENDIDO', span1: totalSoldTransformed },
         {
             title: 'PRODUTO MAIS VENDIDO',
             span1: data?.productName,
             span2: data?.quantitySold
         },
         {
-            title: 'CLIENTE COM MAIS ORDENS',
+            title: 'CLIENTE QUE MAIS COMPROU',
             span1: data?.clientName,
             span2: data?.quantityOrders
         },

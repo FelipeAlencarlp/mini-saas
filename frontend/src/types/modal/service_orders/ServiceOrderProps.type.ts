@@ -2,6 +2,7 @@ import { Item } from "@/types/dashboard/service_orders/Item.type";
 
 export type ServiceOrderProps = {
     children: React.ReactNode;
+    items?: Item[];
     title?: string;
     isOpen: boolean;
     isPending?: boolean;

@@ -4,6 +4,7 @@ import {
 
 export type ModalServiceOrdersType =
     | { type: 'create'; }
+    | { type: 'view'; serviceOrder: ServiceOrdersType }
     | { type: 'edit'; serviceOrder: ServiceOrdersType }
     | { type: 'delete'; serviceOrder: ServiceOrdersType }
     | null;

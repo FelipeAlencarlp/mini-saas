@@ -18,6 +18,7 @@ import {
 } from "@/types/modal/service_orders/ModalServiceOrders.type";
 import { getServiceOrdersTableColumns } from "@/utils/serviceOrdersTableColumns";
 import { EditServiceOrderModal } from "@/components/serviceOrders/EditServiceOrderModal";
+import { ViewServiceOrderModal } from "@/components/serviceOrders/ViewServiceOrderModal";
 
 export default function ServiceOrdersPage() {
     const { showToast } = useToast();
@@ -55,6 +56,10 @@ export default function ServiceOrdersPage() {
 
     const columns = useMemo(
         () => getServiceOrdersTableColumns({
+            onView: (serviceOrder) => {
+                setModal({ type: 'view', serviceOrder });
+            },
+
             onEdit: (serviceOrder) => {
                 setModal({ type: 'edit', serviceOrder });
             },
@@ -100,6 +105,12 @@ export default function ServiceOrdersPage() {
                 onConfirm={handleUpdate}
                 onFinish={handleFinish}
                 isPending={updateServiceOrderMutation.isPending}
+            />
+
+            <ViewServiceOrderModal
+                serviceOrder={modal?.type === 'view' ? modal.serviceOrder : null}
+                isOpen={modal?.type === 'view'}
+                onClose={() => setModal(null)}
             />
 
             <DeleteModal
