@@ -3,7 +3,9 @@ import { ServiceOrdersType } from "@/types/dashboard/service_orders/ServiceOrder
 export type EditServiceOrderModalProps = {
     serviceOrder: ServiceOrdersType | null;
     isOpen: boolean;
+    isPending?: boolean;
     onClose: () => void;
+    onCancel: (id: number) => void;
     onConfirm: (
         id: number,
         items: {
@@ -11,5 +13,5 @@ export type EditServiceOrderModalProps = {
             quantity: number
         }[]
     ) => void;
-    isPending?: boolean;
+    onFinish: (id: number) => void;
 };

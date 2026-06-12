@@ -6,6 +6,9 @@ export function DashboardCards({
     data,
     isLoading
 }: DashboardCardsProps) {
+    
+    // TODO: Ajustar totais de ordens (ver no sistema)
+
     const totalSoldTransformed =
         data?.totalSoldOrders.toFixed(2).replace('.', ',');
 

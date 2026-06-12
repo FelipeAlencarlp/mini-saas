@@ -30,7 +30,9 @@ export default function ServiceOrdersPage() {
         debouncedSearch,
         setSearch,
         handleCreate,
+        handleCancel,
         handleUpdate,
+        handleFinish,
         handleDelete,
         handlePageClick,
         createServiceOrderMutation,
@@ -94,7 +96,9 @@ export default function ServiceOrdersPage() {
                 serviceOrder={modal?.type === 'edit' ? modal.serviceOrder : null}
                 isOpen={modal?.type === 'edit'}
                 onClose={() => setModal(null)}
+                onCancel={handleCancel}
                 onConfirm={handleUpdate}
+                onFinish={handleFinish}
                 isPending={updateServiceOrderMutation.isPending}
             />
 

@@ -16,7 +16,7 @@ export function getProductsTableColumns({
         { header: '#', accessor: 'id' },
         { header: 'NOME', accessor: 'name' },
         {
-            header: 'PREÇO R$',
+            header: 'PREÇO',
             accessor: 'price',
             format: "currency"
         },

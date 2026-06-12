@@ -19,7 +19,7 @@ export default function AdminLayout({
                 {/* Espaço da sidebar desktop */}
                 <div className="hidden md:block w-64 shrink-0" />
 
-                <main className="flex-1 p-5 md:p-10">
+                <main className="flex-1 min-w-0 p-5 md:p-10">
                     {children}
                 </main>
             </div>

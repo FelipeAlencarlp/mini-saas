@@ -10,7 +10,12 @@ export function TotalsServiceOrder({
         <>
             {items.length > 0 && (
                 <BaseCardServiceOrder titleP="TOTAIS">
-                    <div className="flex flex-col md:flex-row md:justify-around">
+                    <div
+                        className="
+                            flex flex-col
+                            md:flex-row md:justify-around
+                        "
+                    >
                         <p className="text-gray-400 font-semibold">
                             SUBTOTAL:{' '}
                             <span className="font-normal text-gray-500">
@@ -27,7 +32,7 @@ export function TotalsServiceOrder({
                         </p>
 
                         <p className="text-gray-400 font-semibold">
-                            QUANTIDADE DE PRODUTOS:{' '}
+                            PRODUTOS:{' '}
                             <span className="font-normal text-gray-500">
                                 {quantityProduct}
                             </span>

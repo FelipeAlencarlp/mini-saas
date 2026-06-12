@@ -1,4 +1,4 @@
-import { ServiceOrderModal } from "../modal/ServiceOrderModal";
+import { ServiceOrderModalWithButtons } from "./ServiceOrderModalWithButtons";
 import { ServiceOrderClientData } from "./ServiceOrderClientData";
 import { BaseCardServiceOrder } from "./BaseCardServiceOrder";
 import { SelectProductServiceOrder } from "./SelectProductServiceOrder";
@@ -15,7 +15,9 @@ export function EditServiceOrderModal({
     serviceOrder,
     isOpen,
     onClose,
+    onCancel,
     onConfirm,
+    onFinish,
     isPending
 }: EditServiceOrderModalProps) {
     const {
@@ -30,25 +32,33 @@ export function EditServiceOrderModal({
         setProductId,
         setProductIdError,
         handleClose,
-        handleSubmit,
         handleAddProduct,
+        handleUpdateOrder,
+        handleCancelOrder,
+        handleFinishOrder,
         handleChangeQuantity,
         handleRemoveProductList,
     } = useEditServiceOrderModalActions({
         serviceOrder,
         isOpen,
         onClose,
-        onConfirm
+        onCancel,
+        onConfirm,
+        onFinish
     });
 
     return (
-        <ServiceOrderModal
+        <ServiceOrderModalWithButtons
             isOpen={isOpen}
             onClose={handleClose}
-            onClick={handleSubmit}
+            onCancelOrder={handleCancelOrder}
+            onUpdateOrder={handleUpdateOrder}
+            onFinishOrder={handleFinishOrder}
             isPending={isPending}
             items={items}
-            optionTitle={['Criando...', 'Criar']}
+            optionTitle={['Cancelando...', 'Cancelar']}
+            optionTitle1={['Atualizando...', 'Atualizar']}
+            optionTitle2={['Finalizando...', 'Finalizar']}
         >
             {/* Client Data */}
             <ServiceOrderClientData client={client}/>
@@ -82,6 +92,6 @@ export function EditServiceOrderModal({
                 subtotal={subtotal}
                 quantityProduct={quantityProduct}
             />
-        </ServiceOrderModal>
+        </ServiceOrderModalWithButtons>
     );
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useCreateServiceOrder } from "../useCreateServiceOrder";
+import { useCancelServiceOrder } from "../useCancelServiceOrder";
 import { useUpdateServiceOrder } from "../useUpdateServiceOrder";
+import { useFinishServiceOrder } from "../useFinishServiceOrder";
 import { useDeleteServiceOrder } from "../useDeleteServiceOrder";
 import { useDebounce } from "../../useDebounce";
 
@@ -20,7 +22,9 @@ export function useServiceOrdersActions({
     }, [debouncedSearch]);
 
     const createServiceOrderMutation = useCreateServiceOrder();
+    const cancelServiceOrderMutation = useCancelServiceOrder();
     const updateServiceOrderMutation = useUpdateServiceOrder();
+    const finishServiceOrderMutation = useFinishServiceOrder();
     const deleteServiceOrderMutation = useDeleteServiceOrder();
 
     function handleCreate(
@@ -38,6 +42,12 @@ export function useServiceOrdersActions({
         closeModal();
     }
 
+    function handleCancel(id: number) {
+        cancelServiceOrderMutation.mutate({ id });
+        
+        closeModal();
+    }
+
     function handleUpdate(
         id: number,
         items: {
@@ -49,6 +59,12 @@ export function useServiceOrdersActions({
             id,
             items
         });
+
+        closeModal();
+    }
+
+    function handleFinish(id: number) {
+        finishServiceOrderMutation.mutate({ id });
 
         closeModal();
     }
@@ -72,7 +88,9 @@ export function useServiceOrdersActions({
         setPage,
 
         handleCreate,
+        handleCancel,
         handleUpdate,
+        handleFinish,
         handleDelete,
         handlePageClick,
 

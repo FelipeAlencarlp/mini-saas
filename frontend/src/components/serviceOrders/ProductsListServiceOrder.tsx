@@ -67,10 +67,12 @@ export function ProductsListServiceOrder({
                                         className="
                                             text-gray-500
                                             font-semibold
-                                            break-all
+                                            wrap-break-word
+                                            flex md:flex-row flex-col
+                                            md:gap-1
                                         "
                                     >
-                                        NOME:{' '}
+                                        NOME:
                                         <span
                                             className="
                                                 font-normal text-gray-600
@@ -84,9 +86,11 @@ export function ProductsListServiceOrder({
                                         className="
                                             text-gray-500
                                             font-semibold
+                                            flex md:flex-row flex-col
+                                            md:gap-1
                                         "
                                     >
-                                        PREÇO:{' '}
+                                        PREÇO:
                                         <span
                                             className="
                                                 font-normal text-gray-600

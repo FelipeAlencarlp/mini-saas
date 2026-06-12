@@ -1,9 +1,9 @@
-import { Item } from "../dashboard/service_orders/Item.type";
+import { Item } from "@/types/dashboard/service_orders/Item.type";
 
-export type ModalProps = {
+export type ServiceOrderProps = {
     children: React.ReactNode;
-    isOpen: boolean;
     title?: string;
+    isOpen: boolean;
     isPending?: boolean;
     optionTitle?: string[];
     onClose: () => void;

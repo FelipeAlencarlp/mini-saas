@@ -4,7 +4,7 @@ import { SelectProductServiceOrder } from "./SelectProductServiceOrder";
 import { ProductsListServiceOrder } from "./ProductsListServiceOrder";
 import { TotalsServiceOrder } from "./TotalsServiceOrder";
 import { Modal } from "../modal/Modal";
-import { ServiceOrderModal } from "../modal/ServiceOrderModal";
+import { ServiceOrderModal } from "./ServiceOrderModal";
 import { SearchInput } from "../form/SearchInput";
 import {
     CreateServiceOrderModalProps

@@ -70,9 +70,12 @@ export function TableRow<T>({
                             {column.header}
                         </span>
 
-                        <div className="
-                            py-3 text-base md:py-0 break-words
-                        ">
+                        <div
+                            className="
+                                py-3 text-base
+                                md:py-0 wrap-break-word
+                            "
+                        >
                             {column.render
                                 ? column.render(row)
                                 : formatValue(value, column.format)

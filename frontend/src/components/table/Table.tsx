@@ -15,7 +15,8 @@ export function Table<T>({
     return (
         <>
             <div className="
-                relative overflow-x-auto
+                relative w-full
+                overflow-x-auto
                 shadow-md mt-5 sm:rounded-lg
             ">
                 {isLoading && (
@@ -29,8 +30,8 @@ export function Table<T>({
                 )}
                 
                 <table className="
-                    table-fixed w-full
-                    border-collapse text-center
+                    w-full text-center
+                    border-collapse
                 ">
                     <TableHead columns={columns}/>
                     <TableBody

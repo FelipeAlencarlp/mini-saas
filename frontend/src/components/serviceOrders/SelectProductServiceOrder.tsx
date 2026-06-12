@@ -15,7 +15,15 @@ export const SelectProductServiceOrder = forwardRef<
     onClick
 }, ref) => {
     return (
-        <div className="flex gap-3 items-start">
+        <div
+            className="
+                flex gap-3
+                md:items-start
+                md:flex-row
+                flex-col justify-center
+                items-center
+            "
+        >
             <div className="flex flex-col w-full">
                 <select
                     name="selectServiceOrder"
@@ -66,8 +74,8 @@ export const SelectProductServiceOrder = forwardRef<
                 title="Adicionar produto"
                 onClick={onClick}
                 className="
-                    self-start
-                    w-30 p-1 rounded
+                    md:self-start w-full
+                    md:w-30 p-1 rounded
                     bg-blue-500
                     text-white
                     hover:bg-blue-600

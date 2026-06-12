@@ -14,7 +14,9 @@ export function useEditServiceOrderModalActions({
     serviceOrder,
     isOpen,
     onClose,
-    onConfirm
+    onCancel,
+    onConfirm,
+    onFinish
 }: EditServiceOrderModalProps) {
     const [id, setId] = useState<number>(0);
     const [client, setClient] = useState<ClientType | null>(null);
@@ -148,7 +150,11 @@ export function useEditServiceOrderModalActions({
         setQuantityProduct(totals.totalQuantity);
     }
 
-    function handleSubmit() {
+    function handleCancelOrder() {
+        onCancel(id);
+    }
+
+    function handleUpdateOrder() {
         if (!client) return;
 
         onConfirm(
@@ -158,6 +164,10 @@ export function useEditServiceOrderModalActions({
                 quantity: item.quantity,
             }))
         );
+    }
+
+    function handleFinishOrder() {
+        onFinish(id);
     }
 
     function handleClose() {
@@ -185,8 +195,10 @@ export function useEditServiceOrderModalActions({
         setProductIdError,
 
         handleClose,
-        handleSubmit,
         handleAddProduct,
+        handleUpdateOrder,
+        handleCancelOrder,
+        handleFinishOrder,
         handleChangeQuantity,
         handleRemoveProductList,
     };

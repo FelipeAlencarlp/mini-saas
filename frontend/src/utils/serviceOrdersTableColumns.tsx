@@ -31,18 +31,20 @@ export function getServiceOrdersTableColumns({
             accessor: 'status',
             render: (serviceOrder) => (
                 <div className="w-full text-white text-xs">
-                    {serviceOrder.status === 'Iniciado'
-                        ? (
-                            <span className="bg-blue-500 px-2 py-1 rounded">
-                                {serviceOrder.status.toUpperCase()}
-                            </span>
-                          )
-                        : (
-                            <span className="bg-red-500 px-2 py-1 rounded">
-                                {serviceOrder.status.toUpperCase()}
-                            </span>
-                        )
-                    }
+                    <span
+                        className={`
+                            ${
+                                {
+                                    Iniciado: "bg-blue-500",
+                                    Finalizado: "bg-orange-500",
+                                    Cancelado: "bg-gray-500",
+                                }[serviceOrder.status] || ""
+                            }
+                            px-2 py-1 rounded
+                        `}
+                    >
+                        {serviceOrder.status.toUpperCase()}
+                    </span>
                 </div>
             ),
         },
@@ -77,7 +79,7 @@ export function getServiceOrdersTableColumns({
             accessor: 'actions',
             render: (serviceOrder) => (
                 <div className="flex justify-center gap-2">
-                    {serviceOrder.status !== 'Finalizado' && (
+                    {serviceOrder.status === 'Iniciado' && (
                         <TableEditButton
                             title="Editar Ordem"
                             onClick={() => onEdit(serviceOrder)}

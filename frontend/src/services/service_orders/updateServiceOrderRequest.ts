@@ -15,8 +15,6 @@ export async function updateServiceOrderRequest({
     id,
     items
 }: UpdateRequest): Promise<ServiceOrdersType> {
-    console.log(id)
-    console.log(items)
     const response = await api.patch(`/service-orders/edit-order/${id}`, {
         items
     });
