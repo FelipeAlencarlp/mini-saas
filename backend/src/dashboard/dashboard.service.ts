@@ -15,7 +15,7 @@ export class DashboardService {
 
     async total(): Promise<{ total: number}> {
         const orders = await this.prisma.serviceOrder.count({
-            where: { status: 'Iniciado' }
+            where: { deletedAt: null }
         });
 
         return { total: orders };
@@ -23,7 +23,7 @@ export class DashboardService {
 
     async totalEndedOrders(): Promise<{ totalEnded: number }> {
         const orders = await this.prisma.serviceOrder.count({
-            where: { status: 'Finalizado' }
+            where: { status: 'Finalizado', deletedAt: null }
         });
 
         return { totalEnded: orders };
@@ -32,7 +32,7 @@ export class DashboardService {
     async totalSold(): Promise<{ valueTotalSold: number }> {
         const result = await this.prisma.serviceOrder.aggregate({
             _sum: { total: true },
-            where: { status: 'Finalizado' }
+            where: { status: 'Finalizado', deletedAt: null }
         });
 
         const totalFinal = result._sum.total ?? 0;
@@ -45,7 +45,7 @@ export class DashboardService {
             by: ['productId'],
             _sum: { quantity: true },
             where: {
-                serviceOrder: { status: 'Finalizado' }
+                serviceOrder: { status: 'Finalizado', deletedAt: null }
             },
             orderBy: {
                 _sum: { quantity: 'desc' }
@@ -74,7 +74,7 @@ export class DashboardService {
     async clientMostOrders(): Promise<ClientDashboardEntity> {
         const resultOrder = await this.prisma.serviceOrder.groupBy({
             by: ['clientId'],
-            where: { status: 'Finalizado' },
+            where: { status: 'Finalizado', deletedAt: null },
             _count: { clientId: true },
             orderBy: {
                 _count: { clientId: 'desc' }
