@@ -1,13 +1,8 @@
 import { api } from "@/services/api";
-import { ServiceOrdersProps } from "@/types/dashboard/service_order";
-
-interface UpdateRequest {
-    id: number;
-    items: {
-        productId: number,
-        quantity: number
-    }[];
-}
+import {
+    ServiceOrdersProps,
+    UpdateRequest
+} from "@/types/dashboard/service_order";
 
 export async function updateServiceOrderRequest({
     id,

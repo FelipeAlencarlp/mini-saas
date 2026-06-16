@@ -1,11 +1,5 @@
+import { FooterFormProps } from "@/types/form";
 import Link from "next/link";
-
-interface FooterFormProps {
-    childrenP: React.ReactNode;
-    href: string;
-    titleLink: string;
-    childrenLink: React.ReactNode;
-}
 
 export function FooterForm({
     childrenP,

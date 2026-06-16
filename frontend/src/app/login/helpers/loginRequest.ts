@@ -1,9 +1,5 @@
 import { api } from "@/services/api";
-
-interface LoginRequest {
-    email: string;
-    password: string;
-}
+import { LoginRequest } from "@/types/login";
 
 export async function loginRequest({
     email, password

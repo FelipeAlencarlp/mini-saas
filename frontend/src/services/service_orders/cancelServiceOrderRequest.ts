@@ -1,9 +1,8 @@
 import { api } from "@/services/api";
-import { ServiceOrdersProps } from "@/types/dashboard/service_order";
-
-interface CancelRequest {
-    id: number;
-}
+import {
+    ServiceOrdersProps,
+    CancelRequest
+} from "@/types/dashboard/service_order";
 
 export async function cancelServiceOrderRequest({
     id

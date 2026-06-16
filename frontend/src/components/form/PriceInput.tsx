@@ -1,15 +1,6 @@
 import { forwardRef } from "react";
 import { Input } from "./Input";
-
-interface PriceInputProps {
-    label: string;
-    bgLabel: string;
-    id: string;
-    name: string;
-    value: string;
-    error?: string;
-    onChange: (value: string) => void;
-}
+import { PriceInputProps } from "@/types/form";
 
 export const PriceInput = forwardRef<
     HTMLInputElement,

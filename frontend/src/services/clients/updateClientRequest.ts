@@ -1,18 +1,12 @@
 import { api } from "@/services/api";
-
-interface UpdateRequest {
-    id: number;
-    name: string;
-    email?: string;
-    phone?: string;
-}
+import { UpdateClientRequest } from "@/types/dashboard/client";
 
 export async function updateClientRequest({
     id,
     name,
     email,
     phone
-}: UpdateRequest) {
+}: UpdateClientRequest) {
     const payload = {
         name,
         ...(email && { email }),

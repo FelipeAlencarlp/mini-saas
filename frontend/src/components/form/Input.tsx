@@ -1,32 +1,5 @@
+import { InputProps } from "@/types/form";
 import { forwardRef } from "react";
-
-type InputMode =
-    | 'none'
-    | 'text'
-    | 'tel'
-    | 'url'
-    | 'email'
-    | 'numeric'
-    | 'decimal'
-    | 'search';
-
-interface InputProps {
-    label: string;
-    bgLabel: string;
-    id: string;
-    name: string;
-    type?: string;
-    value: string | number;
-    placeholder?: string;
-    maxlength?: number;
-    min?: number;
-    prefix?: string;
-    inputMode?: InputMode;
-    autoComplete?: string;
-    error?: string;
-    className?: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(({
     label,
@@ -84,7 +57,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
                     htmlFor={id}
                     className={`
                         absolute left-2 top-1 z-10
-                        origin-[0] ${bgLabel} px-1
+                        origin-left ${bgLabel} px-1
                         text-sm text-gray-500
                         duration-300 transform
 

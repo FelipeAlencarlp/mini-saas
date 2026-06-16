@@ -1,5 +1,19 @@
 import { Dispatch, SetStateAction } from "react";
 
+export interface FormProps {
+    children: React.ReactNode;
+    id: string;
+    title: string;
+    isPending: boolean;
+    titlesButton: string[] | '';
+    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    childrenP: React.ReactNode;
+    href: string;
+    titleLink: string;
+    childrenLink: React.ReactNode;
+    onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
+}
+
 export interface ButtonProps {
     children: React.ReactNode;
     type?: ButtonType;
@@ -12,7 +26,46 @@ export interface ButtonProps {
 
 type ButtonType = 'button' | 'submit' | 'reset';
 
+// Input
+type InputMode =
+    | 'none'
+    | 'text'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'numeric'
+    | 'decimal'
+    | 'search';
+
+export interface InputProps {
+    label: string;
+    bgLabel: string;
+    id: string;
+    name: string;
+    type?: string;
+    value: string | number;
+    placeholder?: string;
+    maxlength?: number;
+    min?: number;
+    prefix?: string;
+    inputMode?: InputMode;
+    autoComplete?: string;
+    error?: string;
+    className?: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 // Phone Input
+export interface PhoneInputProps {
+    label: string;
+    bgLabel: string;
+    id: string;
+    name: string;
+    value: string;
+    error?: string;
+    onChange: (value: string) => void;
+}
+
 export interface UsePhoneInputProps {
     setPhone: Dispatch<SetStateAction<string>>;
 }
@@ -38,3 +91,22 @@ export type SearchInputProps = {
         item: SearchResult
     ) => void;
 };
+
+// PriceInput
+export interface PriceInputProps {
+    label: string;
+    bgLabel: string;
+    id: string;
+    name: string;
+    value: string;
+    error?: string;
+    onChange: (value: string) => void;
+}
+
+// Footer
+export interface FooterFormProps {
+    childrenP: React.ReactNode;
+    href: string;
+    titleLink: string;
+    childrenLink: React.ReactNode;
+}

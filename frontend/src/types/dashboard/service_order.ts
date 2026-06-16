@@ -1,3 +1,4 @@
+import { ClientProps } from "./client";
 import { ProductProps } from "./product";
 
 export interface ServiceOrdersProps {
@@ -36,16 +37,28 @@ export interface BaseCardProps {
     className?: string;
 }
 
+// Modal (helpers)
+export interface ServiceOrderClientModalProps {
+    client: ClientProps | null;
+}
+
+export interface ServiceOrderValidationClientErrors {
+    client: string
+}
+
+export interface ServiceOrderProductModalProps {
+    productId: string;
+}
+
+export interface ServiceOrderValidationProductErrors {
+    productId: string
+}
+
+// Items
 export interface ItemProps {
     product: ProductProps;
     quantity: number;
     price: number;
-}
-
-export interface ProductsListProps {
-    items: ItemProps[];
-    handleChangeQuantity: (id: number, value: string) => void;
-    handleRemoveProductList: (id: number) => void;
 }
 
 export interface EditItemProps {
@@ -65,6 +78,12 @@ export interface SelectProductProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
+export interface ProductsListProps {
+    items: ItemProps[];
+    handleChangeQuantity: (id: number, value: string) => void;
+    handleRemoveProductList: (id: number) => void;
+}
+
 export interface TotalsProps {
     items: ItemProps[];
     subtotal: number;
@@ -82,4 +101,30 @@ export interface CreateRequest {
         productId: number,
         quantity: number
     }[];
+}
+
+export interface RegisterRequest {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export interface UpdateRequest {
+    id: number;
+    items: {
+        productId: number,
+        quantity: number
+    }[];
+}
+
+export interface CancelRequest {
+    id: number;
+}
+
+export interface DeleteRequest {
+    id: number;
+}
+
+export interface FinishRequest {
+    id: number;
 }

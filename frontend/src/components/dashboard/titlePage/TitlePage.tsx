@@ -1,9 +1,5 @@
+import { TitlePageProps } from "@/types/dashboard/dashboard";
 import { TitlePageSkeleton } from "./TitlePageSkeleton";
-
-interface TitlePageProps {
-    children: React.ReactNode;
-    isLoading?: boolean;
-}
 
 export function TitlePage({
     children,

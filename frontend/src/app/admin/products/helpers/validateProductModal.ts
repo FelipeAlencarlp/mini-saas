@@ -1,14 +1,7 @@
-interface ProductModalProps {
-    name: string;
-    price: string;
-    quantity: string;
-}
-
-interface ValidationErrors {
-    name: string;
-    price: string;
-    quantity: string;
-}
+import {
+    ProductModalProps,
+    ValidationErrors
+} from "@/types/dashboard/product";
 
 export function validateProductModal({
     name,

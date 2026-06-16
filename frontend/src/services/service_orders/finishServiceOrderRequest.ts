@@ -1,9 +1,8 @@
 import { api } from "@/services/api";
-import { ServiceOrdersProps } from "@/types/dashboard/service_order";
-
-interface FinishRequest {
-    id: number;
-}
+import {
+    ServiceOrdersProps,
+    FinishRequest
+} from "@/types/dashboard/service_order";
 
 export async function finishServiceOrderRequest({
     id

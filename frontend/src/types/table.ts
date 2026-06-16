@@ -37,3 +37,9 @@ export interface TableProps<T> {
         selected: number;
     }) => void;
 }
+
+// Button
+export interface TableButtonProps {
+    title: string;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}

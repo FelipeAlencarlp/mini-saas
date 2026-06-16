@@ -1,18 +1,12 @@
 import { api } from "@/services/api";
-
-interface UpdateRequest {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-}
+import { UpdateProductRequest } from "@/types/dashboard/product";
 
 export async function updateProductRequest({
     id,
     name,
     price,
     quantity
-}: UpdateRequest) {
+}: UpdateProductRequest) {
     const response = await api.patch(`/products/${id}`, {
         name,
         price,

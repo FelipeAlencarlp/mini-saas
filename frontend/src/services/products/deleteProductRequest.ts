@@ -1,10 +1,7 @@
 import { api } from "@/services/api";
+import { DeleteProductRequest } from "@/types/dashboard/product";
 
-interface DeleteRequest {
-    id: number;
-}
-
-export async function deleteProductRequest({ id }: DeleteRequest) {
+export async function deleteProductRequest({ id }: DeleteProductRequest) {
     const response = await api.delete(`/products/${id}`);
 
     return response.data.data;

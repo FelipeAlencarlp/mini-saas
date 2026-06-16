@@ -1,21 +1,6 @@
 import Link from "next/link";
-import { FooterForm } from "../user/FooterForm";
 import { Button } from "./Button";
-
-interface FormProps {
-    children: React.ReactNode;
-    id: string;
-    title: string;
-    isPending: boolean;
-    titlesButton: string[] | '';
-    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-    onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
-
-    childrenP: React.ReactNode;
-    href: string;
-    titleLink: string;
-    childrenLink: React.ReactNode;
-}
+import { FormProps } from "@/types/form";
 
 export function Form({
     children,

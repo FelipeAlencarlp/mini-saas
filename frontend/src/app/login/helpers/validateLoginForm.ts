@@ -1,12 +1,7 @@
-interface ValidateLoginFormProps {
-    email: string;
-    password: string
-}
-
-interface ValidationErrors {
-    email: string;
-    password: string;
-}
+import {
+    ValidateLoginFormProps,
+    ValidationErrors
+} from "@/types/login";
 
 export function validateLoginForm({
     email,

@@ -1,10 +1,5 @@
 import { api } from "@/services/api";
-
-interface RegisterRequest {
-    name: string;
-    email: string;
-    password: string;
-}
+import { RegisterRequest } from "@/types/dashboard/service_order";
 
 export async function registerRequest({
     name,

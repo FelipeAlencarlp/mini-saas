@@ -33,6 +33,12 @@ export interface clientMostOrdersProps {
     quantityOrders: number;
 }
 
+// TitlePage
+export interface TitlePageProps {
+    children: React.ReactNode;
+    isLoading?: boolean;
+}
+
 // Dashboard Layout (HEADER)
 export interface HeaderProps {
     isLoading?: boolean;

@@ -1,15 +1,6 @@
 import { forwardRef } from "react";
 import { Input } from "./Input";
-
-interface PhoneInputProps {
-    label: string;
-    bgLabel: string;
-    id: string;
-    name: string;
-    value: string;
-    error?: string;
-    onChange: (value: string) => void;
-}
+import { PhoneInputProps } from "@/types/form";
 
 export const PhoneInput = forwardRef<
     HTMLInputElement,

@@ -1,17 +1,12 @@
-import { ClientProps } from "@/types/dashboard/client";
-
-interface ServiceOrderModalProps {
-    client: ClientProps | null;
-}
-
-interface ValidationErrors {
-    client: string
-}
+import {
+    ServiceOrderClientModalProps,
+    ServiceOrderValidationClientErrors
+} from "@/types/dashboard/service_order";
 
 export function validateClientSelectedModal({
     client,
-}: ServiceOrderModalProps): ValidationErrors {
-    const error: ValidationErrors = {
+}: ServiceOrderClientModalProps): ServiceOrderValidationClientErrors {
+    const error: ServiceOrderValidationClientErrors = {
         client: ''
     };
 

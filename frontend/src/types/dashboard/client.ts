@@ -27,3 +27,21 @@ export interface ValidationClientErrors {
     email: string;
     phone: string;
 }
+
+// services (REQUEST)
+export interface CreateClientRequest {
+    name: string;
+    email?: string;
+    phone?: string;
+}
+
+export interface UpdateClientRequest {
+    id: number;
+    name: string;
+    email?: string;
+    phone?: string;
+}
+
+export interface DeleteClientRequest {
+    id: number;
+}

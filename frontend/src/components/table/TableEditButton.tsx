@@ -1,12 +1,8 @@
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { Button } from "../form/Button";
+import { TableButtonProps } from "@/types/table";
 
-interface TableEditButtonProps {
-    title: string;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-export function TableEditButton({ title, onClick }: TableEditButtonProps) {
+export function TableEditButton({ title, onClick }: TableButtonProps) {
     return (
         <Button
             title={title}

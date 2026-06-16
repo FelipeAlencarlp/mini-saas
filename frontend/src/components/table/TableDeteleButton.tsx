@@ -1,12 +1,10 @@
 import { HiOutlineTrash } from "react-icons/hi2";
 import { Button } from "../form/Button";
+import { TableButtonProps } from "@/types/table";
 
-interface TableEditButtonProps {
-    title: string;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-export function TableDeleteButton({ title, onClick }: TableEditButtonProps) {
+export function TableDeleteButton({
+    title, onClick
+}: TableButtonProps) {
     return (
         <Button
             title={title}

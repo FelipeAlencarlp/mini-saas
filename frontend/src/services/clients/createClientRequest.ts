@@ -1,17 +1,11 @@
 import { api } from "@/services/api";
-import { ClientProps } from "@/types/dashboard/client";
-
-interface CreateRequest {
-    name: string;
-    email?: string;
-    phone?: string;
-}
+import { ClientProps, CreateClientRequest } from "@/types/dashboard/client";
 
 export async function createClientRequest({
     name,
     email,
     phone
-}: CreateRequest): Promise<ClientProps> {
+}: CreateClientRequest): Promise<ClientProps> {
     const payload = {
         name,
         ...(email && { email }),
