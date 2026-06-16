@@ -1,5 +1,4 @@
-import { TableDeleteButton } from "@/components/table/TableDeteleButton";
-import { TableEditButton } from "@/components/table/TableEditButton";
+import { TableButton } from "@/components/table/TableButton";
 import { ProductProps } from "@/types/dashboard/product";
 import { Column } from "@/types/table";
 
@@ -30,13 +29,15 @@ export function getProductsTableColumns({
             accessor: 'actions',
             render: (product: ProductProps) => (
                 <div className="flex justify-center gap-2">
-                    <TableEditButton
+                    <TableButton
                         title="Editar Produto"
+                        type="edit"
                         onClick={() => onEdit(product)}
                     />
 
-                    <TableDeleteButton
+                    <TableButton
                         title="Deletar Produto"
+                        type="delete"
                         onClick={() => onDelete(product)}
                     />
                 </div>

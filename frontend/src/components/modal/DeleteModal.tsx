@@ -32,7 +32,7 @@ export function DeleteModal({
         >
             <p className="
                 flex flex-col text-gray-600
-                text-center text-xl pb-2
+                text-center text-xl pt-6 pb-2
             ">
                 Deseja realmente excluir:
                 <b>{item?.name ?? "Essa ordem"}?</b>

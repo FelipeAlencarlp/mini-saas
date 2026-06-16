@@ -39,7 +39,10 @@ export interface TableProps<T> {
 }
 
 // Button
+type TypeButton = 'edit' | 'delete' | 'view';
+
 export interface TableButtonProps {
     title: string;
+    type: TypeButton;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }

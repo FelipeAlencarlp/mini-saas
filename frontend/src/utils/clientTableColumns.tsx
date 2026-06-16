@@ -1,5 +1,4 @@
-import { TableDeleteButton } from "@/components/table/TableDeteleButton";
-import { TableEditButton } from "@/components/table/TableEditButton";
+import { TableButton } from "@/components/table/TableButton";
 import { ClientProps } from "@/types/dashboard/client";
 import { Column } from "@/types/table";
 
@@ -22,13 +21,15 @@ export function getClientTableColumns({
             accessor: 'actions',
             render: (client: ClientProps) => (
                 <div className="flex justify-center gap-2">
-                    <TableEditButton
+                    <TableButton
                         title="Editar Cliente"
+                        type="edit"
                         onClick={() => onEdit(client)}
                     />
 
-                    <TableDeleteButton
+                    <TableButton
                         title="Deletar Cliente"
+                        type="delete"
                         onClick={() => onDelete(client)}
                     />
                 </div>
