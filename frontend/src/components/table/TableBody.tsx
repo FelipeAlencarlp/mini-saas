@@ -1,4 +1,4 @@
-import { TableBodyProps } from "@/types/table/TableBodyProps.type";
+import { TableBodyProps } from "@/types/table";
 import { TableRow } from "./TableRow";
 
 export function TableBody<T>({ data, columns }: TableBodyProps<T>) {

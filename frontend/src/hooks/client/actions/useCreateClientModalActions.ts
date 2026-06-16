@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { validateClientModal } from "@/app/admin/clients/helpers/validateClientModal";
-import { CreateModalProps } from "@/types/modal/client/CreateClientModalProps";
+import { CreateModalProps } from "@/types/modal/client";
 import { usePhoneInput } from "../../usePhoneInput";
 
 export function useCreateClientModalActions({
@@ -30,7 +30,7 @@ export function useCreateClientModalActions({
         }
     }, [isOpen]);
 
-    const { handlePhone } = usePhoneInput({ phone, setPhone });
+    const { handlePhone } = usePhoneInput({ setPhone });
 
     function handleSubmit() {
         const validationErrors = validateClientModal({

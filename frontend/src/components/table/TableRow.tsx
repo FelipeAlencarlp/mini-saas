@@ -1,4 +1,4 @@
-import { TableRowProps } from "@/types/table/TableRowProps.type";
+import { TableRowProps } from "@/types/table";
 
 export function TableRow<T>({
     row,

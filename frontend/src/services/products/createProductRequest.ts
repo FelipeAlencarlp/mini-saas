@@ -1,17 +1,11 @@
 import { api } from "@/services/api";
-import { ProductType } from "@/types/dashboard/products/Product.type";
-
-interface CreateRequest {
-    name: string;
-    price: number;
-    quantity: number;
-}
+import { CreateProductRequest, ProductProps } from "@/types/dashboard/product";
 
 export async function createProductRequest({
     name,
     price,
     quantity
-}: CreateRequest): Promise<ProductType> {
+}: CreateProductRequest): Promise<ProductProps> {
     const response = await api.post('/products', {
         name,
         price,

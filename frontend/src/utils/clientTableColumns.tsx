@@ -1,17 +1,17 @@
 import { TableDeleteButton } from "@/components/table/TableDeteleButton";
 import { TableEditButton } from "@/components/table/TableEditButton";
-import { ClientType } from "@/types/dashboard/clients/Client.type";
-import { Column } from "@/types/table/Column.type";
+import { ClientProps } from "@/types/dashboard/client";
+import { Column } from "@/types/table";
 
 interface ClientTableColumnsProps {
-    onEdit: (client: ClientType) => void;
-    onDelete: (client: ClientType) => void;
+    onEdit: (client: ClientProps) => void;
+    onDelete: (client: ClientProps) => void;
 }
 
 export function getClientTableColumns({
     onEdit,
     onDelete
-}: ClientTableColumnsProps): Column<ClientType>[] {
+}: ClientTableColumnsProps): Column<ClientProps>[] {
     return [
         { header: '#', accessor: 'id' },
         { header: 'NOME', accessor: 'name' },
@@ -20,7 +20,7 @@ export function getClientTableColumns({
         {
             header: 'AÇÕES',
             accessor: 'actions',
-            render: (client: ClientType) => (
+            render: (client: ClientProps) => (
                 <div className="flex justify-center gap-2">
                     <TableEditButton
                         title="Editar Cliente"
@@ -34,5 +34,5 @@ export function getClientTableColumns({
                 </div>
             ),
         },
-    ] satisfies Column<ClientType>[]; // não muda o tipo real do array para string
+    ] satisfies Column<ClientProps>[]; // não muda o tipo real do array para string
 }

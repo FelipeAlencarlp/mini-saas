@@ -1,5 +1,5 @@
 import ReactPaginate from 'react-paginate';
-import { PaginationProps } from "@/types/PaginationProps.type";
+import { PaginationProps } from "@/types/page";
 
 export function Pagination({
     page,

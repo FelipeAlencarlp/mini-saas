@@ -1,4 +1,4 @@
-import { BaseCardProps } from "@/types/dashboard/service_orders/BaseCardProps.typs";
+import { BaseCardProps } from "@/types/dashboard/service_order";
 
 export function BaseCardServiceOrder({
     children,

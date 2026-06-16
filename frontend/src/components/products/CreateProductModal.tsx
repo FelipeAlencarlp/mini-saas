@@ -1,9 +1,7 @@
 import { Modal } from "../modal/Modal";
 import { Input } from "../form/Input";
 import { PriceInput } from "../form/PriceInput";
-import {
-    CreateProductModalProps
-} from "@/types/modal/products/CreateProductModalProps"; 
+import { CreateProductModalProps } from "@/types/modal/product"; 
 import {
     useCreateProductModalActions
 } from "@/hooks/products/actions/useCreateProductModalActions";

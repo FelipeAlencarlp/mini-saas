@@ -1,22 +1,20 @@
 import { TableDeleteButton } from "@/components/table/TableDeteleButton";
 import { TableEditButton } from "@/components/table/TableEditButton";
 import { TableViewButton } from "@/components/table/TableViewButton";
-import {
-    ServiceOrdersType
-} from "@/types/dashboard/service_orders/ServiceOrders.type";
-import { Column } from "@/types/table/Column.type";
+import { ServiceOrdersProps } from "@/types/dashboard/service_order";
+import { Column } from "@/types/table";
 
 interface ServiceOrdersTableColumnsProps {
-    onView: (serviceOrder: ServiceOrdersType) => void;
-    onEdit: (serviceOrder: ServiceOrdersType) => void;
-    onDelete: (serviceOrder: ServiceOrdersType) => void;
+    onView: (serviceOrder: ServiceOrdersProps) => void;
+    onEdit: (serviceOrder: ServiceOrdersProps) => void;
+    onDelete: (serviceOrder: ServiceOrdersProps) => void;
 }
 
 export function getServiceOrdersTableColumns({
     onView,
     onEdit,
     onDelete
-}: ServiceOrdersTableColumnsProps): Column<ServiceOrdersType>[] {
+}: ServiceOrdersTableColumnsProps): Column<ServiceOrdersProps>[] {
     return [
         { header: '#', accessor: 'id' },
         {
@@ -103,5 +101,5 @@ export function getServiceOrdersTableColumns({
                 </div>
             ),
         },
-    ] satisfies Column<ServiceOrdersType>[]; // não muda o tipo real do array para string
+    ] satisfies Column<ServiceOrdersProps>[]; // não muda o tipo real do array para string
 }

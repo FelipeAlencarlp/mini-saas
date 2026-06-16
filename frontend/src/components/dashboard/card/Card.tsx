@@ -1,8 +1,4 @@
-interface CardProps {
-    title: string;
-    span1: string;
-    span2?: number;
-}
+import { CardProps } from "@/types/dashboard/dashboard";
 
 export function Card({ title, span1, span2 }: CardProps) {
     return (

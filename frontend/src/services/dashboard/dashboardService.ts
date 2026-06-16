@@ -1,6 +1,6 @@
 import { api } from "@/services/api";
-import { clientMostOrders } from "@/types/dashboard/ClientMostOrders.type";
-import { ProductMostSolded } from "@/types/dashboard/ProductMostSolded.type";
+import { clientMostOrdersProps } from "@/types/dashboard/dashboard";
+import { ProductMostSoldedProps } from "@/types/dashboard/dashboard";
 
 export async function getTotalOrders(): Promise<number> {
     const response = await api.get('/dashboard/total-orders');
@@ -23,14 +23,14 @@ export async function getTotalSoldOrders(): Promise<number> {
     return valueTotalSold;
 }
 
-export async function getProductMostSolded(): Promise<ProductMostSolded> {
+export async function getProductMostSolded(): Promise<ProductMostSoldedProps> {
     const response = await api.get('/dashboard/product-most-sold');
     const { productName, quantitySold } = response.data.data;
 
     return { productName, quantitySold };
 }
 
-export async function getClientMostOrders(): Promise<clientMostOrders> {
+export async function getClientMostOrders(): Promise<clientMostOrdersProps> {
     const response = await api.get('/dashboard/client-most-orders');
     const { clientName, quantityOrders } = response.data.data;
 

@@ -1,4 +1,4 @@
-import { TableHeadProps } from "@/types/table/TableHeadProps";
+import { TableHeadProps } from "@/types/table";
 
 export function TableHead<T>({ columns }: TableHeadProps<T>) {
     return (

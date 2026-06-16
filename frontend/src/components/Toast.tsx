@@ -1,6 +1,9 @@
-import { ToastType } from "@/types/toast/Toast.type";
+import { ToastData } from "@/types/toast";
 
-export function Toast({ message, type = 'success' }: ToastType) {
+export function Toast({
+    message,
+    type = 'success'
+}: ToastData) {
     return (
         <div
             className={`

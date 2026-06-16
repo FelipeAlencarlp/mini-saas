@@ -1,17 +1,17 @@
 import { TableDeleteButton } from "@/components/table/TableDeteleButton";
 import { TableEditButton } from "@/components/table/TableEditButton";
-import { ProductType } from "@/types/dashboard/products/Product.type";
-import { Column } from "@/types/table/Column.type";
+import { ProductProps } from "@/types/dashboard/product";
+import { Column } from "@/types/table";
 
 interface ProductsTableColumnsProps {
-    onEdit: (product: ProductType) => void;
-    onDelete: (product: ProductType) => void;
+    onEdit: (product: ProductProps) => void;
+    onDelete: (product: ProductProps) => void;
 }
 
 export function getProductsTableColumns({
     onEdit,
     onDelete
-}: ProductsTableColumnsProps): Column<ProductType>[] {
+}: ProductsTableColumnsProps): Column<ProductProps>[] {
     return [
         { header: '#', accessor: 'id' },
         { header: 'NOME', accessor: 'name' },
@@ -28,7 +28,7 @@ export function getProductsTableColumns({
         {
             header: 'AÇÕES',
             accessor: 'actions',
-            render: (product: ProductType) => (
+            render: (product: ProductProps) => (
                 <div className="flex justify-center gap-2">
                     <TableEditButton
                         title="Editar Produto"
@@ -42,5 +42,5 @@ export function getProductsTableColumns({
                 </div>
             ),
         },
-    ] satisfies Column<ProductType>[]; // não muda o tipo real do array para string
+    ] satisfies Column<ProductProps>[]; // não muda o tipo real do array para string
 }

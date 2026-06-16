@@ -6,9 +6,7 @@ import { TotalsServiceOrder } from "./TotalsServiceOrder";
 import { Modal } from "../modal/Modal";
 import { ServiceOrderModal } from "./ServiceOrderModal";
 import { SearchInput } from "../form/SearchInput";
-import {
-    CreateServiceOrderModalProps
-} from "@/types/modal/service_orders/CreateServiceOrderModalProps";
+import { CreateServiceOrderModalProps } from "@/types/modal/service_order";
 import {
     useCreateServiceOrderModalActions
 } from "@/hooks/service_orders/actions/useCreateServiceOrderModalActions";

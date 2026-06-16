@@ -1,17 +1,14 @@
 import { api } from "@/services/api";
 import {
-    ServiceOrdersType
-} from "@/types/dashboard/service_orders/ServiceOrders.type";
+    ServiceOrdersProps,
+    CreateRequest
+} from "@/types/dashboard/service_order";
 
-interface CreateRequest {
-    clientId: number;
-    items: { productId: number, quantity: number }[];
-}
 
 export async function createServiceOrderRequest({
     clientId,
     items
-}: CreateRequest): Promise<ServiceOrdersType> {
+}: CreateRequest): Promise<ServiceOrdersProps> {
     const response = await api.post('/service-orders', {
         clientId,
         items

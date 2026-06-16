@@ -1,21 +1,14 @@
-interface ClientModalProps {
-    name: string;
-    email?: string;
-    phone?: string;
-}
-
-interface ValidationErrors {
-    name: string;
-    email: string;
-    phone: string;
-}
+import {
+    ClientModalProps,
+    ValidationClientErrors
+} from "@/types/dashboard/client";
 
 export function validateClientModal({
     name,
     email,
     phone
-}: ClientModalProps): ValidationErrors {
-    const errors: ValidationErrors = {
+}: ClientModalProps): ValidationClientErrors {
+    const errors: ValidationClientErrors = {
         name: '',
         email: '',
         phone: ''

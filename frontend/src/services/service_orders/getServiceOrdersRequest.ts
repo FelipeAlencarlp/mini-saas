@@ -1,12 +1,10 @@
 import { api } from "../api";
-import {
-    ServiceOrdersResponse
-} from "@/types/dashboard/service_orders/ServiceOrdersResponse.type";
+import { ServiceOrdersResponseProps } from "@/types/dashboard/service_order";
 
 export async function getServiceOrdersRequest(
     search: string,
     page: number
-): Promise<ServiceOrdersResponse> {
+): Promise<ServiceOrdersResponseProps> {
     const response = await api.get('/service-orders', {
         params: {
             filter: search,

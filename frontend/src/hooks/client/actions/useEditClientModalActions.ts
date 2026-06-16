@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { EditModalProps } from "@/types/modal/client/EditClientModalProps";
+import { EditModalProps } from "@/types/modal/client";
 import {
     validateClientModal
 } from "@/app/admin/clients/helpers/validateClientModal";
@@ -35,7 +35,7 @@ export function useEditClientModalActions({
         }
     }, [isOpen, client]);
 
-    const { handlePhone } = usePhoneInput({ phone, setPhone });
+    const { handlePhone } = usePhoneInput({ setPhone });
 
     function handleSubmit() {
         const validationErrors = validateClientModal({

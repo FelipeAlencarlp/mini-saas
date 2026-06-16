@@ -1,4 +1,4 @@
-import { DashboardCardsProps } from "@/types/dashboard/DashboardCardsProps.type";
+import { DashboardCardsProps } from "@/types/dashboard/dashboard";
 import { Card } from "./Card";
 import { CardSkeleton } from "./CardSkeleton";
 

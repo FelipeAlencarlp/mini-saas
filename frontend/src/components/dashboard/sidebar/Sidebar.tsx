@@ -1,7 +1,7 @@
 import { HiXMark } from 'react-icons/hi2';
 import NavAdmin from '../NavAdmin';
 import { SidebarSkeleton } from './SidebarSkeleton';
-import { SidebarProps } from '@/types/dashboard/SidebarProps.type';
+import { SidebarProps } from '@/types/dashboard/dashboard';
 
 export function Sidebar({
     open,

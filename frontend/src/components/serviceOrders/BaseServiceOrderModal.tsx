@@ -1,4 +1,4 @@
-import { BaseServiceOrderModalProps } from "@/types/modal/service_orders/BaseServiceOrderModalProps.type";
+import { BaseServiceOrderModalProps } from "@/types/modal/service_order";
 import { HiXMark } from "react-icons/hi2";
 
 export function BaseServiceOrderModal({

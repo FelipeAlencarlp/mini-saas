@@ -1,12 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import {
-    validateProductSelectedModal
-} from "@/app/admin/service_orders/helpers/validateProductSelectedModal";
-import { ClientType } from "@/types/dashboard/clients/Client.type";
-import {
-    ViewServiceOrderModalProps
-} from "@/types/modal/service_orders/ViewServiceOrderModalProps";
-import { Item } from "@/types/dashboard/service_orders/Item.type";
+import { useEffect, useState } from "react";
+import { ClientProps } from "@/types/dashboard/client";
+import { ViewServiceOrderModalProps } from "@/types/modal/service_order";
+import { ItemProps } from "@/types/dashboard/service_order";
 import { useProductsQuery } from "@/hooks/products/useProductsQuery";
 import { useClientsQuery } from "@/hooks/client/useClientsQuery";
 
@@ -15,8 +10,8 @@ export function useViewServiceOrderModalActions({
     isOpen,
     onClose
 }: ViewServiceOrderModalProps) {
-    const [client, setClient] = useState<ClientType | null>(null);
-    const [items, setItems] = useState<Item[]>([]);
+    const [client, setClient] = useState<ClientProps | null>(null);
+    const [items, setItems] = useState<ItemProps[]>([]);
 
     const [subtotal, setSubtotal] = useState<number>(0);
     const [quantityProduct, setQuantityProduct] = useState<number>(0);

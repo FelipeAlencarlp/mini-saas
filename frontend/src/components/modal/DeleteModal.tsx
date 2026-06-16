@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DeleteModalProps } from "@/types/modal/DeleteModalProps.type";
+import { DeleteModalProps } from "@/types/modal/modal";
 import { Modal } from "./Modal";
 
 export function DeleteModal({

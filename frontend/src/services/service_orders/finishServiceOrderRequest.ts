@@ -1,7 +1,5 @@
 import { api } from "@/services/api";
-import {
-    ServiceOrdersType
-} from "@/types/dashboard/service_orders/ServiceOrders.type";
+import { ServiceOrdersProps } from "@/types/dashboard/service_order";
 
 interface FinishRequest {
     id: number;
@@ -9,7 +7,7 @@ interface FinishRequest {
 
 export async function finishServiceOrderRequest({
     id
-}: FinishRequest): Promise<ServiceOrdersType> {
+}: FinishRequest): Promise<ServiceOrdersProps> {
     const response = await api.patch(
         `/service-orders/end-order/${id}`
     );

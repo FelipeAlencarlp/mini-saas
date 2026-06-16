@@ -1,10 +1,10 @@
 import { HiOutlinePlus } from "react-icons/hi2";
 import { Input } from "../form/Input";
 import { Button } from "../form/Button";
-import { SearchAndButton } from "@/types/SearchAndButton.type";
 import {
     SearchAndButtonHeaderPageSkeleton
 } from "./SearchAndButtonHeaderPageSkeleton";
+import { SearchAndButtonProps } from "@/types/page";
 
 export function SearchAndButtonHeaderPage({
     label,
@@ -14,7 +14,7 @@ export function SearchAndButtonHeaderPage({
     isLoading = false,
     onSearch,
     onClick
-}: SearchAndButton) {
+}: SearchAndButtonProps) {
     if (isLoading) return <SearchAndButtonHeaderPageSkeleton />;
     
     return (

@@ -1,8 +1,8 @@
 import { TableBody } from "./TableBody";
 import { TableHead } from "./TableHead";
 import { Spinner } from "../Spinner";
-import { TableProps } from "@/types/table/TableProps.type";
 import { Pagination } from "../pagination";
+import { TableProps } from "@/types/table";
 
 export function Table<T>({
     columns,

@@ -1,5 +1,5 @@
 import { HiXMark } from 'react-icons/hi2';
-import { ModalProps } from "@/types/modal/ModalProps.type";
+import { ModalProps } from "@/types/modal/modal";
 import { Button } from '../form/Button';
 
 export function Modal({

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { Input } from "./Input";
-import { SearchInputProps } from "@/types/form/SearchInput.type";
+import { SearchInputProps } from "@/types/form";
 
 export const SearchInput = forwardRef<
     HTMLInputElement,

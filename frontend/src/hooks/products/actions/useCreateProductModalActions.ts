@@ -2,9 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
     validateProductModal
 } from "@/app/admin/products/helpers/validateProductModal";
-import {
-    CreateProductModalProps
-} from "@/types/modal/products/CreateProductModalProps";
+import { CreateProductModalProps } from "@/types/modal/product";
 
 export function useCreateProductModalActions({
     isOpen,

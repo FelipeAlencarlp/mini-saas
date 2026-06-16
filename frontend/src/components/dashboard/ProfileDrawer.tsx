@@ -1,13 +1,6 @@
 import { HiXMark, HiUserCircle } from 'react-icons/hi2';
 import { LogoutButton } from './LogoutButton';
-import { UserType } from '@/types/User.type';
-
-interface ProfileDrawerProps {
-    open: boolean;
-    user?: UserType;
-    isLoading: boolean;
-    onClose: () => void;
-}
+import { ProfileDrawerProps } from '@/types/dashboard/dashboard';
 
 export function ProfileDrawer({
     open,

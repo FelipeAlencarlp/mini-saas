@@ -1,12 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-
-type UsePhoneInputProps = {
-    phone: string;
-    setPhone: Dispatch<SetStateAction<string>>;
-};
+import { UsePhoneInputProps } from "@/types/form";
 
 export function usePhoneInput({
-    phone,
     setPhone
 }: UsePhoneInputProps) {
 

@@ -1,8 +1,6 @@
 import { BaseServiceOrderModal } from './BaseServiceOrderModal';
 import { Button } from '../form/Button';
-import {
-    ServiceOrderProps
-} from '@/types/modal/service_orders/ServiceOrderProps.type';
+import { ServiceOrderProps } from '@/types/modal/service_order';
 
 export function ServiceOrderModal({
     children,

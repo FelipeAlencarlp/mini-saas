@@ -1,8 +1,8 @@
 'use client';
 
-import { ToastType } from '@/types/toast/Toast.type';
-import { ToastContextType } from '@/types/toast/ToastContext.type';
-import { ToastData } from '@/types/toast/ToastData.type';
+import { ToastType } from '@/types/toast';
+import { ToastContextType } from '@/types/toast';
+import { ToastData } from '@/types/toast';
 import {
     createContext,
     useState,

@@ -13,9 +13,7 @@ import {
 import {
     useServiceOrdersActions
 } from "@/hooks/service_orders/actions/useServiceOrdersActions";
-import {
-    ModalServiceOrdersType
-} from "@/types/modal/service_orders/ModalServiceOrders.type";
+import { ModalServiceOrdersType } from "@/types/modal/service_order";
 import { getServiceOrdersTableColumns } from "@/utils/serviceOrdersTableColumns";
 import { EditServiceOrderModal } from "@/components/serviceOrders/EditServiceOrderModal";
 import { ViewServiceOrderModal } from "@/components/serviceOrders/ViewServiceOrderModal";

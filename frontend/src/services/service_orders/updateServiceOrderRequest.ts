@@ -1,7 +1,5 @@
 import { api } from "@/services/api";
-import {
-    ServiceOrdersType
-} from "@/types/dashboard/service_orders/ServiceOrders.type";
+import { ServiceOrdersProps } from "@/types/dashboard/service_order";
 
 interface UpdateRequest {
     id: number;
@@ -14,7 +12,7 @@ interface UpdateRequest {
 export async function updateServiceOrderRequest({
     id,
     items
-}: UpdateRequest): Promise<ServiceOrdersType> {
+}: UpdateRequest): Promise<ServiceOrdersProps> {
     const response = await api.patch(`/service-orders/edit-order/${id}`, {
         items
     });

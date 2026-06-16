@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-    EditProductModalProps
-} from "@/types/modal/products/EditProductModalProps";
+import { EditProductModalProps } from "@/types/modal/product";
 import {
     validateProductModal
 } from "@/app/admin/products/helpers/validateProductModal";

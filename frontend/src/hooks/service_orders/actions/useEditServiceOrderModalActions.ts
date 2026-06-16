@@ -2,11 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import {
     validateProductSelectedModal
 } from "@/app/admin/service_orders/helpers/validateProductSelectedModal";
-import { ClientType } from "@/types/dashboard/clients/Client.type";
-import {
-    EditServiceOrderModalProps
-} from "@/types/modal/service_orders/EditServiceOrderModalProps";
-import { Item } from "@/types/dashboard/service_orders/Item.type";
+import { ClientProps } from "@/types/dashboard/client";
+import { EditServiceOrderModalProps } from "@/types/modal/service_order";
+import { ItemProps } from "@/types/dashboard/service_order";
 import { useProductsQuery } from "@/hooks/products/useProductsQuery";
 import { useClientsQuery } from "@/hooks/client/useClientsQuery";
 
@@ -19,9 +17,9 @@ export function useEditServiceOrderModalActions({
     onFinish
 }: EditServiceOrderModalProps) {
     const [id, setId] = useState<number>(0);
-    const [client, setClient] = useState<ClientType | null>(null);
+    const [client, setClient] = useState<ClientProps | null>(null);
     const [productId, setProductId] = useState<string>('');
-    const [items, setItems] = useState<Item[]>([]);
+    const [items, setItems] = useState<ItemProps[]>([]);
 
     const [subtotal, setSubtotal] = useState<number>(0);
     const [quantityProduct, setQuantityProduct] = useState<number>(0);

@@ -1,6 +1,6 @@
 import { Modal } from "../modal/Modal";
 import { Input } from "../form/Input";
-import { CreateModalProps } from "@/types/modal/client/CreateClientModalProps";
+import { CreateModalProps } from "@/types/modal/client";
 import {
     useCreateClientModalActions
 } from "@/hooks/client/actions/useCreateClientModalActions";

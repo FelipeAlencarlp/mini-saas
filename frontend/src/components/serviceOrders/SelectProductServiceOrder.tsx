@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { Button } from "../form/Button";
 import {
     SelectProductProps
-} from "@/types/dashboard/service_orders/SelectProduct.type";
+} from "@/types/dashboard/service_order";
 
 export const SelectProductServiceOrder = forwardRef<
     HTMLSelectElement,

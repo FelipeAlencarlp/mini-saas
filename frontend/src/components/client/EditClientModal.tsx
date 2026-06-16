@@ -1,6 +1,6 @@
 import { Modal } from "../modal/Modal";
 import { Input } from "../form/Input";
-import { EditModalProps } from "@/types/modal/client/EditClientModalProps";
+import { EditModalProps } from "@/types/modal/client";
 import {
     useEditClientModalActions
 } from "@/hooks/client/actions/useEditClientModalActions";

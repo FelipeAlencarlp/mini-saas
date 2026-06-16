@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/useToast";
 import { useClientsActions } from "@/hooks/client/actions/useClientsActions";
 import { useClientsQuery } from "@/hooks/client/useClientsQuery";
 import { getClientTableColumns } from "@/utils/clientTableColumns";
-import { ModalClientType } from "@/types/modal/client/ModalClient.type";
+import { ModalClientType } from "@/types/modal/client";
 
 export default function ClientsPage() {
     const { showToast } = useToast();

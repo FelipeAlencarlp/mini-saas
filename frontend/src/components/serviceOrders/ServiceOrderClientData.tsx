@@ -1,9 +1,9 @@
 import { BaseCardServiceOrder } from "./BaseCardServiceOrder";
-import { ClientType } from "@/types/dashboard/clients/Client.type";
+import { ClientProps } from "@/types/dashboard/client";
 
 export function ServiceOrderClientData({
     client
-}: { client: ClientType | null }) {
+}: { client: ClientProps | null }) {
     return (
         <>
             <BaseCardServiceOrder

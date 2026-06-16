@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/useToast";
 import { useProductsActions } from "@/hooks/products/actions/useProductsActions";
 import { useProductsQuery } from "@/hooks/products/useProductsQuery";
 import { getProductsTableColumns } from "@/utils/productsTableColumns";
-import { ModalProductsType } from "@/types/modal/products/ModalProducts.type";
+import { ModalProductsType } from "@/types/modal/product";
 
 export default function ProductsPage() {
     const { showToast } = useToast();

@@ -1,7 +1,5 @@
 import { api } from "@/services/api";
-import {
-    ServiceOrdersType
-} from "@/types/dashboard/service_orders/ServiceOrders.type";
+import { ServiceOrdersProps } from "@/types/dashboard/service_order";
 
 interface CancelRequest {
     id: number;
@@ -9,7 +7,7 @@ interface CancelRequest {
 
 export async function cancelServiceOrderRequest({
     id
-}: CancelRequest): Promise<ServiceOrdersType> {
+}: CancelRequest): Promise<ServiceOrdersProps> {
     const response = await api.patch(
         `/service-orders/cancel-order/${id}`
     );

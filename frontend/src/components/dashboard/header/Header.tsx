@@ -1,11 +1,6 @@
 import { HiBars3, HiUserCircle } from 'react-icons/hi2';
 import { HeaderSkeleton } from './HeaderSkeleton';
-
-interface HeaderProps {
-    isLoading?: boolean;
-    onOpenMenu: () => void;
-    onOpenProfile: () => void;
-}
+import { HeaderProps } from '@/types/dashboard/dashboard';
 
 export function Header({
     isLoading,

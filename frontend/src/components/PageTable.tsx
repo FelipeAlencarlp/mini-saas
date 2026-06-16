@@ -4,7 +4,7 @@ import {
     SearchAndButtonHeaderPage
 } from "@/components/searchAndButton/SearchAndButtonHeaderPage";
 import { TableSkeleton } from "@/components/table/TableSkeleton";
-import { PageTableProps } from "@/types/PageTableProps.type";
+import { PageTableProps } from "@/types/page";
 
 export function PageTable<T>({
     titlePage,

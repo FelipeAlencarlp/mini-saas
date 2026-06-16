@@ -1,6 +1,4 @@
-import {
-    ViewServiceOrderModalProps
-} from "@/types/modal/service_orders/ViewServiceOrderModalProps";
+import { ViewServiceOrderModalProps } from "@/types/modal/service_order";
 import {
     useViewServiceOrderModalActions
 } from "@/hooks/service_orders/actions/useViewServiceOrderModalActions";

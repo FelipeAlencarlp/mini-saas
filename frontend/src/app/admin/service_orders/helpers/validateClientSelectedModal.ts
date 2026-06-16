@@ -1,7 +1,7 @@
-import { ClientType } from "@/types/dashboard/clients/Client.type";
+import { ClientProps } from "@/types/dashboard/client";
 
 interface ServiceOrderModalProps {
-    client: ClientType | null;
+    client: ClientProps | null;
 }
 
 interface ValidationErrors {

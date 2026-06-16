@@ -1,4 +1,4 @@
-import { TableSkeletonProps } from "@/types/table/TableSkeletonProps.type";
+import { TableSkeletonProps } from "@/types/table";
 
 export function TableSkeleton({
     columns,

@@ -1,12 +1,4 @@
-interface ButtonProps {
-    children: React.ReactNode;
-    type?: 'button' | 'submit' | 'reset';
-    Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    className: string;
-    disabled?: boolean;
-    title?: string;
-}
+import { ButtonProps } from "@/types/form";
 
 export function Button({
     children,

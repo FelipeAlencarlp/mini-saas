@@ -4,9 +4,7 @@ import { BaseCardServiceOrder } from "./BaseCardServiceOrder";
 import { SelectProductServiceOrder } from "./SelectProductServiceOrder";
 import { ProductsListServiceOrder } from "./ProductsListServiceOrder";
 import { TotalsServiceOrder } from "./TotalsServiceOrder";
-import {
-    EditServiceOrderModalProps
-} from "@/types/modal/service_orders/EditServiceOrderModalProps";
+import { EditServiceOrderModalProps } from "@/types/modal/service_order";
 import {
     useEditServiceOrderModalActions
 } from "@/hooks/service_orders/actions/useEditServiceOrderModalActions";
