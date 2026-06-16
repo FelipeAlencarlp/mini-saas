@@ -35,7 +35,9 @@ export default function ServiceOrdersPage() {
         handleDelete,
         handlePageClick,
         createServiceOrderMutation,
+        cancelServiceOrderMutation,
         updateServiceOrderMutation,
+        finishServiceOrderMutation,
         deleteServiceOrderMutation,
     } = useServiceOrdersActions({
         closeModal: () => setModal(null)
@@ -102,7 +104,9 @@ export default function ServiceOrdersPage() {
                 onCancel={handleCancel}
                 onConfirm={handleUpdate}
                 onFinish={handleFinish}
-                isPending={updateServiceOrderMutation.isPending}
+                isCancelPending={cancelServiceOrderMutation.isPending}
+                isUpdatePending={updateServiceOrderMutation.isPending}
+                isFinishPending={finishServiceOrderMutation.isPending}
             />
 
             <ViewServiceOrderModal

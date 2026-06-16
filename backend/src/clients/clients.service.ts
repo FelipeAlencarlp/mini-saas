@@ -29,7 +29,7 @@ export class ClientsService {
             {
                 where,
                 select: customerSelect,
-                orderBy: { id: 'asc' }
+                orderBy: { createdAt: 'desc' }
             }
         );
     }

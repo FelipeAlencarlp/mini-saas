@@ -27,6 +27,8 @@ export function useCreateServiceOrderModalActions({
 
     const [subtotal, setSubtotal] = useState<number>(0);
     const [quantityProduct, setQuantityProduct] = useState<number>(0);
+    
+    const [action, setAction] = useState<string | null>(null);
 
     const [clientError, setClientError] = useState({ client: '' });
     const [productIdError, setProductIdError] = useState({ productId: '' });
@@ -169,6 +171,8 @@ export function useCreateServiceOrderModalActions({
                 quantity: item.quantity,
             }))
         );
+
+        setAction(null);
     }
 
     function handleCloseClient() {
@@ -202,6 +206,7 @@ export function useCreateServiceOrderModalActions({
         items,
         search,
         client,
+        action,
         clients,
         products,
         subtotal,
@@ -215,6 +220,7 @@ export function useCreateServiceOrderModalActions({
 
         setSearch,
         setClient,
+        setAction,
         setProductId,
         setClientError,
         setIsOpenSearch,

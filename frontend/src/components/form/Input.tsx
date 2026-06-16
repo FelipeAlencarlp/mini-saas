@@ -22,7 +22,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
             <div className="relative mt-6">
                 {prefix && (
                     <span className="
-                        absolute left-3.5 top-[58%]
+                        absolute left-3.5 top-[54%]
                         text-gray-400 -translate-y-1/2
                     ">
                         {prefix}

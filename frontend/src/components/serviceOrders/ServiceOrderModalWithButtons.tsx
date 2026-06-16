@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BaseServiceOrderModal } from './BaseServiceOrderModal';
 import { Button } from '../form/Button';
 import {
@@ -11,35 +10,17 @@ export function ServiceOrderModalWithButtons({
     children,
     items = [],
     isOpen,
-    isPending,
+    action,
     optionTitle,
     optionTitle1,
     optionTitle2,
+    isCancelPending,
+    isUpdatePending,
+    isFinishPending,
+    setAction,
     onClose,
-    onCancelOrder,
-    onUpdateOrder,
-    onFinishOrder
+    onConfirm
 }: ServiceOrderModalWithButtonsProps) {
-    const [action, setAction] = useState<ActionType>(null);
-
-    function handleConfirm() {
-        switch (action) {
-            case 'cancel':
-                onCancelOrder?.();
-                break;
-
-            case 'update':
-                onUpdateOrder?.();
-                break;
-
-            case 'finish':
-                onFinishOrder?.();
-                break;
-        }
-
-        setAction(null);
-    }
-
     const modalConfig = {
         cancel: {
             title: 'Cancelar Ordem',
@@ -84,7 +65,7 @@ export function ServiceOrderModalWithButtons({
                         <Button
                             type="submit"
                             onClick={() => setAction('cancel')}
-                            disabled={isPending}
+                            disabled={isCancelPending}
                             className="
                                 w-64
                                 bg-gray-500
@@ -95,7 +76,7 @@ export function ServiceOrderModalWithButtons({
                                 font-semibold
                             "
                         >
-                            {isPending
+                            {isCancelPending
                                 ? `${optionTitle?.[0] ?? ""}`
                                 : `${optionTitle?.[1] ?? ""}`
                             }
@@ -104,7 +85,7 @@ export function ServiceOrderModalWithButtons({
                         <Button
                             type="submit"
                             onClick={() => setAction('update')}
-                            disabled={isPending}
+                            disabled={isUpdatePending}
                             className="
                                 w-64
                                 bg-blue-500
@@ -115,7 +96,7 @@ export function ServiceOrderModalWithButtons({
                                 font-semibold
                             "
                         >
-                            {isPending
+                            {isUpdatePending
                                 ? `${optionTitle1?.[0] ?? ""}`
                                 : `${optionTitle1?.[1] ?? ""}`
                             }
@@ -124,7 +105,7 @@ export function ServiceOrderModalWithButtons({
                         <Button
                             type="submit"
                             onClick={() => setAction('finish')}
-                            disabled={isPending}
+                            disabled={isFinishPending}
                             className="
                                 w-64
                                 bg-orange-500
@@ -135,7 +116,7 @@ export function ServiceOrderModalWithButtons({
                                 font-semibold
                             "
                         >
-                            {isPending
+                            {isFinishPending
                                 ? `${optionTitle2?.[0] ?? ""}`
                                 : `${optionTitle2?.[1] ?? ""}`
                             }
@@ -146,12 +127,11 @@ export function ServiceOrderModalWithButtons({
 
             <ConfirmActionModal
                 isOpen={!!action}
-                isPending={isPending}
                 onClose={() => setAction(null)}
-                onConfirm={handleConfirm}
-                title={action ? modalConfig[action].title : ''}
+                onConfirm={onConfirm}
+                title="Atenção"
                 description={action ? modalConfig[action].description : ''}
-                confirmText={action ? modalConfig[action].confirmText : ''}
+                confirmText="Confirmar"
             />
         </>
     );

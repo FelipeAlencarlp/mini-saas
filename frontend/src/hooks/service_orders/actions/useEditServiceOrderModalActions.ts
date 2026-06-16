@@ -3,7 +3,7 @@ import {
     validateProductSelectedModal
 } from "@/app/admin/service_orders/helpers/validateProductSelectedModal";
 import { ClientProps } from "@/types/dashboard/client";
-import { EditServiceOrderModalProps } from "@/types/modal/service_order";
+import { ActionType, EditServiceOrderModalProps } from "@/types/modal/service_order";
 import { ItemProps } from "@/types/dashboard/service_order";
 import { useProductsQuery } from "@/hooks/products/useProductsQuery";
 import { useClientsQuery } from "@/hooks/client/useClientsQuery";
@@ -23,6 +23,8 @@ export function useEditServiceOrderModalActions({
 
     const [subtotal, setSubtotal] = useState<number>(0);
     const [quantityProduct, setQuantityProduct] = useState<number>(0);
+
+    const [action, setAction] = useState<ActionType>(null);
 
     const [productIdError, setProductIdError] = useState({ productId: '' });
 
@@ -152,9 +154,27 @@ export function useEditServiceOrderModalActions({
         onCancel(id);
     }
 
-    function handleUpdateOrder() {
-        if (!client) return;
+    function handleConfirm() {
+        switch (action) {
+            case 'cancel':
+                handleCancelOrder?.();
+                break;
 
+            case 'update':
+                handleUpdateOrder?.();
+                break;
+
+            case 'finish':
+                handleFinishOrder?.();
+                break;
+        }
+
+        setAction(null);
+    }
+
+    function handleUpdateOrder() {
+        console.log(id)
+        console.log(items)
         onConfirm(
             id,
             items.map(item => ({
@@ -181,6 +201,7 @@ export function useEditServiceOrderModalActions({
     return {
         items,
         client,
+        action,
         products,
         subtotal,
         productId,
@@ -189,14 +210,13 @@ export function useEditServiceOrderModalActions({
         productIdInputRef,
 
         setClient,
+        setAction,
         setProductId,
         setProductIdError,
 
         handleClose,
+        handleConfirm,
         handleAddProduct,
-        handleUpdateOrder,
-        handleCancelOrder,
-        handleFinishOrder,
         handleChangeQuantity,
         handleRemoveProductList,
     };

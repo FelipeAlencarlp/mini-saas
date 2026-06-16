@@ -25,6 +25,18 @@ export function getProductsTableColumns({
             format: "number"
         },
         {
+            header: 'CRIADO EM',
+            accessor: 'createdAt',
+            render: (product) =>
+                new Date(product.createdAt ?? '').toLocaleString("pt-BR")
+        },
+        {
+            header: 'ATUALIZADO EM',
+            accessor: 'updatedAt',
+            render: (product) =>
+                new Date(product.updatedAt ?? '').toLocaleString("pt-BR")
+        },
+        {
             header: 'AÇÕES',
             accessor: 'actions',
             render: (product: ProductProps) => (

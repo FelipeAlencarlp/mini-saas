@@ -34,7 +34,7 @@ export class ProductsService {
       {
         where,
         select: customerSelect,
-        orderBy: { id: 'asc' }
+        orderBy: { createdAt: 'desc' }
       }
     );
 

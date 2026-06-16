@@ -3,7 +3,6 @@ import { ConfirmActionModalProps } from "@/types/modal/service_order";
 
 export function ConfirmActionModal({
     isOpen,
-    isPending,
     title,
     description,
     confirmText,
@@ -16,7 +15,6 @@ export function ConfirmActionModal({
             isOpen={isOpen}
             onClose={onClose}
             onClick={onConfirm}
-            isPending={isPending}
             optionTitle={['Processando...', confirmText]}
         >
             <p className="text-center text-gray-600 text-lg mt-4">

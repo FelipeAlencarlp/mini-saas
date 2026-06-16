@@ -3,5 +3,7 @@ export const customerSelect = {
     name: true,
     email: true,
     phone: true,
-    orders: true
+    orders: true,
+    createdAt: true,
+    updatedAt: true,
 };

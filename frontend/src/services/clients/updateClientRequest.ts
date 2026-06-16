@@ -9,8 +9,8 @@ export async function updateClientRequest({
 }: UpdateClientRequest) {
     const payload = {
         name,
-        ...(email && { email }),
-        ...(phone && { phone }),
+        email: email?.trim() === '' ? null : email,
+        phone: phone?.trim() === '' ? null : phone
     };
 
     const response = await api.patch(`/clients/${id}`, payload);

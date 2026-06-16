@@ -29,7 +29,15 @@ export function useEditProductModalActions({
         if (isOpen && product) {
             setId(product.id);
             setName(product.name);
-            setPrice(String(product?.price));
+            setPrice(
+                Number(product.price).toLocaleString(
+                    'pt-BR',
+                    {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                    }
+                )
+            );
             setQuantity(String(product?.quantity));
         }
     }, [isOpen, product]);

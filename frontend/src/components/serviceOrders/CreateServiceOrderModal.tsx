@@ -22,6 +22,7 @@ export function CreateServiceOrderModal({
         items,
         client,
         search,
+        action,
         clients,
         products,
         subtotal,
@@ -34,6 +35,7 @@ export function CreateServiceOrderModal({
         productIdInputRef,
         setClient,
         setSearch,
+        setAction,
         setProductId,
         setClientError,
         setProductIdError,
@@ -85,6 +87,8 @@ export function CreateServiceOrderModal({
             {/* Service Order */}
             <ServiceOrderModal
                 isOpen={isOpen && step === 'serviceOrder'}
+                action={action}
+                setAction={setAction}
                 onClose={handleClose}
                 onClick={handleSubmit}
                 isPending={isPending}

@@ -27,14 +27,14 @@ export function useServiceOrdersActions({
     const finishServiceOrderMutation = useFinishServiceOrder();
     const deleteServiceOrderMutation = useDeleteServiceOrder();
 
-    function handleCreate(
+    async function handleCreate(
         clientId: number,
         items: {
             productId: number,
             quantity: number
         }[]
     ) {
-        createServiceOrderMutation.mutate({
+        await createServiceOrderMutation.mutateAsync({
             clientId,
             items
         });
@@ -42,20 +42,20 @@ export function useServiceOrdersActions({
         closeModal();
     }
 
-    function handleCancel(id: number) {
-        cancelServiceOrderMutation.mutate({ id });
+    async function handleCancel(id: number) {
+        await cancelServiceOrderMutation.mutateAsync({ id });
         
         closeModal();
     }
 
-    function handleUpdate(
+    async function handleUpdate(
         id: number,
         items: {
             productId: number,
             quantity: number
         }[]
     ) {
-        updateServiceOrderMutation.mutate({
+        await updateServiceOrderMutation.mutateAsync({
             id,
             items
         });
@@ -63,14 +63,14 @@ export function useServiceOrdersActions({
         closeModal();
     }
 
-    function handleFinish(id: number) {
-        finishServiceOrderMutation.mutate({ id });
+    async function handleFinish(id: number) {
+        await finishServiceOrderMutation.mutateAsync({ id });
 
         closeModal();
     }
 
-    function handleDelete(id: number) {
-        deleteServiceOrderMutation.mutate({ id });
+    async function handleDelete(id: number) {
+        await deleteServiceOrderMutation.mutateAsync({ id });
 
         closeModal();
     }
@@ -95,7 +95,9 @@ export function useServiceOrdersActions({
         handlePageClick,
 
         createServiceOrderMutation,
+        cancelServiceOrderMutation,
         updateServiceOrderMutation,
+        finishServiceOrderMutation,
         deleteServiceOrderMutation,
     };
 }

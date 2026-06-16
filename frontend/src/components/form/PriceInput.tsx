@@ -14,7 +14,6 @@ export const PriceInput = forwardRef<
     error,
     onChange
 }, ref) => {
-
     function handleChange(
         e: React.ChangeEvent<HTMLInputElement>
     ) {

@@ -17,6 +17,18 @@ export function getClientTableColumns({
         { header: 'E-MAIL', accessor: 'email' },
         { header: 'TELEFONE', accessor: 'phone' },
         {
+            header: 'CRIADO EM',
+            accessor: 'createdAt',
+            render: (client) =>
+                new Date(client.createdAt ?? '').toLocaleString("pt-BR")
+        },
+        {
+            header: 'ATUALIZADO EM',
+            accessor: 'updatedAt',
+            render: (client) =>
+                new Date(client.updatedAt?? '').toLocaleString("pt-BR")
+        },
+        {
             header: 'AÇÕES',
             accessor: 'actions',
             render: (client: ClientProps) => (

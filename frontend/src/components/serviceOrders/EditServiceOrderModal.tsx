@@ -12,28 +12,30 @@ import {
 export function EditServiceOrderModal({
     serviceOrder,
     isOpen,
+    isCancelPending,
+    isUpdatePending,
+    isFinishPending,
     onClose,
     onCancel,
     onConfirm,
     onFinish,
-    isPending
 }: EditServiceOrderModalProps) {
     const {
         items,
         client,
+        action,
         products,
         subtotal,
         productId,
         productIdError,
         quantityProduct,
         productIdInputRef,
+        setAction,
         setProductId,
         setProductIdError,
         handleClose,
+        handleConfirm,
         handleAddProduct,
-        handleUpdateOrder,
-        handleCancelOrder,
-        handleFinishOrder,
         handleChangeQuantity,
         handleRemoveProductList,
     } = useEditServiceOrderModalActions({
@@ -47,13 +49,15 @@ export function EditServiceOrderModal({
 
     return (
         <ServiceOrderModalWithButtons
-            isOpen={isOpen}
-            onClose={handleClose}
-            onCancelOrder={handleCancelOrder}
-            onUpdateOrder={handleUpdateOrder}
-            onFinishOrder={handleFinishOrder}
-            isPending={isPending}
             items={items}
+            isOpen={isOpen}
+            action={action}
+            setAction={setAction}
+            onClose={handleClose}
+            onConfirm={handleConfirm}
+            isCancelPending={isCancelPending}
+            isUpdatePending={isUpdatePending}
+            isFinishPending={isFinishPending}
             optionTitle={['Cancelando...', 'Cancelar']}
             optionTitle1={['Atualizando...', 'Atualizar']}
             optionTitle2={['Finalizando...', 'Finalizar']}
