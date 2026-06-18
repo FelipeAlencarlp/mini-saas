@@ -1,14 +1,5 @@
-"use client";
+import UsersPage from "@/components/user/UsersPage";
 
-import { TitlePage } from "@/components/dashboard/titlePage/TitlePage";
-
-export default function UsersPage() {
-
-    // TODO: Construir página e usuários e roles
-
-    return (
-        <div>
-            <TitlePage>Usuários</TitlePage>
-        </div>
-    );
+export default function Users() {
+    return <UsersPage />;
 }

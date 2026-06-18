@@ -7,10 +7,6 @@ export interface FormProps {
     isPending: boolean;
     titlesButton: string[] | '';
     Icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-    childrenP: React.ReactNode;
-    href: string;
-    titleLink: string;
-    childrenLink: React.ReactNode;
     onSubmit: (e: React.SubmitEvent<HTMLFormElement>) => void;
 }
 

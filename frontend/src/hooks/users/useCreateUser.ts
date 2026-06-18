@@ -1,17 +1,20 @@
-import { useMutation } from "@tanstack/react-query";
-import { useToast } from "./useToast";
-import { registerRequest } from "@/services/users/registerRequest";
-import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createUserRequest } from "@/services/users/createUserRequest";
+import { useToast } from "../useToast";
 
-export function useRegisterUser() {
-    const router = useRouter();
+export function useCreateUser() {
+    const queryClient = useQueryClient();
     const { showToast } = useToast();
 
     return useMutation({
-        mutationFn: registerRequest,
+        mutationFn: createUserRequest,
 
         onSuccess: async () => {
-            router.push('/login?success=registered');
+            await queryClient.invalidateQueries({
+                queryKey: ['users']
+            });
+            
+            showToast('Usuário criado com sucesso', 'success');
         },
 
         onError: (error: any) => {

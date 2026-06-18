@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { useToast } from "./useToast";
-import { useAuth } from "./useAuth";
+import { useToast } from "../useToast";
+import { useAuth } from "../useAuth";
 import { loginRequest } from "@/app/login/helpers/loginRequest";
 
 export function useLogin() {

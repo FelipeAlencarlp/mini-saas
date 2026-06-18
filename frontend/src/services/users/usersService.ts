@@ -1,7 +1,7 @@
 import { api } from "@/services/api";
-import { UserType } from "@/types/User.type";
+import { UserProps } from "@/types/user";
 
-export async function getUser(): Promise<UserType> {
+export async function getUser(): Promise<UserProps> {
     const response = await api.get('/users/user');
     const { sub, username, useremail } = response.data.data;
     

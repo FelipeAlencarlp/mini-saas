@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button } from "./Button";
 import { FormProps } from "@/types/form";
 
@@ -9,10 +8,6 @@ export function Form({
     isPending,
     titlesButton,
     Icon,
-    childrenP,
-    href,
-    titleLink,
-    childrenLink,
     onSubmit
 }: FormProps) {
     return (
@@ -55,20 +50,6 @@ export function Form({
                         : `${titlesButton?.[1] ?? ""}`
                     }
                 </Button>
-
-                <p className="text-gray-800 text-center">
-                    {childrenP}
-                    <Link
-                        href={href}
-                        className="
-                            pl-1 font-bold cursor pointer
-                            hover:underline
-                        "
-                        title={titleLink}
-                    >
-                        {childrenLink}
-                    </Link>
-                </p>
             </form>
         </div>
     );

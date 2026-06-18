@@ -103,12 +103,6 @@ export interface CreateRequest {
     }[];
 }
 
-export interface RegisterRequest {
-    name: string;
-    email: string;
-    password: string;
-}
-
 export interface UpdateRequest {
     id: number;
     items: {

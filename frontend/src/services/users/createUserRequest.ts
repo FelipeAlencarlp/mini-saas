@@ -1,11 +1,11 @@
 import { api } from "@/services/api";
-import { RegisterRequest } from "@/types/dashboard/service_order";
+import { CreateUserRequestProps } from "@/types/dashboard/user";
 
-export async function registerRequest({
+export async function createUserRequest({
     name,
     email,
     password
-}: RegisterRequest) {
+}: CreateUserRequestProps) {
     const response = await api.post('/auth/register', {
         name,
         email,

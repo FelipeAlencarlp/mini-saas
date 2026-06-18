@@ -1,17 +1,20 @@
 export function SidebarSkeleton() {
     return (
         <aside className="
-                fixed top-0 left-0 z-50
-                w-64 h-screen bg-gray-800
+                fixed left-0 top-17 z-50
+                w-64
+                h-[calc(100vh-68px)]
+                bg-gray-800
 
-                md:translate-x-0 md:static
+                transform transition-transform duration-300
+                md:translate-x-0
                 flex flex-col
             "
         >
             {/* Header */}
             <div className="
-                    flex items-center justify-between
-                    p-5 border-b border-gray-700
+                    md:hidden flex items-center
+                    justify-between p-5 border-b
                     animate-pulse
                 "
             >

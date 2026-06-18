@@ -1,24 +1,15 @@
-interface ValidateLoginFormProps {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
+import {
+    UserModalProps,
+    ValidationUserErrorsProps
+} from "@/types/modal/user";
 
-interface ValidationErrors {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
-
-export function validateRegisterForm({
+export function validateUserModal({
     name,
     email,
     password,
     confirmPassword
-}: ValidateLoginFormProps): ValidationErrors {
-    const errors: ValidationErrors = {
+}: UserModalProps): ValidationUserErrorsProps {
+    const errors: ValidationUserErrorsProps = {
         name: '',
         email: '',
         password: '',
