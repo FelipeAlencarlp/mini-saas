@@ -1,12 +1,9 @@
 import { api } from "@/services/api";
-import {
-    ServiceOrdersProps,
-    CancelRequest
-} from "@/types/dashboard/service_order";
+import { ServiceOrdersProps } from "@/types/dashboard/service_order";
 
 export async function cancelServiceOrderRequest({
     id
-}: CancelRequest): Promise<ServiceOrdersProps> {
+}: { id: number }): Promise<ServiceOrdersProps> {
     const response = await api.patch(
         `/service-orders/cancel-order/${id}`
     );

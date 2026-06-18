@@ -42,18 +42,6 @@ export interface ServiceOrderClientModalProps {
     client: ClientProps | null;
 }
 
-export interface ServiceOrderValidationClientErrors {
-    client: string
-}
-
-export interface ServiceOrderProductModalProps {
-    productId: string;
-}
-
-export interface ServiceOrderValidationProductErrors {
-    productId: string
-}
-
 // Items
 export interface ItemProps {
     product: ProductProps;
@@ -109,16 +97,4 @@ export interface UpdateRequest {
         productId: number,
         quantity: number
     }[];
-}
-
-export interface CancelRequest {
-    id: number;
-}
-
-export interface DeleteRequest {
-    id: number;
-}
-
-export interface FinishRequest {
-    id: number;
 }

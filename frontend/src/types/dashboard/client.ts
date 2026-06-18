@@ -43,7 +43,3 @@ export interface UpdateClientRequest {
     email?: string;
     phone?: string;
 }
-
-export interface DeleteClientRequest {
-    id: number;
-}

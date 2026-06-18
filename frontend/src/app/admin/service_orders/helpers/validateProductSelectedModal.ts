@@ -1,12 +1,7 @@
-import {
-    ServiceOrderProductModalProps,
-    ServiceOrderValidationProductErrors
-} from "@/types/dashboard/service_order";
-
 export function validateProductSelectedModal({
     productId,
-}: ServiceOrderProductModalProps): ServiceOrderValidationProductErrors {
-    const error: ServiceOrderValidationProductErrors = {
+}: { productId: string }): { productId: string } {
+    const error: { productId: string } = {
         productId: ''
     };
 

@@ -43,7 +43,3 @@ export interface UpdateProductRequest {
     price: number;
     quantity: number;
 }
-
-export interface DeleteProductRequest {
-    id: number;
-}
