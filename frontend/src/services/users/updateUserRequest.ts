@@ -4,13 +4,11 @@ import { UpdateUserRequestProps } from "@/types/dashboard/user";
 export async function updateUserRequest({
     id,
     name,
-    email,
-    password
+    email
 }: UpdateUserRequestProps) {
     const response = await api.patch(`/users/${id}`, {
         name,
-        email,
-        password
+        email
     });
 
     return response.data.data;

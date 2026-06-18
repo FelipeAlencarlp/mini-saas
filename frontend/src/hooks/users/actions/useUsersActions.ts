@@ -38,14 +38,12 @@ export function useUsersActions({ closeModal }: UseUsersActionsProps) {
     async function handleUpdate(
         id: number,
         name: string,
-        email: string,
-        password: string
+        email: string
     ) {
         await updateUserMutation.mutateAsync({
             id,
             name,
-            email,
-            password
+            email
         });
 
         closeModal();

@@ -6,7 +6,7 @@ export async function createUserRequest({
     email,
     password
 }: CreateUserRequestProps) {
-    const response = await api.post('/auth/register', {
+    const response = await api.post('/users', {
         name,
         email,
         password

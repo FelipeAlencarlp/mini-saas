@@ -1,19 +1,12 @@
-import {
-    UserModalProps,
-    ValidationUserErrorsProps
-} from "@/types/modal/user";
+import { ValidationUserProps } from "@/types/modal/user";
 
 export function validateUserModal({
     name,
-    email,
-    password,
-    confirmPassword
-}: UserModalProps): ValidationUserErrorsProps {
-    const errors: ValidationUserErrorsProps = {
+    email
+}: ValidationUserProps): ValidationUserProps {
+    const errors: ValidationUserProps = {
         name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+        email: ''
     };
 
     // Name
@@ -28,20 +21,6 @@ export function validateUserModal({
         errors.email = 'E-mail obrigatório';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
         errors.email = 'E-mail inválido';
-    }
-
-    // Password
-    if (!password) {
-        errors.password = 'Senha é obrigatória'
-    } else if (password.length < 4) {
-        errors.password = 'Senha deve ter no mínimo 4 caracteres';
-    }
-
-    // ConfirmPassword
-    if (!confirmPassword) {
-        errors.confirmPassword = 'Obrigatório confirmar a senha.';
-    } else if (confirmPassword !== password) {
-        errors.confirmPassword = 'As senhas não são iguais.';
     }
 
     return errors;

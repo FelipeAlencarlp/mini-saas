@@ -24,8 +24,7 @@ export interface EditUserModalProps {
     onConfirm: (
         id: number,
         name: string,
-        email: string,
-        password: string
+        email: string
     ) => void;
     isPending?: boolean;
 }
@@ -38,9 +37,14 @@ export interface UserModalProps {
     confirmPassword?: string;
 }
 
+export interface ValidationUserProps {
+    name: string;
+    email: string;
+}
+
 export interface ValidationUserErrorsProps {
     name: string;
     email: string;
     password: string;
-    confirmPassword?: string;
+    confirmPassword: string;
 }

@@ -45,7 +45,7 @@ export function CreateUserModal({
         >
             <Input
                 label="Nome"
-                bgLabel="bg-white"
+                bgLabel="bg-gray-200"
                 ref={nameInputRef}
                 id="name-create-input-modal"
                 name="name"
@@ -65,7 +65,7 @@ export function CreateUserModal({
 
             <Input
                 label="E-mail"
-                bgLabel="bg-white"
+                bgLabel="bg-gray-200"
                 ref={emailInputRef}
                 id="email-create-input-modal"
                 name="email"
@@ -85,7 +85,7 @@ export function CreateUserModal({
 
             <Input
                 label="Senha"
-                bgLabel="bg-white"
+                bgLabel="bg-gray-200"
                 ref={passwordInputRef}
                 id="password-create-input-modal"
                 name="password"
@@ -105,7 +105,7 @@ export function CreateUserModal({
 
             <Input
                 label="Confirmar Senha"
-                bgLabel="bg-white"
+                bgLabel="bg-gray-200"
                 ref={confirmPasswordInputRef}
                 id="confirmPassword-create-input-modal"
                 name="confirmPassword"

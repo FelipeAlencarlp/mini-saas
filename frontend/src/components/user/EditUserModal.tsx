@@ -15,15 +15,12 @@ export function EditUserModal({
     const {
         name,
         email,
-        password,
         errors,
         nameInputRef,
         emailInputRef,
-        passwordInputRef,
         setName,
         setEmail,
         setErrors,
-        setPassword,
         handleSubmit,
         handleClose
     } = useEditUserModalActions({
@@ -44,7 +41,7 @@ export function EditUserModal({
         >
             <Input
                 label="Nome"
-                bgLabel="bg-white"
+                bgLabel="bg-gray-200"
                 ref={nameInputRef}
                 id="name-edit-input-modal"
                 name="name"
@@ -55,15 +52,14 @@ export function EditUserModal({
                     setName(e.target.value);
                     setErrors({
                         name: '',
-                        email: errors.email,
-                        password: errors.password,
+                        email: errors.email
                     });
                 }}
             />
 
             <Input
                 label="E-mail"
-                bgLabel="bg-white"
+                bgLabel="bg-gray-200"
                 ref={emailInputRef}
                 id="email-edit-input-modal"
                 name="email"
@@ -74,27 +70,7 @@ export function EditUserModal({
                     setEmail(e.target.value);
                     setErrors({
                         name: errors.name,
-                        email: '',
-                        password: errors.password,
-                    });
-                }}
-            />
-
-            <Input
-                label="Senha"
-                bgLabel="bg-white"
-                ref={passwordInputRef}
-                id="password-edit-input-modal"
-                name="password"
-                type="password"
-                value={password}
-                error={errors.password}
-                onChange={(e) => {
-                    setPassword(e.target.value);
-                    setErrors({
-                        name: errors.name,
-                        email: errors.email,
-                        password: '',
+                        email: ''
                     });
                 }}
             />

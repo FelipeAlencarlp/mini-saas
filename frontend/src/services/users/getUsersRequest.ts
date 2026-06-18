@@ -5,7 +5,7 @@ export async function getUsersRequest(
     search: string,
     page: number
 ): Promise<UsersResponseProps> {
-    const response = await api.get('/users', {
+    const response = await api.get('/users/users', {
         params: {
             filter: search,
             page,

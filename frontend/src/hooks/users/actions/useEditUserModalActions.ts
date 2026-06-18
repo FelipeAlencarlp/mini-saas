@@ -11,32 +11,27 @@ export function useEditUserModalActions({
     const [id, setId] = useState<number>(0);
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
 
     const [errors, setErrors] = useState({
         name: '',
-        email: '',
-        password: ''
+        email: ''
     });
 
     const nameInputRef = useRef<HTMLInputElement>(null);
     const emailInputRef = useRef<HTMLInputElement>(null);
-    const passwordInputRef = useRef<HTMLInputElement>(null);
     
     useEffect(() => {
         if (isOpen && user) {
             setId(user.id);
             setName(user.name);
             setEmail(user.email);
-            setPassword(user.password);
         }
     }, [isOpen, user]);
 
     function handleSubmit() {
         const validationErrors = validateUserModal({
             name,
-            email,
-            password
+            email
         });
 
         setErrors(validationErrors);
@@ -51,16 +46,10 @@ export function useEditUserModalActions({
             return;
         }
 
-        if (validationErrors.password) {
-            passwordInputRef.current?.focus();
-            return;
-        }
-
         onConfirm(
             id,
             name.trim(),
-            email.trim(),
-            password.trim()
+            email.trim()
         );
     }
 
@@ -72,25 +61,21 @@ export function useEditUserModalActions({
     function resetForm() {
         setErrors({
             name: '',
-            email: '',
-            password: ''
+            email: ''
         });
     }
 
     return {
         name,
         email,
-        password,
         errors,
 
         nameInputRef,
         emailInputRef,
-        passwordInputRef,
 
         setName,
         setEmail,
         setErrors,
-        setPassword,
 
         handleSubmit,
         handleClose
