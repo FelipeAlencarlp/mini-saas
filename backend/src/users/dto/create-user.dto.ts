@@ -1,7 +1,7 @@
 import { IsString, IsEmail, IsNotEmpty, MinLength } from "class-validator";
 import { IsUniqueEmail } from "../decorators/IsUniqueEmail.decorator";
 
-export class RegisterUserDto {
+export class CreateUserDto {
     @IsString()
     @MinLength(3, { message: 'O nome precisar ter 3 ou mais caracteres.' })
     @IsNotEmpty({ message: 'O nome é obrigatório.' })

@@ -1,7 +1,14 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { RegisterUserDto } from './dto/register-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { paginate } from '../common/paginate/paginate';
 import { UserEntity } from '../auth/entity/user.entity';
+import { PaginatedResult } from '../common/types/paginated-result.type';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -12,15 +19,32 @@ export class UsersService {
         id: true,
         name: true,
         email: true,
-        orders: true
+        orders: true,
+        createdAt: true,
+        updatedAt: true
     };
 
-    async findAll(): Promise<UserEntity[]> {
-        return await this.prisma.user.findMany({
-            where: { deletedAt: null },
-            select: this.customerSelect,
-            orderBy: { id: 'asc' }
-        });
+    async findAll(
+        page: string,
+        limit: string,
+        filter?: string
+    ): Promise<PaginatedResult<UserEntity>> {
+        const where = filter
+            ? {
+                name: { contains: filter, mode: 'insensitive' },
+                deletedAt: null
+                }
+            : { deletedAt: null };
+
+        return paginate(
+            this.prisma.user,
+            { page, limit },
+            {
+                where,
+                select: this.customerSelect,
+                orderBy: { createdAt: 'desc' }
+            }
+        );
     }
 
     async findOneByEmail(email: string): Promise<any> {
@@ -42,7 +66,7 @@ export class UsersService {
         return user;
     }
 
-    async create(dto: RegisterUserDto): Promise<UserEntity> {
+    async create(dto: CreateUserDto): Promise<UserEntity> {
         const emailExists = await this.findOneByEmail(dto.email);
 
         if (emailExists) {
@@ -59,5 +83,42 @@ export class UsersService {
                 email: true
             }
         });
+    }
+
+    async update(
+        id: number,
+        dto: UpdateUserDto
+    ): Promise<UserEntity> {
+        const user = await this.findOne(id);
+
+        return await this.prisma.user.update({
+            where: { id: user.id },
+            data: { 
+                ...dto,
+                updatedAt: new Date()
+            }
+        });
+    }
+
+    async remove(id: number): Promise<{ userRemoved: boolean }> {
+        const user = await this.findOne(id);
+
+        await this.prisma.user.update({
+            where: { id: user.id },
+            data: { deletedAt: new Date() }
+        });
+
+        return { userRemoved: true };
+    }
+
+    async restore(id: number): Promise<{ userRestored: boolean }> {
+        const user = await this.findOne(id);
+
+        await this.prisma.user.update({
+            where: { id: user.id },
+            data: { deletedAt: null }
+        });
+
+        return { userRestored: true };
     }
 }
