@@ -3,13 +3,12 @@ import { BaseCardServiceOrder } from "./BaseCardServiceOrder";
 import { SelectProductServiceOrder } from "./SelectProductServiceOrder";
 import { ProductsListServiceOrder } from "./ProductsListServiceOrder";
 import { TotalsServiceOrder } from "./TotalsServiceOrder";
-import { Modal } from "../modal/Modal";
 import { ServiceOrderModal } from "./ServiceOrderModal";
-import { SearchInput } from "../form/SearchInput";
 import { CreateServiceOrderModalProps } from "@/types/modal/service_order";
 import {
     useCreateServiceOrderModalActions
 } from "@/hooks/service_orders/actions/useCreateServiceOrderModalActions";
+import { SelectClientModal } from "./SelectClientModal";
 
 export function CreateServiceOrderModal({
     isOpen,
@@ -56,33 +55,27 @@ export function CreateServiceOrderModal({
     return (
         <>
             {/* Select Client */}
-            <Modal
-                title="Escolher Cliente"
+            <SelectClientModal
+                ref={clientInputRef}
+                value={search}
+                isOpenSearch={isOpenSearch}
+                error={clientError.client}
+                results={clients?.data ?? []}
                 isOpen={isOpen && step === 'client'}
+                isPending={isPending}
                 onClose={handleCloseClient}
                 onClick={handleAdvance}
-                isPending={isPending}
-                optionTitle={['Avançando...', 'Avançar']}
-            >
-                <SearchInput
-                    label="Buscar cliente"
-                    ref={clientInputRef}
-                    value={search}
-                    results={clients?.data ?? []}
-                    isOpen={isOpenSearch}
-                    error={clientError.client}
-                    onChange={(e) => {
-                        setSearch(e.target.value);
-                        setIsOpenSearch(true);
-                        setClientError(() => ({ client: '' }))
-                    }}
-                    onSelect={(client) => {
-                        setClient(client);
-                        setSearch(client.name);
-                        setIsOpenSearch(false);
-                    }}
-                />
-            </Modal>
+                onChange={(e) => {
+                    setSearch(e.target.value);
+                    setIsOpenSearch(true);
+                    setClientError(() => ({ client: '' }))
+                }}
+                onSelect={(client) => {
+                    setClient(client);
+                    setSearch(client.name);
+                    setIsOpenSearch(false);
+                }}
+            />
             
             {/* Service Order */}
             <ServiceOrderModal

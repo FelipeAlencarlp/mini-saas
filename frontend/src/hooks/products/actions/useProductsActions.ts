@@ -21,27 +21,27 @@ export function useProductsActions({ closeModal }: UseProductsActionsProps) {
     const updateProductMutation = useUpdateProduct();
     const deleteProductMutation = useDeleteProduct();
 
-    function handleCreate(
+    const handleCreate = async (
         name: string,
         price: number,
         quantity: number
-    ) {
-        createProductMutation.mutate({
+    ) => {
+        await createProductMutation.mutateAsync({
             name,
             price,
             quantity
         });
 
         closeModal();
-    }
+    };
 
-    function handleUpdate(
+    const handleUpdate = async (
         id: number,
         name: string,
         price: number,
         quantity: number
-    ) {
-        updateProductMutation.mutate({
+    ) => {
+        await updateProductMutation.mutateAsync({
             id,
             name,
             price,
@@ -49,13 +49,13 @@ export function useProductsActions({ closeModal }: UseProductsActionsProps) {
         });
 
         closeModal();
-    }
+    };
 
-    function handleDelete(id: number) {
-        deleteProductMutation.mutate({ id });
+    const handleDelete = async (id: number) => {
+        await deleteProductMutation.mutateAsync({ id });
 
         closeModal();
-    }
+    };
 
     function handlePageClick(event: { selected: number }) {
         setPage(event.selected + 1);

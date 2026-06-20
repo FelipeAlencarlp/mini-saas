@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sidebar } from "./sidebar/Sidebar";
 import { Overlay } from "./Overlay";
 import { Header } from "./header/Header";
@@ -16,9 +16,11 @@ export function DashboardLayout() {
 
     const { data: user, isLoading, error } = useUserQuery();
 
-    if (error) {
-        showToast('Erro ao exibir usuário', 'error');
-    }
+    useEffect(() => {
+        if (error) {
+            showToast('Erro ao exibir usuário', 'error');
+        }
+    }, [error]);
 
     return (
         <div>

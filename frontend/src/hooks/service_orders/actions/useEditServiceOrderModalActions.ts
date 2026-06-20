@@ -173,8 +173,6 @@ export function useEditServiceOrderModalActions({
     }
 
     function handleUpdateOrder() {
-        console.log(id)
-        console.log(items)
         onConfirm(
             id,
             items.map(item => ({

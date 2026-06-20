@@ -1,4 +1,5 @@
 import { ItemProps, ServiceOrdersProps } from "@/types/dashboard/service_order";
+import { SearchResult } from "../form";
 
 export type ModalServiceOrdersType =
     | { type: 'create'; }
@@ -18,6 +19,23 @@ export interface ServiceOrderProps {
     setAction: (type: string | null) => void;
     onClose: () => void;
     onClick: () => void;
+}
+
+export interface SelectClientModalProps {
+    value: string;
+    error?: string;
+    isOpen: boolean;
+    results: SearchResult[];
+    isPending?: boolean;
+    isOpenSearch: boolean;
+    onClose: () => void;
+    onClick: () => void;
+    onChange: (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => void;
+    onSelect: (
+        item: SearchResult
+    ) => void;
 }
 
 export interface ViewServiceOrderModalProps {

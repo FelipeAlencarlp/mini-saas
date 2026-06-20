@@ -3,6 +3,7 @@ import {
     validateProductModal
 } from "@/app/admin/products/helpers/validateProductModal";
 import { CreateProductModalProps } from "@/types/modal/product";
+import { ActionType } from "@/types/modal/modal";
 
 export function useCreateProductModalActions({
     isOpen,
@@ -12,6 +13,8 @@ export function useCreateProductModalActions({
     const [name, setName] = useState<string>('');
     const [price, setPrice] = useState<string>('0.01');
     const [quantity, setQuantity] = useState<string>('1');
+
+    const [action, setAction] = useState<ActionType>(null);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -28,10 +31,11 @@ export function useCreateProductModalActions({
             setName('');
             setPrice('0.01');
             setQuantity('1');
+            setAction(null);
         }
     }, [isOpen]);
 
-    function handleSubmit() {
+    const handleSubmit = () => {
         const validationErrors = validateProductModal({
             name,
             price,
@@ -55,6 +59,10 @@ export function useCreateProductModalActions({
             return;
         }
 
+        setAction('create');
+    };
+
+    const handleConfirmCreate = () => {
         onConfirm(
             name.trim(),
             Number(
@@ -64,7 +72,9 @@ export function useCreateProductModalActions({
             ),
             Number(quantity)
         );
-    }
+
+        setAction(null);
+    };
 
     function handleClose() {
         resetForm();
@@ -86,8 +96,9 @@ export function useCreateProductModalActions({
     return {
         name,
         price,
-        quantity,
+        action,
         errors,
+        quantity,
 
         nameInputRef,
         priceInputRef,
@@ -95,10 +106,12 @@ export function useCreateProductModalActions({
 
         setName,
         setPrice,
-        setQuantity,
+        setAction,
         setErrors,
+        setQuantity,
 
+        handleClose,
         handleSubmit,
-        handleClose
+        handleConfirmCreate
     };
 }

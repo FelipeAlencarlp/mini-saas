@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { ActionType } from "@/types/modal/modal";
 import { CreateUserModalProps } from "@/types/modal/user";
 import { validateUserModal } from "@/app/admin/users/helpers/validateUserModal";
 
@@ -11,6 +12,8 @@ export function useCreateUserModalActions({
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+    const [action, setAction] = useState<ActionType>(null);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -25,6 +28,7 @@ export function useCreateUserModalActions({
             setEmail('');
             setPassword('');
             setConfirmPassword('');
+            setAction(null);
         }
     }, [isOpen]);
 
@@ -33,7 +37,7 @@ export function useCreateUserModalActions({
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const confirmPasswordInputRef = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         const validationErrors = validateUserModal({
             name,
             email,
@@ -63,12 +67,18 @@ export function useCreateUserModalActions({
             return;
         }
 
+        setAction('create');
+    }
+
+    const handleConfirmCreate = () => {
         onConfirm(
             name.trim(),
             email.trim(),
             password.trim()
         );
-    }
+
+        setAction(null);
+    };
 
     function handleClose() {
         resetForm();
@@ -92,6 +102,7 @@ export function useCreateUserModalActions({
     return {
         name,
         email,
+        action,
         errors,
         password,
         confirmPassword,
@@ -103,11 +114,13 @@ export function useCreateUserModalActions({
         
         setName,
         setEmail,
+        setAction,
         setErrors,
         setPassword,
         setConfirmPassword,
 
+        handleClose,
         handleSubmit,
-        handleClose
+        handleConfirmCreate,
     };
 }

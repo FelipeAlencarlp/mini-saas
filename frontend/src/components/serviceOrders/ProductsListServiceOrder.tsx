@@ -1,9 +1,7 @@
 import { Button } from "../form/Button";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { Input } from "../form/Input";
-import {
-    ProductsListProps
-} from "@/types/dashboard/service_orders/ProductsListProps.type";
+import { ProductsListProps } from "@/types/dashboard/service_order";
 
 export function ProductsListServiceOrder({
     items,

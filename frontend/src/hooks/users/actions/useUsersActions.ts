@@ -21,11 +21,11 @@ export function useUsersActions({ closeModal }: UseUsersActionsProps) {
     const updateUserMutation = useUpdateUser();
     const deleteUserMutation = useDeleteUser();
 
-    async function handleCreate(
+    const handleCreate = async (
         name: string,
         email: string,
         password: string
-    ) {
+    ) => {
         await createUserMutation.mutateAsync({
             name,
             email,
@@ -33,13 +33,13 @@ export function useUsersActions({ closeModal }: UseUsersActionsProps) {
         });
 
         closeModal();
-    }
+    };
 
-    async function handleUpdate(
+    const handleUpdate = async (
         id: number,
         name: string,
         email: string
-    ) {
+    ) => {
         await updateUserMutation.mutateAsync({
             id,
             name,
@@ -47,13 +47,13 @@ export function useUsersActions({ closeModal }: UseUsersActionsProps) {
         });
 
         closeModal();
-    }
+    };
 
-    async function handleDelete(id: number) {
+    const handleDelete = async (id: number) => {
         await deleteUserMutation.mutateAsync({ id });
 
         closeModal();
-    }
+    };
 
     function handlePageClick(event: { selected: number }) {
         setPage(event.selected + 1);

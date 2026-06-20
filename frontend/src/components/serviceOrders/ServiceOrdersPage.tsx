@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PageTable } from "@/components/PageTable";
 import { DeleteModal } from "@/components/modal/DeleteModal";
 import {
@@ -50,9 +50,11 @@ export default function ServiceOrdersPage() {
         error
     } = useServiceOrdersQuery(debouncedSearch, page);
 
-    if (error) {
-        showToast('Erro ao carregar ordens de serviço', 'error');
-    }
+    useEffect(() => {
+        if (error) {
+            showToast('Erro ao carregar ordens de serviço', 'error');
+        }
+    }, [error]);
 
     const columns = useMemo(
         () => getServiceOrdersTableColumns({

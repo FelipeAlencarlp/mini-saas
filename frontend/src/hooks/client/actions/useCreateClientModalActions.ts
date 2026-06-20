@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { validateClientModal } from "@/app/admin/clients/helpers/validateClientModal";
 import { CreateModalProps } from "@/types/modal/client";
 import { usePhoneInput } from "../../usePhoneInput";
+import { ActionType } from "@/types/modal/modal";
 
 export function useCreateClientModalActions({
     isOpen,
@@ -11,6 +12,8 @@ export function useCreateClientModalActions({
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
+
+    const [action, setAction] = useState<ActionType>(null);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -27,12 +30,13 @@ export function useCreateClientModalActions({
             setName('');
             setEmail('');
             setPhone('');
+            setAction(null);
         }
     }, [isOpen]);
 
     const { handlePhone } = usePhoneInput({ setPhone });
 
-    function handleSubmit() {
+    const handleSubmit = () => {
         const validationErrors = validateClientModal({
             name,
             email,
@@ -56,12 +60,18 @@ export function useCreateClientModalActions({
             return;
         }
 
-        onConfirm(
-            name,
-            email,
-            phone
-        );
+        setAction('create');
     }
+
+    const handleConfirmCreate = () => {
+        onConfirm(
+            name.trim(),
+            email.trim(),
+            phone.trim()
+        );
+
+        setAction(null);
+    };
 
     function handleClose() {
         resetForm();
@@ -84,6 +94,7 @@ export function useCreateClientModalActions({
         name,
         email,
         phone,
+        action,
         errors,
 
         nameInputRef,
@@ -93,10 +104,12 @@ export function useCreateClientModalActions({
         setName,
         setEmail,
         setPhone,
+        setAction,
         setErrors,
 
-        handleSubmit,
         handlePhone,
-        handleClose
+        handleClose,
+        handleSubmit,
+        handleConfirmCreate
     };
 }

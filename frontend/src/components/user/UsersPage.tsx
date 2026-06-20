@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CreateUserModal } from "@/components/user/CreateUserModal";
 import { EditUserModal } from "@/components/user/EditUserModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
@@ -39,9 +39,11 @@ export default function UsersPage() {
         error
     } = useUsersQuery(debouncedSearch, page);
 
-    if (error) {
-        showToast('Erro ao carregar usuários', 'error');
-    }
+    useEffect(() => {
+        if (error) {
+            showToast('Erro ao carregar usuários', 'error');
+        }
+    }, [error]);
 
     const columns = useMemo(
         () => getUsersTableColumns({
@@ -96,7 +98,7 @@ export default function UsersPage() {
                 onClose={() => setModal(null)}
                 onConfirm={handleDelete}
                 isPending={deleteUserMutation.isPending}
-            />
+            /> 
         </>
     );
 }

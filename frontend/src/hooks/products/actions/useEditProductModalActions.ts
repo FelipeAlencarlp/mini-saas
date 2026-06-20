@@ -3,6 +3,7 @@ import { EditProductModalProps } from "@/types/modal/product";
 import {
     validateProductModal
 } from "@/app/admin/products/helpers/validateProductModal";
+import { ActionType } from "@/types/modal/modal";
 
 export function useEditProductModalActions({
     product,
@@ -14,6 +15,8 @@ export function useEditProductModalActions({
     const [name, setName] = useState<string>('');
     const [price, setPrice] = useState<string>('');
     const [quantity, setQuantity] = useState<string>('');
+
+    const [action, setAction] = useState<ActionType>(null);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -39,10 +42,11 @@ export function useEditProductModalActions({
                 )
             );
             setQuantity(String(product?.quantity));
+            setAction(null);
         }
     }, [isOpen, product]);
 
-    function handleSubmit() {
+    const handleSubmit = () => {
         const validationErrors = validateProductModal({
             name,
             price,
@@ -66,6 +70,10 @@ export function useEditProductModalActions({
             return;
         }
 
+        setAction('edit');
+    };
+
+    const handleConfirmEdit = () => {
         onConfirm(
             id,
             name.trim(),
@@ -76,7 +84,9 @@ export function useEditProductModalActions({
             ),
             Number(quantity)
         );
-    }
+
+        setAction(null);
+    };
 
     function handleClose() {
         resetForm();
@@ -94,8 +104,9 @@ export function useEditProductModalActions({
     return {
         name,
         price,
-        quantity,
+        action,
         errors,
+        quantity,
 
         nameInputRef,
         priceInputRef,
@@ -103,10 +114,12 @@ export function useEditProductModalActions({
 
         setName,
         setPrice,
-        setQuantity,
+        setAction,
         setErrors,
+        setQuantity,
 
+        handleClose,
         handleSubmit,
-        handleClose
+        handleConfirmEdit
     };
 }

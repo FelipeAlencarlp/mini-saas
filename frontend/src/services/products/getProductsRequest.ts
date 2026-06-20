@@ -1,5 +1,5 @@
 import { api } from "../api";
-import {ProductsResponseProps} from "@/types/dashboard/product";
+import { ProductsResponseProps } from "@/types/dashboard/product";
 
 export async function getProductsRequest(
     search: string,

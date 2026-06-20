@@ -1,4 +1,4 @@
-import { TotalsProps } from "@/types/dashboard/service_orders/TotalsProps.type";
+import { TotalsProps } from "@/types/dashboard/service_order";
 import { BaseCardServiceOrder } from "./BaseCardServiceOrder";
 
 export function TotalsServiceOrder({

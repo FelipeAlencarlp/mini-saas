@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { ActionType } from "@/types/modal/modal";
 import { EditUserModalProps } from "@/types/modal/user";
-import { validateUserModal } from "@/app/admin/users/helpers/validateUserModal";
+import { validateEditUserModal } from "@/app/admin/users/helpers/validateEditUserModal";
 
 export function useEditUserModalActions({
     user,
@@ -11,6 +12,8 @@ export function useEditUserModalActions({
     const [id, setId] = useState<number>(0);
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
+
+    const [action, setAction] = useState<ActionType>(null);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -25,11 +28,12 @@ export function useEditUserModalActions({
             setId(user.id);
             setName(user.name);
             setEmail(user.email);
+            setAction(null);
         }
     }, [isOpen, user]);
 
-    function handleSubmit() {
-        const validationErrors = validateUserModal({
+    const handleSubmit = () => {
+        const validationErrors = validateEditUserModal({
             name,
             email
         });
@@ -46,12 +50,18 @@ export function useEditUserModalActions({
             return;
         }
 
+        setAction('edit');
+    }
+
+    const handleConfirmEdit = () => {
         onConfirm(
             id,
             name.trim(),
             email.trim()
         );
-    }
+
+        setAction(null);
+    };
 
     function handleClose() {
         resetForm();
@@ -68,6 +78,7 @@ export function useEditUserModalActions({
     return {
         name,
         email,
+        action,
         errors,
 
         nameInputRef,
@@ -75,9 +86,11 @@ export function useEditUserModalActions({
 
         setName,
         setEmail,
+        setAction,
         setErrors,
 
+        handleClose,
         handleSubmit,
-        handleClose
+        handleConfirmEdit
     };
 }

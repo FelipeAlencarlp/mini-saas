@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CreateProductModal } from "@/components/products/CreateProductModal";
 import { EditProductModal } from "@/components/products/EditProductModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
@@ -39,9 +39,11 @@ export default function ProductsPage() {
         error
     } = useProductsQuery(debouncedSearch, page);
 
-    if (error) {
-        showToast('Erro ao carregar produtos', 'error');
-    }
+    useEffect(() => {
+        if (error) {
+            showToast('Erro ao carregar produtos', 'error');
+        }
+    }, [error]);
 
     const columns = useMemo(
         () => getProductsTableColumns({

@@ -4,6 +4,7 @@ import {
     validateClientModal
 } from "@/app/admin/clients/helpers/validateClientModal";
 import { usePhoneInput } from "@/hooks/usePhoneInput";
+import { ActionType } from "@/types/modal/modal";
 
 export function useEditClientModalActions({
     client,
@@ -15,6 +16,8 @@ export function useEditClientModalActions({
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
+
+    const [action, setAction] = useState<ActionType>(null);
 
     const [errors, setErrors] = useState({
         name: '',
@@ -32,12 +35,13 @@ export function useEditClientModalActions({
             setName(client.name);
             setEmail(client?.email || '');
             setPhone(client?.phone || '');
+            setAction(null);
         }
     }, [isOpen, client]);
 
     const { handlePhone } = usePhoneInput({ setPhone });
 
-    function handleSubmit() {
+    const handleSubmit = () => {
         const validationErrors = validateClientModal({
             name,
             email,
@@ -61,13 +65,19 @@ export function useEditClientModalActions({
             return;
         }
 
+        setAction('edit');
+    }
+
+    const handleConfirmEdit = () => {
         onConfirm(
             id,
-            name,
-            email,
-            phone
+            name.trim(),
+            email.trim(),
+            phone.trim()
         );
-    }
+
+        setAction(null);
+    };
 
     function handleClose() {
         resetForm();
@@ -86,6 +96,7 @@ export function useEditClientModalActions({
         name,
         email,
         phone,
+        action,
         errors,
 
         nameInputRef,
@@ -94,10 +105,12 @@ export function useEditClientModalActions({
 
         setName,
         setEmail,
+        setAction,
         setErrors,
 
-        handleSubmit,
         handlePhone,
-        handleClose
+        handleClose,
+        handleSubmit,
+        handleConfirmEdit
     };
 }

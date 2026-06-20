@@ -1,4 +1,4 @@
-import { ViewProductsListProps } from "@/types/dashboard/service_orders/ViewProductsListProps";
+import { ViewProductsListProps } from "@/types/dashboard/service_order";
 
 export function ViewProductsListServiceOrder({
     items

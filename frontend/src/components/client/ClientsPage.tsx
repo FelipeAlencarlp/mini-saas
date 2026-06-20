@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { EditClientModal } from "@/components/client/EditClientModal";
 import { CreateClientModal } from "@/components/client/CreateClientModal";
 import { DeleteModal } from "@/components/modal/DeleteModal";
@@ -39,9 +39,11 @@ export default function ClientsPage() {
         error
     } = useClientsQuery(debouncedSearch, page);
 
-    if (error) {
-        showToast('Erro ao carregar clientes', 'error');
-    }
+    useEffect(() => {
+        if (error) {
+            showToast('Erro ao carregar clientes', 'error');
+        }
+    }, [error]);
 
     const columns = useMemo(
         () => getClientTableColumns({

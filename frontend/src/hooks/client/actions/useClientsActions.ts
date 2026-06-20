@@ -21,27 +21,27 @@ export function useClientsActions({ closeModal }: UseClientsActionsProps) {
     const updateClientMutation = useUpdateClient();
     const deleteClientMutation = useDeleteClient();
 
-    function handleCreate(
+    const handleCreate = async (
         name: string,
         email: string,
         phone: string
-    ) {
-        createClientMutation.mutate({
+    ) => {
+        await createClientMutation.mutateAsync({
             name,
             email,
             phone
         });
 
         closeModal();
-    }
+    };
 
-    function handleUpdate(
+    const handleUpdate = async (
         id: number,
         name: string,
         email: string,
         phone: string
-    ) {
-        updateClientMutation.mutate({
+    ) => {
+        await updateClientMutation.mutateAsync({
             id,
             name,
             email,
@@ -49,10 +49,10 @@ export function useClientsActions({ closeModal }: UseClientsActionsProps) {
         });
 
         closeModal();
-    }
+    };
 
-    function handleDelete(id: number) {
-        deleteClientMutation.mutate({ id });
+    const handleDelete = async (id: number) => {
+        await deleteClientMutation.mutateAsync({ id });
 
         closeModal();
     }

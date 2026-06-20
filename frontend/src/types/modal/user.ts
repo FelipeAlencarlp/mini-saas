@@ -40,11 +40,11 @@ export interface UserModalProps {
 export interface ValidationUserProps {
     name: string;
     email: string;
-}
-
-export interface ValidationUserErrorsProps {
-    name: string;
-    email: string;
     password: string;
     confirmPassword: string;
+}
+
+export interface ValidationEditUserProps {
+    name: string;
+    email: string;
 }

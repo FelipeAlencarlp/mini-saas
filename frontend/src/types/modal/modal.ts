@@ -1,3 +1,5 @@
+export type ActionType = 'create' | 'edit' | null;
+
 export interface ModalProps {
     children: React.ReactNode;
     isOpen: boolean;
@@ -5,7 +7,7 @@ export interface ModalProps {
     isPending?: boolean;
     optionTitle?: string[];
     onClose: () => void;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 // Delete Modal

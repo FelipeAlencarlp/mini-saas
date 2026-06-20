@@ -67,7 +67,7 @@ export interface UsePhoneInputProps {
 }
 
 // SearchInput
-interface SearchResult {
+export interface SearchResult {
     id: number;
     name: string;
 };

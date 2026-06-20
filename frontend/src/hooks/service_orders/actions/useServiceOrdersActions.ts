@@ -27,13 +27,13 @@ export function useServiceOrdersActions({
     const finishServiceOrderMutation = useFinishServiceOrder();
     const deleteServiceOrderMutation = useDeleteServiceOrder();
 
-    async function handleCreate(
+    const handleCreate = async (
         clientId: number,
         items: {
             productId: number,
             quantity: number
         }[]
-    ) {
+    ) => {
         await createServiceOrderMutation.mutateAsync({
             clientId,
             items
@@ -42,38 +42,38 @@ export function useServiceOrdersActions({
         closeModal();
     }
 
-    async function handleCancel(id: number) {
+    const handleCancel = async (id: number) => {
         await cancelServiceOrderMutation.mutateAsync({ id });
         
         closeModal();
-    }
+    };
 
-    async function handleUpdate(
+    const handleUpdate = async (
         id: number,
         items: {
             productId: number,
             quantity: number
         }[]
-    ) {
+    ) => {
         await updateServiceOrderMutation.mutateAsync({
             id,
             items
         });
 
         closeModal();
-    }
+    };
 
-    async function handleFinish(id: number) {
+    const handleFinish = async (id: number) => {
         await finishServiceOrderMutation.mutateAsync({ id });
 
         closeModal();
-    }
+    };
 
-    async function handleDelete(id: number) {
+    const handleDelete = async (id: number) => {
         await deleteServiceOrderMutation.mutateAsync({ id });
 
         closeModal();
-    }
+    };
 
     function handlePageClick(event: { selected: number }) {
         setPage(event.selected + 1);

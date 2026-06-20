@@ -1,10 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useToast } from "@/hooks/useToast";
 import { TitlePage } from "@/components/dashboard/titlePage/TitlePage";
 import { DashboardCards } from "@/components/dashboard/card/DashboardCards";
-import { useQuery } from "@tanstack/react-query";
 import { getDashboardData } from "@/app/admin/helpers/dashboardData";
-import { useToast } from "@/hooks/useToast";
 
 export default function AdminPage() {
     const { showToast } = useToast();
@@ -14,9 +15,11 @@ export default function AdminPage() {
         queryFn: getDashboardData
     });
 
-    if (error) {
-        showToast('Erro ao carregar dados', 'error');
-    }
+    useEffect(() => {
+        if (error) {
+            showToast('Erro ao carregar dados', 'error');
+        }
+    }, [error]);
 
     return (
         <>
