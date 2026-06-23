@@ -48,9 +48,13 @@ export class UsersService {
     }
 
     async findOneByEmail(email: string): Promise<any> {
-        return await this.prisma.user.findFirst({
+        const user = await this.prisma.user.findFirst({
             where: { email, deletedAt: null }
         });
+
+        if (!user) return false;
+
+        return user;
     }
 
     async findOne(id: number): Promise<UserEntity> {
@@ -91,8 +95,24 @@ export class UsersService {
     ): Promise<UserEntity> {
         const user = await this.findOne(id);
 
+        if (dto.email && dto.email !== user.email) {
+            const emailAlreadyExists =
+                await this.prisma.user.findFirst({
+                    where: {
+                        email: dto.email,
+                        deletedAt: null
+                    }
+                });
+
+            if (emailAlreadyExists) {
+                throw new ConflictException(
+                    'Este e-mail já está sendo utilizado.'
+                );
+            }
+        }
+
         return await this.prisma.user.update({
-            where: { id: user.id },
+            where: { id },
             data: { 
                 ...dto,
                 updatedAt: new Date()

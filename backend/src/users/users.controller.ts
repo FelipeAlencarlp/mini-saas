@@ -61,6 +61,14 @@ export class UsersController {
         return this.usersService.findOne(id);
     }
 
+    @Get()
+    @ApiOkResponse({ type: UserEntity })
+    async findOneByEmail(
+        @Query('email') email: string
+    ): Promise<UserEntity> {
+        return this.usersService.findOneByEmail(email);
+    }
+
     @Post()
     @ApiCreatedResponse({ type: UserEntity })
     async register(
