@@ -45,6 +45,7 @@ export interface ValidationUserProps {
 }
 
 export interface ValidationEditUserProps {
+    user?: UserProps | null;
     name: string;
     email: string;
 }

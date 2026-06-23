@@ -99,6 +99,12 @@ export interface PriceInputProps {
     onChange: (value: string) => void;
 }
 
+// EmailInput
+export interface EmailInputProps {
+    value: string;
+    onChange: (value: string) => void;
+}
+
 // Footer
 export interface FooterFormProps {
     childrenP: React.ReactNode;

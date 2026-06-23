@@ -34,6 +34,7 @@ export function useEditUserModalActions({
 
     const handleSubmit = () => {
         const validationErrors = validateEditUserModal({
+            user,
             name,
             email
         });

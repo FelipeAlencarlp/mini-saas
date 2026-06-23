@@ -1,5 +1,6 @@
 import { Modal } from "../modal/Modal";
 import { Input } from "../form/Input";
+import { EmailInput } from "../form/EmailInput";
 import { ConfirmActionModal } from "../modal/ConfirmActionModal";
 import { CreateUserModalProps } from "@/types/modal/user";
 import {
@@ -68,17 +69,11 @@ export function CreateUserModal({
                     }}
                 />
 
-                <Input
-                    label="E-mail"
-                    bgLabel="bg-gray-200"
-                    ref={emailInputRef}
-                    id="email-create-input-modal"
-                    name="email"
-                    type="email"
+                <EmailInput
                     value={email}
-                    error={errors.email}
+                    ref={emailInputRef}
                     onChange={(e) => {
-                        setEmail(e.target.value);
+                        setEmail(e);
                         setErrors({
                             name: errors.name,
                             email: '',

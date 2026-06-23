@@ -1,6 +1,7 @@
 import { ValidationEditUserProps } from "@/types/modal/user";
 
 export function validateEditUserModal({
+    user,
     name,
     email
 }: ValidationEditUserProps): ValidationEditUserProps {
@@ -21,6 +22,10 @@ export function validateEditUserModal({
         errors.email = 'E-mail obrigatório';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
         errors.email = 'E-mail inválido';
+    }
+
+    if (user?.email !== email) {
+        errors.email = 'E-mail já cadastrado';
     }
 
     return errors;
