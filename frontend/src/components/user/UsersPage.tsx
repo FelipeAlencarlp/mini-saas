@@ -60,6 +60,7 @@ export default function UsersPage() {
     return (
         <>
             <PageTable
+                text="Usuários"
                 titlePage="Usuários"
                 isLoading={isLoading}
                 isFetching={isFetching}

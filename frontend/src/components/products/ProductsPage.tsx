@@ -60,6 +60,7 @@ export default function ProductsPage() {
     return (
         <>
             <PageTable
+                text="Produtos"
                 titlePage="Produtos"
                 isLoading={isLoading}
                 isFetching={isFetching}

@@ -60,6 +60,7 @@ export default function ClientsPage() {
     return (
         <>
             <PageTable
+                text="Clientes"
                 titlePage="Clientes"
                 isLoading={isLoading}
                 isFetching={isFetching}

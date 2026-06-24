@@ -75,6 +75,7 @@ export default function ServiceOrdersPage() {
     return (
         <>
             <PageTable
+                text="Ordens de Serviço"
                 titlePage="Ordens de Serviço"
                 isLoading={isLoading}
                 isFetching={isFetching}

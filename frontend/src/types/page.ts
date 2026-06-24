@@ -1,16 +1,17 @@
 import { Column } from "./table";
 
 export interface PageTableProps<T> {
+    data: T[];
+    page: number;
+    text?: string;
+    label: string;
+    title?: string;
+    search: string;
+    columns: Column<T>[]
+    pageCount: number;
     titlePage: string;
     isLoading: boolean;
     isFetching: boolean;
-    search: string;
-    columns: Column<T>[]
-    data: T[];
-    page: number;
-    pageCount: number;
-    label: string;
-    title?: string;
     descriptionButton?: string;
     onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
