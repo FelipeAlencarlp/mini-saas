@@ -35,24 +35,24 @@ export function DashboardCards({
 
     return (
         <>
-            <div className="
-                flex flex-col items-center gap-4 mb-4 md:mb-0
-                md:flex-row md:flex-wrap md:items-start
-            ">
-                {isLoading
-                    ? Array.from({ length: 4}).map((_, index) => (
-                        <CardSkeleton key={index} />
-                    ))
-                    : cards.map((item) => (
-                        <Card
-                            key={item.title}
-                            title={item.title}
-                            span1={item.span1 ?? ''}
-                            span2={item.span2}
-                        />
-                    ))
-                }
-            </div>
+                <div className="
+                    flex flex-col items-center gap-4 mb-4 md:mb-0
+                    md:flex-row md:flex-wrap md:items-start
+                ">
+                    {isLoading
+                        ? Array.from({ length: 4}).map((_, index) => (
+                            <CardSkeleton key={index} />
+                        ))
+                        : data && cards.map((item) => (
+                            <Card
+                                key={item.title}
+                                title={item.title}
+                                span1={item.span1 ?? ''}
+                                span2={item.span2}
+                            />
+                        ))
+                    }
+                </div>
 
             {!data && !isLoading && <EmpytPage text="Vendas"/>}
         </>

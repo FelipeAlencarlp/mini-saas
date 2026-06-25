@@ -6,7 +6,7 @@ export function EmpytPage({ text }: { text?: string }) {
             className="
                 flex flex-col
                 justify-center items-center
-                text-gray-400
+                text-gray-400 mt-20
             "
         >
             <HiOutlineSwatch size={65}/>

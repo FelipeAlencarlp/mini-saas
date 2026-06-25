@@ -31,41 +31,38 @@ export function PageTable<T>({
                 {titlePage}
             </TitlePage>
 
-            {data
-                ? (
-                    <>
-                        {/* Button and Search */}
-                        <SearchAndButtonHeaderPage
-                            label={label}
-                            title={title}
-                            descriptionButton={descriptionButton}
-                            search={search}
-                            isLoading={isLoading}
-                            onSearch={onSearch}
-                            onClick={onClick}
-                        />
-
-                        {/* Table */}
-                        {isLoading
-                            ?
-                                <TableSkeleton
-                                    columns={columns.length}
-                                    rows={6}
-                                />
-                            :
-                                <Table
-                                    columns={columns}
-                                    data={data}
-                                    isLoading={isFetching}
-                                    handlePageClick={handlePageClick}
-                                    pageCount={pageCount}
-                                    page={page}
-                                />
-                        }
-                    </>
-                  )
-                : <EmpytPage text={text}/>
+            {/* Button and Search */}
+            {data.length > 0 &&
+                <SearchAndButtonHeaderPage
+                    label={label}
+                    title={title}
+                    descriptionButton={descriptionButton}
+                    search={search}
+                    isLoading={isLoading}
+                    onSearch={onSearch}
+                    onClick={onClick}
+                />
             }
+
+            {/* Table */}
+            {isLoading
+                ?
+                    <TableSkeleton
+                        columns={columns.length}
+                        rows={6}
+                    />
+                : data.length > 0 &&
+                    <Table
+                        columns={columns}
+                        data={data}
+                        isLoading={isFetching}
+                        handlePageClick={handlePageClick}
+                        pageCount={pageCount}
+                        page={page}
+                    />
+            }
+
+            {data.length === 0 && !isLoading && <EmpytPage text={text}/>}
         </>
     );
 }
