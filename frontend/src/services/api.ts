@@ -2,7 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export const api = axios.create({
-    baseURL: 'https://mini-saas-api-ktob.onrender.com'
+    baseURL: 'https://mini-saas-api-ktob.onrender.com',
+    withCredentials: true,
 });
 
 // Token

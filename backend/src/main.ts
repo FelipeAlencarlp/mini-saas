@@ -27,7 +27,10 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: [
+      'https://mini-saas-lovat.vercel.app',
+      'http://localhost:3000'
+    ],
     credentials: true,
   });
 
