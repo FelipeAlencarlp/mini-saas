@@ -18,13 +18,12 @@ export const SelectProductServiceOrder = forwardRef<
         <div
             className="
                 flex gap-3
-                md:items-start
                 md:flex-row
                 flex-col justify-center
                 items-center
             "
         >
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full md:w-130">
                 <select
                     name="selectServiceOrder"
                     id="selectServiceOrder"
@@ -32,7 +31,6 @@ export const SelectProductServiceOrder = forwardRef<
                     ref={ref}
                     onChange={onChange}
                     className={`
-                        w-full
                         rounded-lg
                         border border-gray-200
                         bg-gray-200

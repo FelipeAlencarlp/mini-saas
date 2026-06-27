@@ -7,7 +7,7 @@ export function Header({
     onOpenMenu,
     onOpenProfile
 }: HeaderProps) {
-    if (isLoading) return <HeaderSkeleton/>;
+    // if (isLoading) return <HeaderSkeleton/>;
 
     return (
         <header
@@ -26,13 +26,13 @@ export function Header({
                 <HiBars3 size={28} />
             </button>
 
-            <p className="
-                bg-linear-to-r from-gray-300 to-blue-600
-                bg-clip-text text-transparent
-                font-semibold text-2xl md:pl-12
-            ">
-                Mini SaaS
-            </p>
+            {/* Logo */}
+            <img
+                src="/assets/logo.png"
+                alt="logo"
+                width={250}
+                height={150}
+            />
 
             {/* Perfil */}
             <button

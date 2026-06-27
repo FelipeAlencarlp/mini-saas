@@ -32,17 +32,15 @@ export function PageTable<T>({
             </TitlePage>
 
             {/* Button and Search */}
-            {data.length > 0 &&
-                <SearchAndButtonHeaderPage
-                    label={label}
-                    title={title}
-                    descriptionButton={descriptionButton}
-                    search={search}
-                    isLoading={isLoading}
-                    onSearch={onSearch}
-                    onClick={onClick}
-                />
-            }
+            <SearchAndButtonHeaderPage
+                label={label}
+                title={title}
+                descriptionButton={descriptionButton}
+                search={search}
+                isLoading={isLoading}
+                onSearch={onSearch}
+                onClick={onClick}
+            />
 
             {/* Table */}
             {isLoading

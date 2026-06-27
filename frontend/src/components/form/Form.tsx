@@ -17,6 +17,13 @@ export function Form({
                 py-6 bg-white w-11/12 max-w-175 rounded-2xl
             "
         >
+            <div className="flex justify-center">
+                <p className="
+                    bg-linear-to-r from-gray-300 to-blue-600
+                    bg-clip-text text-transparent
+                    font-semibold text-5xl mb-6
+                ">Mini SaaS</p>
+            </div>
             <form
                 id={id}
                 onSubmit={onSubmit}

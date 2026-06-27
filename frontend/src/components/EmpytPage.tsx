@@ -16,7 +16,7 @@ export function EmpytPage({ text }: { text?: string }) {
                     text-xl text-center
                 "
             >
-                Sem registro de <b>{text}</b> ainda.
+                Nenhum registro de <b>{text}</b> encontrado.
             </p>
         </div>
     );
