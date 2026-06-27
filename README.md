@@ -1,17 +1,18 @@
 # Projeto Mini SaaS
-<img src="/frontend/public/assets/logo.png" alt="Logo"/>
+<img src="./frontend/public/assets/logo.png" alt="Logo"/>
 Um projeto mini saas construido por mim 😉
 
 ## 🧾 Índice
-- <a href="#funcionalidade">Funcionalidades do Projeto</a>
-- <a href="#layout">Layout</a>
-- <a href="#demonstracao">Demonstração</a>
-- <a href="#rodar">Como rodar este projeto?</a>
-- <a href="#tecnologias">Tecnologias Utilizadas</a>
-- <a href="#autor">Pessoa Autora</a>
-- <a href="#passos">Próximos Passos</a>
 
-## 📱 Funcionalidades do Projeto
+- [Funcionalidades do Projeto](#funcionalidades-do-projeto)
+- [Layout](#layout)
+- [Demonstração](#demonstração)
+- [Como rodar este projeto?](#como-rodar-este-projeto)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Pessoa Autora](#pessoa-autora)
+- [Próximos Passos](#próximos-passos)
+
+## Funcionalidades do Projeto
 
 - [x] Login
 - [x] Perfil
@@ -27,22 +28,22 @@ Um projeto mini saas construido por mim 😉
 - [x] Lista de Produtos
 - [x] Lista de Ordem de Serviços
 
-## 📊 Layout
+## Layout
 
-![tela de login](/frontend/public/projeto/login.PNG)
-![perfil usuario](/frontend/public/projeto/perfil.PNG)
-![dashboard](/frontend/public/projeto/dashboard.PNG)
-![cadastro de usuario](/frontend/public/projeto/cadastro-usuario.PNG)
-![lista de usuarios](/frontend/public/projeto/lista-usuarios.PNG)
-![cadastro de cliente](/frontend/public/projeto/cadastro-cliente.PNG)
-![lista de clientes](/frontend/public/projeto/lista-clientes.PNG)
-![cadastro de produto](/frontend/public/projeto/cadastro-produto.PNG)
-![lista de produtos](/frontend/public/projeto/lista-produtos.PNG)
-![criação de ordem cliente](/frontend/public/projeto/escolher-cliente-ordem.PNG)
-![cadastro de ordem](/frontend/public/projeto/cadastro-ordem.PNG)
-![visualizacao de ordem](/frontend/public/projeto/visualizar-ordem.PNG)
-![editar ordem](/frontend/public/projeto/editar-ordem.PNG)
-![lista de ordens](/frontend/public/projeto/lista-ordens.PNG)
+![tela de login](./frontend/public/projeto/login.PNG)
+![perfil usuario](./frontend/public/projeto/perfil.PNG)
+![dashboard](./frontend/public/projeto/dashboard.PNG)
+![cadastro de usuario](./frontend/public/projeto/cadastro-usuario.PNG)
+![lista de usuarios](./frontend/public/projeto/lista-usuarios.PNG)
+![cadastro de cliente](./frontend/public/projeto/cadastro-cliente.PNG)
+![lista de clientes](./frontend/public/projeto/lista-clientes.PNG)
+![cadastro de produto](./frontend/public/projeto/cadastro-produto.PNG)
+![lista de produtos](./frontend/public/projeto/lista-produtos.PNG)
+![criação de ordem cliente](./frontend/public/projeto/escolher-cliente-ordem.PNG)
+![cadastro de ordem](./frontend/public/projeto/cadastro-ordem.PNG)
+![visualizacao de ordem](./frontend/public/projeto/visualizar-ordem.PNG)
+![editar ordem](./frontend/public/projeto/editar-ordem.PNG)
+![lista de ordens](./frontend/public/projeto/lista-ordens.PNG)
 
 ## Demonstração
 
@@ -52,7 +53,7 @@ Para efetuar o login basta digitar as credenciais:
 **email**: admin@minisaas.com
 **senha**: admin
 
-## 💡 Como rodar este projeto?
+## Como rodar este projeto?
 
 ```bash
 #Clone este repositório
@@ -100,7 +101,7 @@ de administrador que foram criadas automáticamente
 senha: admin
 ```
 
-## 🔎 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 
@@ -138,21 +139,12 @@ senha: admin
 
 ## Pessoa Autora
 
-<img src="/frontend/public/projeto/felipe.jpeg" alt="Imagem do desenvolvedor" width="150px"/>
+<img src="./frontend/public/projeto/felipe.jpeg" alt="Imagem do desenvolvedor" width="150px"/>
 
-[Linkedin](www.linkedin.com/in/felipe-alencar-ba39b0263)
+[Linkedin](https://www.linkedin.com/in/felipe-alencar-ba39b0263)
 
 ## Próximos Passos
 
 - [ ] Gerar PDF da ordem de serviço
 - [ ] Melhorar Dashboard (implementar gráficos)
 - [ ] Permitir alterar perfil do usuário
-
-
-
-
-
-
-
-
-
